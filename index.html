@@ -16,7 +16,7 @@
             color: plum;
             background-image: url(45dc01f95c9427350f56d86683056043.jpg);
             background-repeat: repeat;
-            animation: movebackground 5s linear infinite;
+            animation: movebackground 12s linear infinite;
         }
 
         @keyframes movebackground {
@@ -82,7 +82,7 @@
     }
 }
 
-        .japanesegirl {
+    .japanesegirl {
                 display: flex;
                 position: absolute; /* Привязка к нижнему левому углу */
                 bottom: 20px;       /* Отступ от нижней границы */
@@ -91,7 +91,7 @@
                 height: auto;       /* Сохраняем пропорции изображения */
         }
         
-        .text {
+    .text {
             display: flex;
             position: absolute; /* Привязка к нижнему левому углу */
             bottom: 100px;       /* Размещаем выше изображения */
@@ -99,6 +99,14 @@
             font-size: 10px;    /* Размер шрифта */
             color: white;       /* Цвет текста */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для контраста */
+    }
+
+    .jesuss{
+        display: flex;
+        position: absolute;
+        height: 240px;
+        bottom: 440px;
+        right: -6px;
     }
     </style>
 </head>
@@ -123,7 +131,10 @@
     </div>
     <div class="letter">
         <img src="https://i.pinimg.com/736x/c2/35/c8/c235c803f9de63e7606886fea328a24e.jpg" alt="i love you" class="japanesegirl">
-        <p class="text">interesting what she thinking about</p>
+        <p class="text">interesting what she thinking about, oh i know</p>
+    </div>
+    <div class="jesus">
+        <img src="jesus.png" alt="where is jesus" class="jesuss">
     </div>
 </body>
 </html>
