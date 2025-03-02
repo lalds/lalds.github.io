@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alekstwin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Press Start 2P', cursive;
+            color: plum;
+            background-image: url(45dc01f95c9427350f56d86683056043.jpg);
+            background-repeat: repeat;
+            animation: movebackground 5s linear infinite;
+        }
+
+        @keyframes movebackground {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 0%;
+            }
+        }
+
+        #Maybe {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 18px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .social-icons-container {
+            display: flex; /* Включаем flexbox */
+            justify-content: center; /* Выравниваем по центру горизонтально */
+            gap: 20px; /* Добавляем отступ между иконками */
+            position: absolute; /* Привязываем контейнер к нижней части экрана */
+            bottom: 20px; /* Отступ от нижней границы */
+            left: 50%; /* Центрируем относительно горизонтали */
+            transform: translateX(-50%); /* Корректируем положение по центру */
+        }
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .main-image {
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            visibility: hidden;
+        }
+
+        .social-icon {
+            width: 100px; /* Устанавливаем одинаковый размер */
+            height: 100px; /* Устанавливаем одинаковый размер */
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2); /* Эффект увеличения при наведении */
+        }
+
+        @media (max-width: 768px) {
+        .social-icons-container {
+            gap: 10px; /* Уменьшаем отступ между иконками */
+    }
+
+    .social-icon {
+             width: 50px; /* Уменьшаем размер иконок */
+            height: 50px; /* Уменьшаем размер иконок */
+    }
+}
+
+        .japanesegirl {
+                position: absolute; /* Привязка к нижнему левому углу */
+                bottom: 20px;       /* Отступ от нижней границы */
+                left: 20px;         /* Отступ от левой границы */
+                width: 150px;       /* Установим фиксированный размер */
+                height: auto;       /* Сохраняем пропорции изображения */
+        }
+        
+        .text {
+            position: absolute; /* Привязка к нижнему левому углу */
+            bottom: 100px;       /* Размещаем выше изображения */
+            left: 200px;         /* Выравниваем по левому краю */
+            font-size: 10px;    /* Размер шрифта */
+            color: white;       /* Цвет текста */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для контраста */
+    }
+    </style>
+</head>
+<body>
+    <div id="Maybe">
+        <p>ты знаешь мое имя</p>
+    </div>
+    <div class="image-container">
+        <img style="width: 614px; height: 121px" src="https://i.pinimg.com/736x/97/9a/f5/979af575dbf91c2cd0dcb70993351fd3.jpg" class="main-image"/>
+    
+        <div class="social-icons-container">
+            <a href="https://github.com/lalds" target="_blank">
+                <img src="github.png" alt="GitHub профиль" class="social-icon icon-1">
+            </a>
+            <a href="https://www.youtube.com/@twin255" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube канал" class="social-icon icon-2">
+            </a>
+            <a href="https://t.me/forthevalue" target="_blank">
+                <img src="cef4c8e2eaa6ff871704f40695692b23.jpg" alt="image-3" class="social-icon icon-3">
+            </a>
+        </div>
+    </div>
+    <div class="letter">
+        <img src="https://i.pinimg.com/736x/c2/35/c8/c235c803f9de63e7606886fea328a24e.jpg" alt="i love you" class="japanesegirl">
+        <p class="text">interesting what she thinking about</p>
+    </div>
+</body>
+</html>
