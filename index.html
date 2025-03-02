@@ -100,6 +100,29 @@
             color: white;       /* Цвет текста */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для контраста */
     }
+    
+    .button-container {
+            display: flex; /* Включаем Flexbox */
+            justify-content: center; /* Горизонтальное центрирование */
+            align-items: center; /* Вертикальное центрирование */
+            height: 100vh; /* Занимает всю высоту viewport */
+    }
+    
+    .button2 {
+        top: 390px;
+        position: absolute;
+        font-family: 'Press Start 2P';
+        padding: 10px 20px;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        border: none;
+        cursor: pointer;
+    }
+
+    .button2:hover {
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+        transform: scale(1.2)
+    }
 
     </style>
 </head>
@@ -109,7 +132,10 @@
     </div>
     <div class="image-container">
         <img style="width: 614px; height: 121px" src="https://i.pinimg.com/736x/97/9a/f5/979af575dbf91c2cd0dcb70993351fd3.jpg" class="main-image"/>
-        <button type="button">fdsafasfads</button>
+        <a href="devblog.html"> 
+            <div class="button-container">
+            <button class="button2">DevBlog</button>
+        </div></a>
         </div>
     </div>
     <div class="letter">

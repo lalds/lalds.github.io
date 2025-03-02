@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои проекты</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* Общие настройки */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Press Start 2P', cursive;
+            color: rgb(255, 255, 255);
+            background-image: url(45dc01f95c9427350f56d86683056043.jpg);
+            background-repeat: repeat;
+            animation: movebackground 12s linear infinite;
+        }
+
+        @keyframes movebackground {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 0%;
+            }
+        }
+
+        /* Контейнер для текста */
+        .container {
+            background-color: black; /* Полупрозрачный фон */
+            padding: 20px; /* Отступы внутри контейнера */
+            border-radius: 10px; /* Скругление углов */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Тень для объемности */
+            max-width: 600px; /* Максимальная ширина */
+            text-align: center; /* Центрирование текста */
+        }
+
+        /* Заголовок */
+        .chapterone {
+            font-size: 1.5em; /* Размер шрифта */
+            margin-bottom: 10px; /* Отступ снизу */
+            color: #ffcc00; /* Яркий цвет для заголовка */
+        }
+
+        /* Обычный текст */
+        p {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em; /* Размер шрифта */
+            line-height: 1.6; /* Интерлиньяж для удобочитаемости */
+            color: antiquewhite; /* Цвет текста */
+        }
+
+        /* Ссылки */
+        a {
+            color: #4CAF50; /* Цвет ссылок */
+            text-decoration: none; /* Убираем подчеркивание */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="chapterone"><strong>Оглавление - О чем собственно игра?</strong></h2>
+        <p>С недавних пор началась разработка над новой игрой.</p>
+        <p>Кодовое название: <strong>Unknown Kingdom</strong>.</p>
+    </div>
+</body>
+</html>
