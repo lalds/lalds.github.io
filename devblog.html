@@ -29,20 +29,29 @@
             }
         }
 
+        @keyframes sizefull {
+            0% {
+                height: 100px;
+            }
+            100% {
+                height: 150px;
+            }
+        }
+
         /* Контейнер для текста */
         .container {
+            position: absolute;
             background-color: black; /* Полупрозрачный фон */
             padding: 20px; /* Отступы внутри контейнера */
-            border-radius: 10px; /* Скругление углов */
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Тень для объемности */
             max-width: 600px; /* Максимальная ширина */
+            height: 600px;
+            left: 20px;
             text-align: center; /* Центрирование текста */
         }
 
         /* Заголовок */
         .chapterone {
-            font-size: 1.5em; /* Размер шрифта */
-            margin-bottom: 10px; /* Отступ снизу */
             color: #ffcc00; /* Яркий цвет для заголовка */
         }
 
@@ -54,6 +63,11 @@
             color: antiquewhite; /* Цвет текста */
         }
 
+        .game:hover {
+            transition: transform 0.3s ease;
+            transform: scale(1.4);
+        }
+
         /* Ссылки */
         a {
             color: #4CAF50; /* Цвет ссылок */
@@ -63,6 +77,13 @@
         a:hover {
             text-decoration: underline; /* Подчеркивание при наведении */
         }
+
+        #japanesegirl {
+            position: absolute;
+            height: 120px;
+            top: 7px;
+            right: 7px;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +91,13 @@
         <h2 class="chapterone"><strong>Оглавление - О чем собственно игра?</strong></h2>
         <p>С недавних пор началась разработка над новой игрой.</p>
         <p>Кодовое название: <strong>Unknown Kingdom</strong>.</p>
+        <p>Есть ли счастье за пределами нашего мира?</p>
+        <img src="1.png" alt="1.png" style="height: 120px; color: #4CAF50;" class="game">
+        <img src="2.PNG" alt="2.png" style="height: 120px; color: #4CAF50;" class="game">
     </div>
+    <div class="japanesegirl">
+        <img src="https://i.pinimg.com/736x/b3/72/de/b372de581ca76ffe0b8286d642affcca.jpg" alt="japanesegirl" id="japanesegirl">
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
