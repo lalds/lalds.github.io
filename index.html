@@ -101,40 +101,24 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для контраста */
     }
     
-    .button-container {
-            display: flex; /* Включаем Flexbox */
-            justify-content: center; /* Горизонтальное центрирование */
-            align-items: center; /* Вертикальное центрирование */
-            height: 100vh; /* Занимает всю высоту viewport */
-    }
-    
-    .button2 {
-        top: 430px;
+    .container {
         position: absolute;
-        font-family: 'Press Start 2P';
-        padding: 10px 20px;
-        background-color: #ffffff;
-        color: rgb(0, 0, 0);
-        border: none;
-        cursor: pointer;
+        display: flex;
     }
-
-    .button2:hover {
-        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-        transform: scale(1.2)
+    a:hover {
+        transform: scale(1.2);
+        transition: transform 0.3s ease;
     }
-
     </style>
 </head>
 <body>
     <div class="image-container">
         <img style="width: 614px; height: 121px" src="https://i.pinimg.com/736x/97/9a/f5/979af575dbf91c2cd0dcb70993351fd3.jpg" class="main-image"/>
-        <a href="devblog.html"> 
-            <div class="button-container">
-            <button class="button2">DevBlog</button>
-        </div></a>
         </div>
     </div>
     <script src="script.js"></script>
+    <div class="container">
+        <a href="devblog.html">ClickMe</a>
+    </div>
 </body>
 </html>

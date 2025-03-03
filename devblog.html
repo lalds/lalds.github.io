@@ -48,6 +48,7 @@
             height: 600px;
             left: 20px;
             text-align: center; /* Центрирование текста */
+            transform: rotate(-3deg);
         }
 
         /* Заголовок */
@@ -63,7 +64,8 @@
             color: antiquewhite; /* Цвет текста */
         }
 
-        .game:hover {
+        img:hover {
+            box-shadow: 1px 1px 1px;
             transition: transform 0.3s ease;
             transform: scale(1.4);
         }
@@ -84,6 +86,18 @@
             top: 7px;
             right: 7px;
         }
+        .game {
+            position: relative;
+            top: 20px;
+            right: 40px;
+            transform: rotate(-16deg);
+        }
+        .game2 {
+            position: relative;
+            top: 90px;
+            left: 20px;
+            transform: rotate(18deg);
+        }
     </style>
 </head>
 <body>
@@ -93,10 +107,7 @@
         <p>Кодовое название: <strong>Unknown Kingdom</strong>.</p>
         <p>Есть ли счастье за пределами нашего мира?</p>
         <img src="1.png" alt="1.png" style="height: 120px; color: #4CAF50;" class="game">
-        <img src="2.PNG" alt="2.png" style="height: 120px; color: #4CAF50;" class="game">
-    </div>
-    <div class="japanesegirl">
-        <img src="https://i.pinimg.com/736x/b3/72/de/b372de581ca76ffe0b8286d642affcca.jpg" alt="japanesegirl" id="japanesegirl">
+        <img src="2.PNG" alt="2.png" style="height: 120px; color: #4CAF50;" class="game2">
     </div>
     <script src="script.js"></script>
 </body>
