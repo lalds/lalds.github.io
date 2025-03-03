@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alekstwin home</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            background-image: url(61cbe1bd6dd2f96f4e38946e5b1c41e3.jpg);
+            background-repeat: repeat;
+            background-position: center;
+            backdrop-filter: blur(5px);
+            animation: movebackground 2s linear infinite;
+        }
+        
+        @keyframes movebackground {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 0%;
+            }
+        }
+
+        @keyframes tilt {
+            /* Анимация наклона */
+            0%, 40% {
+                transform: scale(1) /* Наклон влево */
+            }
+            50% {
+                transform: scale(1.2); /* Наклон вправо */
+            }
+        }
+        .container {
+            position: absolute;
+            width: 600px;
+            height: 1200px;
+            top: 120px;
+            background-color: rgb(30, 39, 47);
+            box-shadow: 3px 3px 9px;
+        }
+        p {
+            margin: 20px;
+            color: aliceblue;
+        }
+
+        .me {
+            animation: tilt 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <p class="me">What About Me</p>
+    <div class="container">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In assumenda quas eos magni, quam fugit incidunt magnam nobis laboriosam quis dignissimos illo non aspernatur sapiente explicabo consequatur temporibus animi soluta eveniet corrupti! At modi voluptates iste earum, optio ipsum. Quasi corrupti nesciunt dolore accusamus aliquam dolorem eveniet error doloribus reprehenderit quam fugiat placeat omnis, itaque minima? Dolorum maxime eaque laboriosam corrupti ducimus veritatis fugiat minima inventore, rem error doloremque, ad similique itaque commodi reiciendis et repudiandae natus quod officiis. Ea, quisquam adipisci dolorem architecto expedita nulla aperiam, dolor magnam, hic sit doloribus tempora. Dignissimos animi praesentium nulla ex, itaque quae asperiores quibusdam exercitationem delectus voluptatum tempore ipsam veniam veritatis, est corrupti earum mollitia iure quisquam voluptas? Quam iusto tempora necessitatibus architecto tempore ab quasi. Molestias doloribus asperiores facilis cumque impedit ipsam laborum dolor nam beatae placeat nobis tenetur, corporis eveniet expedita, esse est quidem et dignissimos illum voluptas nemo magni nisi rerum neque. Ab blanditiis, fugit accusantium quam eligendi iste harum, laudantium eius at dicta molestias nobis culpa quaerat? Rerum obcaecati cum velit atque, porro ullam explicabo, tempora laudantium voluptas aliquid eaque! Laudantium, quas blanditiis. Reprehenderit autem consequuntur iure quod quaerat iusto sit, ipsa molestias sunt, ducimus velit aliquam mollitia exercitationem voluptatibus labore doloribus nobis provident! Explicabo quos deserunt rem autem? Suscipit, magnam repudiandae! Mollitia cumque minima, reiciendis dolorum deserunt ducimus magni. Velit consequuntur eveniet est nesciunt rerum! Ducimus sapiente ipsa, velit, sed, quasi necessitatibus doloremque esse animi provident tempora et voluptates illum expedita quos ab? Nisi, exercitationem. Dolore nesciunt blanditiis repellat non, est unde ratione temporibus facere impedit quo magnam ducimus quia nihil vitae consequuntur voluptatem ullam? Modi eos mollitia tempora quos delectus. Reprehenderit sint rem commodi libero nesciunt? Accusamus magni, incidunt dolores dignissimos, vel aspernatur quam rerum sint culpa velit architecto reprehenderit atque. Dignissimos earum harum exercitationem fuga in saepe, totam inventore ducimus, consectetur consequatur nobis voluptate a magni laborum est cum doloremque sequi deserunt ullam impedit eius incidunt perspiciatis amet. Hic quis, corporis vitae quo laborum qui neque at magni ad aliquid. Doloremque, ipsa temporibus. Laboriosam nihil esse cupiditate iste fugiat non blanditiis, ullam voluptates laudantium est.</p>
+    </div>
+</body>
+</html>
