@@ -9,7 +9,7 @@
         /* Общие настройки */
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,6 +17,7 @@
             color: rgb(255, 255, 255);
             background-image: url(45dc01f95c9427350f56d86683056043.jpg);
             background-repeat: repeat;
+            background-size: cover;
             animation: movebackground 12s linear infinite;
         }
 
@@ -40,19 +41,21 @@
 
         /* Контейнер для текста */
         .container {
-            position: absolute;
-            background-color: black; /* Полупрозрачный фон */
+            background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон */
             padding: 20px; /* Отступы внутри контейнера */
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Тень для объемности */
-            max-width: 600px; /* Максимальная ширина */
-            height: 600px;
+            max-width: 90%;
+            width: 900px;
             text-align: center; /* Центрирование текста */
-            transform: rotate(-3deg);
+            overflow-y: auto;
+            margin: 20px;
+            height: auto; /* Высота автоматическая */
         }
 
         /* Заголовок */
         .chapterone {
             color: #ffcc00; /* Яркий цвет для заголовка */
+            font-size: 1.5em;
         }
 
         /* Обычный текст */
@@ -85,17 +88,65 @@
             top: 7px;
             right: 7px;
         }
-        .game {
-            position: relative;
-            top: 20px;
-            right: 40px;
-            transform: rotate(-16deg);
+
+        .screenshots {
+            display: flex;
+            justify-content: space-around; /* Равномерное распределение изображений */
+            margin-top: 20px; /* Отступ сверху */
         }
-        .game2 {
-            position: relative;
-            top: 90px;
-            left: 20px;
-            transform: rotate(18deg);
+
+        .game, .game2 {
+            max-width: 200px; /* Максимальная ширина изображений */
+            height: auto; /* Сохранение пропорций */
+        }
+
+        .text-content {
+            text-align: left; /* Выравнивание текста по левому краю */
+            margin: 20px 0; /* Отступы сверху и снизу */
+        }
+
+        /* Медиазапросы для мобильных устройств */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .chapterone {
+                font-size: 1.2em;
+            }
+
+            p {
+                font-size: 0.9em;
+            }
+
+            .screenshots {
+                flex-direction: column; /* Изображения в столбик на мобильных */
+                align-items: center; /* Центрирование изображений */
+            }
+
+            .game, .game2 {
+                margin: 10px 0; /* Отступы между изображениями */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .chapterone {
+                font-size: 1em;
+            }
+
+            p {
+                font-size: 0.8em;
+            }
+
+            .game, .game2 {
+                max-width: 150px; /* Уменьшение размера изображений */
+            }
         }
     </style>
 </head>
@@ -105,8 +156,16 @@
         <p>С недавних пор началась разработка над новой игрой.</p>
         <p>Кодовое название: <strong>Unknown Kingdom</strong>.</p>
         <p>Есть ли счастье за пределами нашего мира?</p>
-        <img src="1.png" alt="1.png" style="height: 120px; color: #4CAF50;" class="game">
-        <img src="2.PNG" alt="2.png" style="height: 120px; color: #4CAF50;" class="game2">
+        
+        <!-- Текст и изображения разделены -->
+        <div class="text-content">
+            <p></p>
+        </div>
+
+        <div class="screenshots">
+            <img src="1.png" alt="1.png" class="game">
+            <img src="2.PNG" alt="2.png" class="game2">
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

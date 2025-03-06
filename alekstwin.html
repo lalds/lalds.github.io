@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>alekstwin home</title>
     <style>
+        /* Общие стили */
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-family: 'Press Start 2P', cursive;
             background-image: url(61cbe1bd6dd2f96f4e38946e5b1c41e3.jpg);
             background-repeat: repeat;
             background-position: center;
             backdrop-filter: blur(5px);
             animation: movebackground 2s linear infinite;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
-        
+
         @keyframes movebackground {
             0% {
                 background-position: 0% 0%;
@@ -27,36 +32,76 @@
         }
 
         @keyframes tilt {
-            /* Анимация наклона */
             0%, 40% {
-                transform: scale(1) /* Наклон влево */
+                transform: scale(1);
             }
             50% {
-                transform: scale(1.2); /* Наклон вправо */
+                transform: scale(1.2);
             }
-        }
-        .container {
-            position: absolute;
-            width: 600px;
-            height: 1200px;
-            top: 120px;
-            background-color: rgb(30, 39, 47);
-            box-shadow: 3px 3px 9px;
-        }
-        p {
-            margin: 20px;
-            color: aliceblue;
         }
 
         .me {
             animation: tilt 3s ease-in-out infinite;
+            color: aliceblue;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: rgb(30, 39, 47);
+            box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            margin: 20px auto;
+            color: aliceblue;
+            overflow-y: auto;
+        }
+
+        p {
+            margin: 0;
+            padding: 10px 0;
+            line-height: 1.6;
+        }
+
+        /* Медиазапросы для мобильных устройств */
+        @media (max-width: 768px) {
+            body {
+                background-size: cover;
+                backdrop-filter: blur(3px);
+            }
+
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .me {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .me {
+                font-size: 1.2rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
     <p class="me">What About Me</p>
     <div class="container">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In assumenda quas eos magni, quam fugit incidunt magnam nobis laboriosam quis dignissimos illo non aspernatur sapiente explicabo consequatur temporibus animi soluta eveniet corrupti! At modi voluptates iste earum, optio ipsum. Quasi corrupti nesciunt dolore accusamus aliquam dolorem eveniet error doloribus reprehenderit quam fugiat placeat omnis, itaque minima? Dolorum maxime eaque laboriosam corrupti ducimus veritatis fugiat minima inventore, rem error doloremque, ad similique itaque commodi reiciendis et repudiandae natus quod officiis. Ea, quisquam adipisci dolorem architecto expedita nulla aperiam, dolor magnam, hic sit doloribus tempora. Dignissimos animi praesentium nulla ex, itaque quae asperiores quibusdam exercitationem delectus voluptatum tempore ipsam veniam veritatis, est corrupti earum mollitia iure quisquam voluptas? Quam iusto tempora necessitatibus architecto tempore ab quasi. Molestias doloribus asperiores facilis cumque impedit ipsam laborum dolor nam beatae placeat nobis tenetur, corporis eveniet expedita, esse est quidem et dignissimos illum voluptas nemo magni nisi rerum neque. Ab blanditiis, fugit accusantium quam eligendi iste harum, laudantium eius at dicta molestias nobis culpa quaerat? Rerum obcaecati cum velit atque, porro ullam explicabo, tempora laudantium voluptas aliquid eaque! Laudantium, quas blanditiis. Reprehenderit autem consequuntur iure quod quaerat iusto sit, ipsa molestias sunt, ducimus velit aliquam mollitia exercitationem voluptatibus labore doloribus nobis provident! Explicabo quos deserunt rem autem? Suscipit, magnam repudiandae! Mollitia cumque minima, reiciendis dolorum deserunt ducimus magni. Velit consequuntur eveniet est nesciunt rerum! Ducimus sapiente ipsa, velit, sed, quasi necessitatibus doloremque esse animi provident tempora et voluptates illum expedita quos ab? Nisi, exercitationem. Dolore nesciunt blanditiis repellat non, est unde ratione temporibus facere impedit quo magnam ducimus quia nihil vitae consequuntur voluptatem ullam? Modi eos mollitia tempora quos delectus. Reprehenderit sint rem commodi libero nesciunt? Accusamus magni, incidunt dolores dignissimos, vel aspernatur quam rerum sint culpa velit architecto reprehenderit atque. Dignissimos earum harum exercitationem fuga in saepe, totam inventore ducimus, consectetur consequatur nobis voluptate a magni laborum est cum doloremque sequi deserunt ullam impedit eius incidunt perspiciatis amet. Hic quis, corporis vitae quo laborum qui neque at magni ad aliquid. Doloremque, ipsa temporibus. Laboriosam nihil esse cupiditate iste fugiat non blanditiis, ullam voluptates laudantium est.</p>
+        <h3 align="center">Alekstwin</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, iste error sapiente molestiae aliquid iure omnis. Ut, nostrum. Totam iusto voluptatum facere ratione dolorum maiores porro ducimus perspiciatis sit tenetur error nobis quas inventore ea autem libero aut beatae blanditiis nihil iure necessitatibus qui, atque repellat! Harum magnam velit alias tempore ipsum enim, voluptatibus laborum ullam, non placeat repudiandae consequatur officia quis temporibus beatae tempora. Quasi minus eaque dicta quae omnis reiciendis consequatur quos maxime voluptatibus autem quaerat nostrum ipsam veniam quas architecto id expedita aperiam perferendis tenetur, temporibus rem fugit, harum aspernatur quod? Voluptatem magnam suscipit neque, minima explicabo aliquid autem numquam quia rerum deserunt saepe, ad tempora amet praesentium distinctio molestias debitis perferendis? Nesciunt culpa quam aut similique cupiditate id recusandae praesentium tempora eligendi neque aperiam, quis at expedita corporis non distinctio ipsa ab hic consequatur! Voluptate sed numquam, aperiam dolores adipisci est facere expedita illo rem assumenda eveniet iste illum necessitatibus, veniam ducimus blanditiis amet maxime dicta consequuntur? Deserunt ullam iste, non doloremque quas tempore dolore, cum eligendi, alias aperiam incidunt voluptates minus ab aliquam nemo voluptatum quam quod. Adipisci deleniti eius animi alias, molestias veniam obcaecati asperiores quo iste quos quam est sit beatae non aut.</p>
     </div>
 </body>
 </html>
