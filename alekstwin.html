@@ -11,7 +11,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-image: url(61cbe1bd6dd2f96f4e38946e5b1c41e3.jpg);
             background-repeat: repeat;
             background-position: center;
@@ -48,10 +48,13 @@
         }
 
         .container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 90%;
             max-width: 600px;
-            background-color: rgb(30, 39, 47);
-            box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.5);
+            height: 1000px;
             padding: 20px;
             margin: 20px auto;
             color: aliceblue;
@@ -62,6 +65,12 @@
             margin: 0;
             padding: 10px 0;
             line-height: 1.6;
+        }
+        
+        #jesus {
+            position: absolute;
+            top: 6px;
+            right: 0px;
         }
 
         /* Медиазапросы для мобильных устройств */
@@ -95,15 +104,42 @@
                 font-size: 0.9rem;
             }
         }
+
+        #crucfix1 {
+            position: absolute;
+            top: 0px;
+            width: 30px;
+        }
+
+        #crucfix2 {
+            position: absolute;
+            transform: rotate(-90deg);
+            top: -50px;
+            width: 30px;
+        }
+        
+        .text {
+            position: absolute;
+
+            bottom: 160px;
+            color: white; /* Добавьте цвет текста для видимости */
+            padding: 10px; /* Добавьте отступы для удобства чтения */
+            width: fit-content; /* Ширина подстраивается под текст */
+            height: auto; /* Высота подстраивается под содержимое */
+            max-width: 100%; /* Ограничение максимальной ширины */
+        }
+
     </style>
 </head>
 <body>
-    <p class="me">What About Me</p>
     <div class="container">
-        <p>Python - средний уровент</p>
-        <p>c# - средний уровень</p>
-        <p>html and css - новичок</p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur accusantium numquam maxime iusto inventore cumque nostrum quam voluptates dicta optio enim dignissimos ex adipisci quisquam facere tenetur vel, ipsum fugiat obcaecati commodi sunt odit a rem possimus? Natus rerum quos architecto, ipsam consequuntur dignissimos perspiciatis dolorum maiores suscipit at repellat porro quibusdam sequi sunt optio, numquam qui a laboriosam ad? Cumque quis ducimus, cupiditate laudantium harum ex molestias aliquid! Laboriosam harum ex ipsam, natus aspernatur aliquid. Earum cum non alias eaque cupiditate nihil, labore sunt dolore ullam repellat, nisi possimus, eius est at? Corporis, vero aut quae labore maiores similique non. Iure dicta expedita consequatur officia cumque, praesentium autem, facere odit nesciunt dolores quaerat distinctio eum? Eligendi, quibusdam. Fugiat illum voluptas vitae eligendi aut nemo, esse consequatur cum sapiente quia necessitatibus rerum quam neque accusamus quibusdam? Cumque autem nam, sit dolorum, quod odio deserunt itaque illo commodi rerum, nemo consectetur a dolorem ipsam consequatur dolor laborum quae? Consequatur, eum tempore magni itaque minus soluta? Excepturi, nesciunt ex. Corrupti, eius, beatae magnam, non perferendis iure assumenda autem nemo perspiciatis ipsa eum fuga necessitatibus nobis! Minima doloremque quisquam eaque suscipit. Amet nostrum, cum excepturi illo distinctio itaque rerum tempora hic et placeat.</p>
+        <div class="crucfix">
+            <img id="crucfix1" src="terrr.png" alt="">
+            <img id="crucfix2" src="terrr.png" alt="">
+        </div>
+        <div class="text">
+            <p>i will be honest</p>
+        </div>
     </div>
 </body>
 </html>
