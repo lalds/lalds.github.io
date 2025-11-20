@@ -1,112 +1,107 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <title>*** mY cOoL wEbSiTe ***</title>
+    <meta charset="UTF-8">
+    <title>ALEKSTWIN // HOME</title>
     <link rel="stylesheet" href="style.css">
-    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Шрифт как на печатной машинке -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<!-- Прямо в body задаем цвет фона, по-старинке -->
-<body bgcolor="#000000" text="#00FF00" link="#00FFFF" vlink="#FF00FF">
+<body>
 
-    <center>
-        <!-- Огромный заголовок -->
-        <h1><font face="Comic Sans MS" color="red">ЛЮБОВЬ И МИРОВОСПРИЯТИЕ</font></h1>
+    <!-- Основной контейнер (центровка) -->
+    <div class="container">
         
-        <!-- Бегущая строка -->
-        <marquee bgcolor="blue" width="80%">
-            NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB     
-        </marquee>
-        
-        <br><br>
+        <!-- ЛЕВАЯ КОЛОНКА (Сайдбар) -->
+        <aside class="sidebar">
+            <div class="box profile-box">
+                <img src="avatar.png" alt="Alekstwin" class="avatar">
+                <h2>Alekstwin</h2>
+                <p class="status">STATUS: <span class="blink">ONLINE</span></p>
+                <hr>
+                <p class="bio">Любовь и мировосприятие.</p>
+            </div>
 
-        <!-- Аватарка. Специально растянутая (width и height) -->
-        <div class="my-face">
-            <img src="avatar.png" width="200" height="250" border="5" alt="это я">
-            <br>
-            <b><font size="5">Alekstwin</font></b>
-        </div>
+            <div class="box nav-box">
+                <h3>:: LINKS ::</h3>
+                <ul class="nav-list">
+                    <li><a href="https://t.me/angelserserser" target="_blank">Telegram</a></li>
+                    <li><a href="https://www.youtube.com/@Angelo-b1k7m" target="_blank">YouTube</a></li>
+                    <li><a href="https://arnoldsavethewest.itch.io/" target="_blank">Itch.io</a></li>
+                </ul>
+            </div>
 
-        <br><br>
-        <hr color="red" width="50%">
-        <br>
+            <div class="box music-box">
+                <p>♫ NOW PLAYING:</p>
+                <marquee scrollamount="3">Silence - Digital Void</marquee>
+            </div>
+        </aside>
 
-        <!-- КНОПКА NLPA (Сделана таблицей, хаха) -->
-        <table border="3" bordercolor="yellow" bgcolor="red" cellpadding="10">
-            <tr>
-                <td>
-                    <center>
-                        <a href="https://nlpacollab.neocities.org/" style="text-decoration: none; font-size: 25px; color: yellow;">
-                            >>> ЖМИ СЮДА (NLPA COLLAB) <<<
+        <!-- ПРАВАЯ КОЛОНКА (Контент) -->
+        <main class="main-content">
+            
+            <!-- Верхняя бегущая строка -->
+            <div class="box marquee-box">
+                <marquee scrollamount="6">
+                    WELCOME TO MY DIGITAL GARDEN +++ CHECK OUT MY PROJECTS +++ NLPA COLLAB IS HERE +++
+                </marquee>
+            </div>
+
+            <!-- Кнопка NLPA (Важная) -->
+            <div class="box nlpa-box">
+                <a href="https://nlpacollab.neocities.org/" class="nlpa-link">
+                    <span class="star">★</span> ENTER NLPA COLLAB <span class="star">★</span>
+                </a>
+            </div>
+
+            <!-- Секция проектов -->
+            <div class="box projects-box">
+                <h3>:: PROJECTS ::</h3>
+                
+                <!-- Сетка проектов -->
+                <div class="projects-grid">
+                    
+                    <!-- Проект 1 -->
+                    <div class="project-item">
+                        <a href="https://nlpacollab.neocities.org/hollowair">
+                            <img src="https://img.itch.zone/aW1hZ2UvMzU4ODQxNi8yMTM1Nzg1Mi5wbmc=/original/cys%2B31.png" alt="HollowAir">
+                            <div class="project-title">HollowAir</div>
                         </a>
-                    </center>
-                </td>
-            </tr>
-        </table>
+                    </div>
 
-        <br><br>
+                    <!-- Проект 2 -->
+                    <div class="project-item">
+                        <a href="https://nlpacollab.neocities.org/freedungeon3d">
+                            <img src="https://img.itch.zone/aW1hZ2UvMjk0MDEwNy8xNzYwNzQ3OC5wbmc=/original/2vD9Ux.png" alt="FreeDungeon3D">
+                            <div class="project-title">FreeDungeon3D</div>
+                        </a>
+                    </div>
 
-        <!-- Ссылки на контакты -->
-        <font face="Impact" size="6" color="white">МОИ КОНТАКТЫ:</font>
-        <br>
-        <div class="links-box">
-            [ <a href="https://t.me/angelserserser">TELEGRAM</a> ] 
-            <br>
-            [ <a href="https://www.youtube.com/@Angelo-b1k7m">YOUTUBE</a> ]
-            <br>
-            [ <a href="https://arnoldsavethewest.itch.io/">ITCH.IO</a> ]
-        </div>
+                    <!-- Проект 3 -->
+                    <div class="project-item">
+                        <a href="https://nlpacollab.neocities.org/epitaphy">
+                            <img src="https://img.itch.zone/aW1hZ2UvMzk5NTkyNi8yMzgyOTM4My5wbmc=/original/1JuMcU.png" alt="EPITAPHY">
+                            <div class="project-title">EPITAPHY</div>
+                        </a>
+                    </div>
 
-        <br><br>
-        <hr>
-        <br>
+                </div>
+            </div>
 
-        <!-- ПРОЕКТЫ (Верстка таблицей — это база для новичка) -->
-        <h2>МОИ ПРОЕКТЫ (ЗАЦЕНИ):</h2>
-        
-        <table border="1" width="80%" bgcolor="#222222">
-            <!-- Проект 1 -->
-            <tr>
-                <td width="30%" bgcolor="grey">
-                    <img src="https://img.itch.zone/aW1hZ2UvMzU4ODQxNi8yMTM1Nzg1Mi5wbmc=/original/cys%2B31.png" width="100%" height="100">
-                </td>
-                <td>
-                    <h3>HollowAir</h3>
-                    <p>Я сделал это сам!!!</p>
-                    <a href="https://nlpacollab.neocities.org/hollowair">>>> СМОТРЕТЬ <<<</a>
-                </td>
-            </tr>
+            <!-- Футер внутри контента -->
+            <div class="box footer-box">
+                <p>Last updated: 21.11.2025</p>
+                <div class="buttons-88x31">
+                    <img src="https://cyber.dabamos.de/88x31/nowebp.gif" alt="no webp">
+                    <img src="https://cyber.dabamos.de/88x31/html_learn.gif" alt="html">
+                </div>
+                <br>
+                <img src="collage.PNG" style="max-width: 100%; opacity: 0.6;">
+            </div>
 
-            <!-- Проект 2 -->
-            <tr>
-                <td bgcolor="grey">
-                    <img src="https://img.itch.zone/aW1hZ2UvMjk0MDEwNy8xNzYwNzQ3OC5wbmc=/original/2vD9Ux.png" width="100%" height="100">
-                </td>
-                <td>
-                    <h3>FreeDungeon3D</h3>
-                    <p>СТРАШИЛКА!!!!!!</p>
-                    <a href="https://nlpacollab.neocities.org/freedungeon3d">>>> СМОТРЕТЬ <<<</a>
-                </td>
-            </tr>
-
-            <!-- Проект 3 -->
-            <tr>
-                <td bgcolor="grey">
-                    <img src="https://img.itch.zone/aW1hZ2UvMzk5NTkyNi8yMzgyOTM4My5wbmc=/original/1JuMcU.png" width="100%" height="100">
-                </td>
-                <td>
-                    <h3>EPITAPHY</h3>
-                    <p>Моя первая игра на юнити</p>
-                    <a href="https://nlpacollab.neocities.org/epitaphy">>>> СМОТРЕТЬ <<<</a>
-                </td>
-            </tr>
-        </table>
-
-        <br><br><br>
-        
-        <!-- Футер -->
-        <i>сделано с душой... (c) 2025</i>
-        <br>
-        <img src="collage.PNG" width="350" height="100" alt="collage">
-    </center>
+        </main>
+    </div>
 
 </body>
 </html>
