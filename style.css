@@ -1,0 +1,62 @@
+body {
+    /* Ставим картинку на фон и размножаем её */
+    background-image: url('https://media.giphy.com/media/U3qYN8S0j3bpK/giphy.gif');
+    background-repeat: repeat;
+    /* Если гифка не прогрузится, будет черный */
+    background-color: black; 
+    font-family: "Times New Roman", Times, serif;
+}
+
+/* Стиль для картинки (аватарки) */
+.my-face img {
+    border: 5px ridge #00ff00; /* Рамка "гребень" */
+    border-radius: 0px; /* Никаких скруглений! */
+}
+
+.my-face:hover img {
+    border-color: red; /* При наведении рамка краснеет */
+}
+
+/* Ссылки */
+a {
+    cursor: crosshair; /* Курсор крестик */
+}
+
+a:hover {
+    background-color: white;
+    color: black;
+    font-style: italic;
+}
+
+/* Блок с контактами */
+.links-box {
+    background-color: #000080; /* Темно-синий */
+    border: 3px double white;
+    width: 300px;
+    padding: 10px;
+}
+
+/* Таблица проектов */
+table {
+    border: 5px solid lime;
+}
+
+td {
+    border: 1px solid white;
+    padding: 5px;
+    color: white;
+    font-family: "Comic Sans MS", "Comic Sans", cursive; /* Легендарный шрифт */
+}
+
+h1 {
+    text-decoration: underline;
+    text-transform: uppercase;
+    background-color: black;
+    display: inline-block;
+    padding: 5px;
+}
+
+h2 {
+    color: yellow;
+    background-color: blue;
+}

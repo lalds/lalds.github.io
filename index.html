@@ -1,144 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alekstwin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Press Start 2P', cursive;
-            color: plum;
-            background-image: url(45dc01f95c9427350f56d86683056043.jpg);
-            background-repeat: repeat;
-            animation: movebackground 12s linear infinite;
-        }
-
-        @keyframes movebackground {
-            0% {
-                background-position: 0% 0%;
-            }
-            100% {
-                background-position: 100% 0%;
-            }
-        }
-
-        #Maybe {
-            display: flex;
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            font-size: 18px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .social-icons-container {
-            display: flex; /* Включаем flexbox */
-            justify-content: center; /* Выравниваем по центру горизонтально */
-            gap: 20px; /* Добавляем отступ между иконками */
-            position: absolute; /* Привязываем контейнер к нижней части экрана */
-            bottom: 20px; /* Отступ от нижней границы */
-            left: 50%; /* Центрируем относительно горизонтали */
-            transform: translateX(-50%); /* Корректируем положение по центру */
-        }
-        .image-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .main-image {
-            display: block;
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            visibility: hidden;
-        }
-
-        .social-icon {
-            width: 100px; /* Устанавливаем одинаковый размер */
-            height: 100px; /* Устанавливаем одинаковый размер */
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .social-icon:hover {
-            transform: scale(1.2); /* Эффект увеличения при наведении */
-        }
-
-        @media (max-width: 768px) {
-        .social-icons-container {
-            gap: 10px; /* Уменьшаем отступ между иконками */
-    }
-
-    .social-icon {
-             width: 50px; /* Уменьшаем размер иконок */
-            height: 50px; /* Уменьшаем размер иконок */
-    }
-}
-
-    .japanesegirl {
-                display: flex;
-                position: absolute; /* Привязка к нижнему левому углу */
-                bottom: 20px;       /* Отступ от нижней границы */
-                left: 20px;         /* Отступ от левой границы */
-                width: 150px;       /* Установим фиксированный размер */
-                height: auto;       /* Сохраняем пропорции изображения */
-        }
-        
-    .text {
-            display: flex;
-            position: absolute; /* Привязка к нижнему левому углу */
-            bottom: 100px;       /* Размещаем выше изображения */
-            left: 200px;         /* Выравниваем по левому краю */
-            font-size: 10px;    /* Размер шрифта */
-            color: white;       /* Цвет текста */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для контраста */
-    }
-    
-    .container {
-        position: absolute;
-        display: flex;
-    }
-
-    .container-two {
-        position: absolute;
-        display: flex;
-        bottom: 5px;
-        left: 4px;
-    }
-
-    a:hover {
-        transform: scale(1.2);
-        transition: transform 0.3s ease;
-    }
-
-    .manifest {
-        position: absolute;
-        bottom: 5px;
-        right: 4px;
-    }
-    </style>
+    <title>*** mY cOoL wEbSiTe ***</title>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
 </head>
-<body>
-    <div class="image-container">
-        <img style="width: 614px; height: 121px" src="https://i.pinimg.com/736x/97/9a/f5/979af575dbf91c2cd0dcb70993351fd3.jpg" class="main-image"/>
+<!-- Прямо в body задаем цвет фона, по-старинке -->
+<body bgcolor="#000000" text="#00FF00" link="#00FFFF" vlink="#FF00FF">
+
+    <center>
+        <!-- Огромный заголовок -->
+        <h1><font face="Comic Sans MS" color="red">ЛЮБОВЬ И МИРОВОСПРИЯТИЕ</font></h1>
+        
+        <!-- Бегущая строка -->
+        <marquee bgcolor="blue" width="80%">
+            NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB NLPA COLLAB     
+        </marquee>
+        
+        <br><br>
+
+        <!-- Аватарка. Специально растянутая (width и height) -->
+        <div class="my-face">
+            <img src="avatar.png" width="200" height="250" border="5" alt="это я">
+            <br>
+            <b><font size="5">Alekstwin</font></b>
         </div>
-    </div>
-    <script src="script.js"></script>
-    <div class="container">
-        <a href="unabomber.html"><img style="height: 500px;" src="https://i.pinimg.com/736x/b0/8d/ee/b08dee9b40c5bab7e47d1e2c67d9cd0d.jpg" alt="i dont know where is it" srcset=""></a>
-    </div>
-    <div class="container-two">
-        <a href="alekstwin.html">AlsoClickHere</a>
-    </div>
-    <div class="manifest">
-        <a href="devblog.html">manifesto</a>
-    </div>
+
+        <br><br>
+        <hr color="red" width="50%">
+        <br>
+
+        <!-- КНОПКА NLPA (Сделана таблицей, хаха) -->
+        <table border="3" bordercolor="yellow" bgcolor="red" cellpadding="10">
+            <tr>
+                <td>
+                    <center>
+                        <a href="https://nlpacollab.neocities.org/" style="text-decoration: none; font-size: 25px; color: yellow;">
+                            >>> ЖМИ СЮДА (NLPA COLLAB) <<<
+                        </a>
+                    </center>
+                </td>
+            </tr>
+        </table>
+
+        <br><br>
+
+        <!-- Ссылки на контакты -->
+        <font face="Impact" size="6" color="white">МОИ КОНТАКТЫ:</font>
+        <br>
+        <div class="links-box">
+            [ <a href="https://t.me/angelserserser">TELEGRAM</a> ] 
+            <br>
+            [ <a href="https://www.youtube.com/@Angelo-b1k7m">YOUTUBE</a> ]
+            <br>
+            [ <a href="https://arnoldsavethewest.itch.io/">ITCH.IO</a> ]
+        </div>
+
+        <br><br>
+        <hr>
+        <br>
+
+        <!-- ПРОЕКТЫ (Верстка таблицей — это база для новичка) -->
+        <h2>МОИ ПРОЕКТЫ (ЗАЦЕНИ):</h2>
+        
+        <table border="1" width="80%" bgcolor="#222222">
+            <!-- Проект 1 -->
+            <tr>
+                <td width="30%" bgcolor="grey">
+                    <img src="https://img.itch.zone/aW1hZ2UvMzU4ODQxNi8yMTM1Nzg1Mi5wbmc=/original/cys%2B31.png" width="100%" height="100">
+                </td>
+                <td>
+                    <h3>HollowAir</h3>
+                    <p>Я сделал это сам!!!</p>
+                    <a href="https://nlpacollab.neocities.org/hollowair">>>> СМОТРЕТЬ <<<</a>
+                </td>
+            </tr>
+
+            <!-- Проект 2 -->
+            <tr>
+                <td bgcolor="grey">
+                    <img src="https://img.itch.zone/aW1hZ2UvMjk0MDEwNy8xNzYwNzQ3OC5wbmc=/original/2vD9Ux.png" width="100%" height="100">
+                </td>
+                <td>
+                    <h3>FreeDungeon3D</h3>
+                    <p>СТРАШИЛКА!!!!!!</p>
+                    <a href="https://nlpacollab.neocities.org/freedungeon3d">>>> СМОТРЕТЬ <<<</a>
+                </td>
+            </tr>
+
+            <!-- Проект 3 -->
+            <tr>
+                <td bgcolor="grey">
+                    <img src="https://img.itch.zone/aW1hZ2UvMzk5NTkyNi8yMzgyOTM4My5wbmc=/original/1JuMcU.png" width="100%" height="100">
+                </td>
+                <td>
+                    <h3>EPITAPHY</h3>
+                    <p>Моя первая игра на юнити</p>
+                    <a href="https://nlpacollab.neocities.org/epitaphy">>>> СМОТРЕТЬ <<<</a>
+                </td>
+            </tr>
+        </table>
+
+        <br><br><br>
+        
+        <!-- Футер -->
+        <i>сделано с душой... (c) 2025</i>
+        <br>
+        <img src="https://web.archive.org/web/20091027072603/http://geocities.com/divine_music/counter.gif">
+    </center>
+
 </body>
 </html>
