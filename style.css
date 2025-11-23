@@ -357,3 +357,96 @@ input[type=range]::-webkit-slider-runnable-track {
     .sidebar { order: 2; }
     .main-content { order: 1; }
 }
+
+/* === DEVLOG / NEWS SYSTEM === */
+.devlog-box h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #fff;
+    background: #fff;
+    color: #000;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+/* Ограничиваем высоту и добавляем скролл, если новостей много */
+#blog-feed {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 5px; 
+    /* Стилизация скролла внутри блока */
+    scrollbar-width: thin;
+    scrollbar-color: #fff #000;
+}
+
+/* Отдельный пост */
+.blog-post {
+    border: 1px dashed #444;
+    padding: 15px;
+    margin-bottom: 25px;
+    background: #0a0a0a;
+}
+
+.blog-header {
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+}
+
+.blog-date {
+    color: #00ff00;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.blog-title {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Картинка внутри поста */
+.blog-img {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #fff;
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* Текст поста (Markdown стили) */
+.blog-body {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #ccc;
+}
+
+.blog-body p {
+    margin-bottom: 10px;
+}
+
+.blog-body strong {
+    color: #fff;
+}
+
+.blog-body a {
+    color: #7878ff;
+    text-decoration: underline;
+}
+
+.blog-body ul {
+    list-style: square;
+    padding-left: 20px;
+    color: #aaa;
+}
+
+/* Подвал поста */
+.blog-footer {
+    font-size: 0.7rem;
+    color: #444;
+    text-align: right;
+    margin-top: 15px;
+    font-style: italic;
+}

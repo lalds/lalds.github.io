@@ -5,6 +5,8 @@
     <title>ALEKSTWIN // HOME</title>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Библиотека для чтения Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- Шрифт печатной машинки -->
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -39,8 +41,6 @@
                     <img src="https://i.pinimg.com/736x/7f/a5/9a/7fa59a831fa884444492cd4bab77bd4c.jpg" class="slide" alt="gif8">
                     <img src="https://i.pinimg.com/736x/4c/24/67/4c24676449af9cf4599c76b521ea5811.jpg" class="slide" alt="gif9">
                     <img src="https://i.pinimg.com/736x/97/39/f2/9739f29fc857ce85495c364eafa6e7cd.jpg" class="slide" alt="gif10">
-                    <img src="https://i.pinimg.com/736x/98/7c/c7/987cc72596bc797262e3b71e8e928867.jpg" class="slide" alt="gif11">
-                    <img src="https://i.pinimg.com/736x/7d/29/0c/7d290ca47ebba400448dac73dc981ed8.jpg" class="slide" alt="gif12">
                 </div>
             </div>
 
@@ -118,6 +118,13 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            
+                        <!-- БЛОК НОВОСТЕЙ (DEVLOG) -->
+            <div class="box devlog-box">
+                <h3>:: SYSTEM LOGS / NEWS ::</h3>
+                <!-- Сюда JS будет выплевывать посты -->
+                <div id="blog-feed"></div>
             </div>
 
             <!-- Футер -->
@@ -225,6 +232,41 @@
         // Инициализация плеера
         loadTrack(trackIndex);
         trackTitle.stop(); // Чтобы бегущая строка стояла, пока пауза
+    </script>
+
+    <!-- СКРИПТ ДЛЯ БЛОГА -->
+    <!-- Сначала подключаем файл с данными -->
+    <script src="posts.js"></script> 
+    
+    <script>
+        const feedContainer = document.getElementById('blog-feed');
+
+        // Проходимся по всем постам из файла posts.js
+        blogPosts.forEach(post => {
+            // Конвертируем Markdown в HTML
+            const htmlContent = marked.parse(post.body);
+
+            // Если есть картинка, создаем для нее HTML, иначе пустота
+            const imageHtml = post.image ? `<img src="${post.image}" class="blog-img">` : '';
+
+            // Создаем HTML структуру поста
+            const postHTML = `
+                <div class="blog-post">
+                    <div class="blog-header">
+                        <span class="blog-date">[${post.date}]</span>
+                        <span class="blog-title">${post.title}</span>
+                    </div>
+                    ${imageHtml}
+                    <div class="blog-body">
+                        ${htmlContent}
+                    </div>
+                    <div class="blog-footer">/// END OF LOG ///</div>
+                </div>
+            `;
+
+            // Добавляем в контейнер
+            feedContainer.innerHTML += postHTML;
+        });
     </script>
 
 </body>
