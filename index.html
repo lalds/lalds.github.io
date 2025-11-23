@@ -5,16 +5,17 @@
     <title>ALEKSTWIN // HOME</title>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Шрифт как на печатной машинке -->
+    <!-- Шрифт печатной машинки -->
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Основной контейнер (центровка) -->
     <div class="container">
         
         <!-- ЛЕВАЯ КОЛОНКА (Сайдбар) -->
         <aside class="sidebar">
+            
+            <!-- Профиль -->
             <div class="box profile-box">
                 <img src="avatar.png" alt="Alekstwin" class="avatar">
                 <h2>Alekstwin</h2>
@@ -23,6 +24,50 @@
                 <p class="bio">Любовь и мировосприятие.</p>
             </div>
 
+            <!-- СЛАЙДШОУ (Новый блок) -->
+            <div class="box slideshow-box">
+                <h3>:: MEMORIES ::</h3>
+                <div class="slideshow-container">
+                    <!-- Вставь сюда свои картинки/гифки. У первой обязательно класс "active" -->
+                    <img src="https://i.pinimg.com/1200x/c4/1d/b8/c41db83ba8d1c4bd0930f7c5a428d93c.jpg" class="slide active" alt="gif1">
+                    <img src="https://i.pinimg.com/736x/02/9f/86/029f86e280bbff9399db5ad63e29e85c.jpg" class="slide" alt="gif2">
+                    <img src="https://i.pinimg.com/736x/12/d8/81/12d881c0cc98e2dbb020cded3ad1f7fe.jpg" class="slide" alt="gif3">
+                    <img src="https://i.pinimg.com/736x/b2/23/dc/b223dc547fc759c1c4160276e2fd9a51.jpg" class="slide" alt="gif4">
+                    <img src="https://i.pinimg.com/736x/7c/9a/81/7c9a8191ff0bd34cbeaf5a3d56575155.jpg" class="slide" alt="gif5">
+                    <img src="https://i.pinimg.com/736x/fd/f6/32/fdf63269d5248e5a9a0cfd8ca6fc8ac1.jpg" class="slide" alt="gif6">
+                    <img src="https://i.pinimg.com/736x/87/c2/7d/87c27d86e20a8403c0b7ceddaa7693ed.jpg" class="slide" alt="gif7">
+                    <img src="https://i.pinimg.com/736x/7f/a5/9a/7fa59a831fa884444492cd4bab77bd4c.jpg" class="slide" alt="gif8">
+                    <img src="https://i.pinimg.com/736x/4c/24/67/4c24676449af9cf4599c76b521ea5811.jpg" class="slide" alt="gif9">
+                    <img src="https://i.pinimg.com/736x/97/39/f2/9739f29fc857ce85495c364eafa6e7cd.jpg" class="slide" alt="gif10">
+                    <img src="https://i.pinimg.com/736x/98/7c/c7/987cc72596bc797262e3b71e8e928867.jpg" class="slide" alt="gif11">
+                    <img src="https://i.pinimg.com/736x/7d/29/0c/7d290ca47ebba400448dac73dc981ed8.jpg" class="slide" alt="gif12">
+                </div>
+            </div>
+
+            <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР -->
+            <div class="box music-box">
+                <h3>:: AUDIO PLAYER ::</h3>
+                
+                <!-- Экранчик -->
+                <div class="track-display">
+                    <marquee scrollamount="4" id="track-title">... WAITING ...</marquee>
+                </div>
+
+                <!-- Кнопки -->
+                <div class="player-controls">
+                    <button id="btn-prev" class="retro-btn">|&lt;</button>
+                    <button id="btn-play" class="retro-btn">[PLAY]</button>
+                    <button id="btn-next" class="retro-btn">&gt;|</button>
+                </div>
+
+                <!-- Громкость -->
+                <div class="volume-container">
+                    <span>VOL:</span>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.3">
+                </div>
+            </div>
+
+            <!-- Навигация -->
             <div class="box nav-box">
                 <h3>:: LINKS ::</h3>
                 <ul class="nav-list">
@@ -31,65 +76,51 @@
                     <li><a href="https://arnoldsavethewest.itch.io/" target="_blank">Itch.io</a></li>
                 </ul>
             </div>
-
-            <div class="box music-box">
-                <p>♫ NOW PLAYING:</p>
-                <marquee scrollamount="3">Silence - Digital Void</marquee>
-            </div>
         </aside>
 
         <!-- ПРАВАЯ КОЛОНКА (Контент) -->
         <main class="main-content">
             
-            <!-- Верхняя бегущая строка -->
+            <!-- Бегущая строка -->
             <div class="box marquee-box">
                 <marquee scrollamount="6">
                     WELCOME TO MY DIGITAL GARDEN +++ CHECK OUT MY PROJECTS +++ NLPA COLLAB IS HERE +++
                 </marquee>
             </div>
 
-            <!-- Кнопка NLPA (Важная) -->
+            <!-- Кнопка NLPA -->
             <div class="box nlpa-box">
                 <a href="https://nlpacollab.neocities.org/" class="nlpa-link">
                     <span class="star">★</span> ENTER NLPA COLLAB <span class="star">★</span>
                 </a>
             </div>
 
-            <!-- Секция проектов -->
+            <!-- Проекты -->
             <div class="box projects-box">
                 <h3>:: PROJECTS ::</h3>
-                
-                <!-- Сетка проектов -->
                 <div class="projects-grid">
-                    
-                    <!-- Проект 1 -->
                     <div class="project-item">
                         <a href="https://nlpacollab.neocities.org/hollowair">
                             <img src="https://img.itch.zone/aW1hZ2UvMzU4ODQxNi8yMTM1Nzg1Mi5wbmc=/original/cys%2B31.png" alt="HollowAir">
                             <div class="project-title">HollowAir</div>
                         </a>
                     </div>
-
-                    <!-- Проект 2 -->
                     <div class="project-item">
                         <a href="https://nlpacollab.neocities.org/freedungeon3d">
                             <img src="https://img.itch.zone/aW1hZ2UvMjk0MDEwNy8xNzYwNzQ3OC5wbmc=/original/2vD9Ux.png" alt="FreeDungeon3D">
                             <div class="project-title">FreeDungeon3D</div>
                         </a>
                     </div>
-
-                    <!-- Проект 3 -->
                     <div class="project-item">
                         <a href="https://nlpacollab.neocities.org/epitaphy">
                             <img src="https://img.itch.zone/aW1hZ2UvMzk5NTkyNi8yMzgyOTM4My5wbmc=/original/1JuMcU.png" alt="EPITAPHY">
                             <div class="project-title">EPITAPHY</div>
                         </a>
                     </div>
-
                 </div>
             </div>
 
-            <!-- Футер внутри контента -->
+            <!-- Футер -->
             <div class="box footer-box">
                 <p>Last updated: 21.11.2025</p>
                 <div class="buttons-88x31">
@@ -97,11 +128,104 @@
                     <img src="https://cyber.dabamos.de/88x31/html_learn.gif" alt="html">
                 </div>
                 <br>
-                <img src="collage.PNG" style="max-width: 100%; opacity: 0.6;">
+                <img src="collage.PNG" style="max-width: 100%; opacity: 0.6; border: 1px solid #333;">
             </div>
 
         </main>
     </div>
+
+    <!-- ======================= -->
+    <!-- СКРИПТЫ (ЛОГИКА САЙТА)  -->
+    <!-- ======================= -->
+    <script>
+        // --- 1. УМНОЕ СЛАЙДШОУ (ПОДСТРАИВАЕТ ВЫСОТУ) ---
+        const container = document.querySelector('.slideshow-container');
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function updateContainerHeight() {
+            const activeSlide = slides[currentSlide];
+            const height = activeSlide.clientHeight || 200; // Если не прогрузилось, берем 200
+            if (height > 0) container.style.height = height + 'px';
+        }
+
+        function showNextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+            updateContainerHeight();
+        }
+
+        // Запуск слайдшоу
+        window.addEventListener('load', () => {
+            updateContainerHeight();
+            setInterval(showNextSlide, 3500); // 3.5 секунды
+        });
+        window.addEventListener('resize', updateContainerHeight);
+
+
+        // --- 2. MP3 ПЛЕЕР (PLAYLIST + VOLUME) ---
+        const playlist = [
+            {
+                title: "Bergenot - Untitled",
+                url: "mp3/Bergenot-Untitled.mp3"
+            }
+            // Добавляй свои треки сюда через запятую
+        ];
+
+        let trackIndex = 0;
+        let isPlaying = false;
+        let audio = new Audio();
+
+        // Элементы
+        const trackTitle = document.getElementById('track-title');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnPlay = document.getElementById('btn-play');
+        const btnNext = document.getElementById('btn-next');
+        const volumeSlider = document.getElementById('volume-slider');
+
+        function loadTrack(index) {
+            audio.src = playlist[index].url;
+            trackTitle.innerText = `>>> ${playlist[index].title} <<<`;
+            audio.volume = volumeSlider.value;
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                btnPlay.innerText = "[PLAY]";
+                trackTitle.stop();
+            } else {
+                audio.play();
+                btnPlay.innerText = "[PAUSE]";
+                trackTitle.start();
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function nextTrack() {
+            trackIndex = (trackIndex + 1) % playlist.length;
+            loadTrack(trackIndex);
+            if (isPlaying) audio.play();
+        }
+
+        function prevTrack() {
+            trackIndex = (trackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(trackIndex);
+            if (isPlaying) audio.play();
+        }
+
+        // События
+        volumeSlider.addEventListener('input', (e) => { audio.volume = e.target.value; });
+        btnPlay.addEventListener('click', togglePlay);
+        btnNext.addEventListener('click', nextTrack);
+        btnPrev.addEventListener('click', prevTrack);
+        audio.addEventListener('ended', nextTrack);
+
+        // Инициализация плеера
+        loadTrack(trackIndex);
+        trackTitle.stop(); // Чтобы бегущая строка стояла, пока пауза
+    </script>
 
 </body>
 </html>
