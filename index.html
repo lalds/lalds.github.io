@@ -144,16 +144,25 @@
     <!-- ======================= -->
     <!-- СКРИПТЫ (ЛОГИКА САЙТА)  -->
     <!-- ======================= -->
-    <script>
-        // --- 1. УМНОЕ СЛАЙДШОУ (ПОДСТРАИВАЕТ ВЫСОТУ) ---
+    
+<script>
+        // =======================
+        // 1. УМНОЕ СЛАЙДШОУ
+        // =======================
         const container = document.querySelector('.slideshow-container');
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
 
         function updateContainerHeight() {
             const activeSlide = slides[currentSlide];
-            const height = activeSlide.clientHeight || 200; // Если не прогрузилось, берем 200
-            if (height > 0) container.style.height = height + 'px';
+            // Проверка, загрузилась ли картинка, чтобы не получить высоту 0
+            if (activeSlide && activeSlide.complete) {
+                 container.style.height = activeSlide.clientHeight + 'px';
+            } else if (activeSlide) {
+                activeSlide.onload = () => {
+                     container.style.height = activeSlide.clientHeight + 'px';
+                };
+            }
         }
 
         function showNextSlide() {
@@ -163,28 +172,28 @@
             updateContainerHeight();
         }
 
-        // Запуск слайдшоу
         window.addEventListener('load', () => {
             updateContainerHeight();
-            setInterval(showNextSlide, 3500); // 3.5 секунды
+            setInterval(showNextSlide, 3500);
         });
         window.addEventListener('resize', updateContainerHeight);
 
 
-        // --- 2. MP3 ПЛЕЕР (PLAYLIST + VOLUME) ---
+        // =======================
+        // 2. MP3 ПЛЕЕР
+        // =======================
         const playlist = [
-            {
-                title: "Bergenot - Untitled",
-                url: "mp3/Bergenot-Untitled.mp3"
-            }
-            // Добавляй свои треки сюда через запятую
+            { title: "IMSCARED - Ambient", url: "mp3/Ambient.mp3" },
+            { title: "Bergenot - Untitled", url: "mp3/Bergenot-Untitled.mp3" }
         ];
 
         let trackIndex = 0;
         let isPlaying = false;
         let audio = new Audio();
+        
+        // Настройка громкости аудио плеера
+        audio.volume = 0.3; 
 
-        // Элементы
         const trackTitle = document.getElementById('track-title');
         const btnPrev = document.getElementById('btn-prev');
         const btnPlay = document.getElementById('btn-play');
@@ -194,7 +203,8 @@
         function loadTrack(index) {
             audio.src = playlist[index].url;
             trackTitle.innerText = `>>> ${playlist[index].title} <<<`;
-            audio.volume = volumeSlider.value;
+            // Не сбрасываем громкость при смене трека, берем из слайдера
+            audio.volume = volumeSlider.value; 
         }
 
         function togglePlay() {
@@ -222,17 +232,53 @@
             if (isPlaying) audio.play();
         }
 
-        // События
         volumeSlider.addEventListener('input', (e) => { audio.volume = e.target.value; });
         btnPlay.addEventListener('click', togglePlay);
         btnNext.addEventListener('click', nextTrack);
         btnPrev.addEventListener('click', prevTrack);
         audio.addEventListener('ended', nextTrack);
 
-        // Инициализация плеера
         loadTrack(trackIndex);
-        trackTitle.stop(); // Чтобы бегущая строка стояла, пока пауза
+        trackTitle.stop();
+
+
+        // =======================
+        // 3. ЗВУКИ ИНТЕРФЕЙСА (НОВОЕ!)
+        // =======================
+        
+        // Укажи путь к твоему звуку клика. 
+        // Если файла нет, звук работать не будет, но ошибок не выдаст.
+        const clickSoundUrl = 'click.mp3'; 
+        
+        // Создаем объект аудио
+        const uiAudio = new Audio(clickSoundUrl);
+        uiAudio.volume = 0.4; // Громкость клика (от 0.0 до 1.0)
+
+        function playClickSound() {
+            // Клонируем узел, чтобы можно было кликать быстро 
+            // и звуки накладывались друг на друга, а не прерывались
+            const soundClone = uiAudio.cloneNode();
+            soundClone.volume = uiAudio.volume;
+            soundClone.play().catch(e => {
+                // Игнорируем ошибки (например, если пользователь еще не взаимодействовал со страницей)
+            });
+        }
+
+        // Находим все кликабельные элементы: ссылки, кнопки и картинки проектов
+        // Ты можешь добавить сюда любые CSS селекторы
+        const clickableElements = document.querySelectorAll('a, button, .project-item, .slide');
+
+        clickableElements.forEach(element => {
+            element.addEventListener('click', playClickSound);
+            
+            // Если хочешь звук при наведении (опционально), раскомментируй строки ниже:
+            // element.addEventListener('mouseenter', () => {
+            //    // Тут можно добавить другой звук, например hover.mp3
+            // });
+        });
     </script>
+
+  
 
     <!-- СКРИПТ ДЛЯ БЛОГА -->
     <!-- Сначала подключаем файл с данными -->

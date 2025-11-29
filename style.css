@@ -26,11 +26,23 @@ body {
     font-family: 'Courier Prime', monospace;
     color: #ccc;
     
-    background-image: url('https://i.pinimg.com/736x/87/7d/1a/877d1a2dbef4667f64df747a809e7c41.jpg');
-    background-size: 120px;
-    background-repeat: repeat;
-    background-attachment: fixed;
+    /* === НАСТРОЙКИ ФОНА === */
+    background-image: url(1764428408743-019ad020-8224-77f5-978d-1b3d67867327.png);
+    
+    /* cover = растягивает картинку так, чтобы покрыть весь экран (обрезая лишнее по краям, если пропорции не совпадают) */
+    background-size: cover; 
+    
+    /* Центрирует картинку */
     background-position: center;
+    
+    /* Запрещает повторение */
+    background-repeat: no-repeat;
+    
+    /* fixed = фон "приклеивается" к экрану и не двигается, когда ты скроллишь контент. Это выглядит очень круто. */
+    background-attachment: fixed;
+    
+    /* Гарантирует, что фон будет во всю высоту экрана, даже если контента мало */
+    min-height: 100vh;
 }
 
 a {
@@ -387,7 +399,7 @@ input[type=range]::-webkit-slider-runnable-track {
 
 /* Ограничиваем высоту и добавляем скролл, если новостей много */
 #blog-feed {
-    max-height: 500px;
+    max-height: 1500px;
     overflow-y: auto;
     padding-right: 5px; 
     /* Стилизация скролла внутри блока */
