@@ -14,8 +14,8 @@
 
     <div class="container">
         
-        <!-- ЛЕВАЯ КОЛОНКА (Сайдбар) -->
-        <aside class="sidebar">
+        <!-- ЛЕВАЯ КОЛОНКА (Закреплена: Профиль, Слайды, Ссылки) -->
+        <aside class="sidebar left-sticky">
             
             <!-- Профиль -->
             <div class="box profile-box">
@@ -26,44 +26,14 @@
                 <p class="bio">Unity Developer, Bug Hunter, Coder <br><br>C#,Python,HTML,CSS <br><br><strong>NLPA COLLAB - Lead Developer </strong></p>
             </div>
 
-            <!-- СЛАЙДШОУ (Новый блок) -->
+            <!-- СЛАЙДШОУ -->
             <div class="box slideshow-box">
                 <h3>:: MEMORIES ::</h3>
                 <div class="slideshow-container">
-                    <!-- Вставь сюда свои картинки/гифки. У первой обязательно класс "active" -->
                     <img src="https://i.pinimg.com/1200x/c4/1d/b8/c41db83ba8d1c4bd0930f7c5a428d93c.jpg" class="slide active" alt="gif1">
                     <img src="https://i.pinimg.com/736x/02/9f/86/029f86e280bbff9399db5ad63e29e85c.jpg" class="slide" alt="gif2">
                     <img src="https://i.pinimg.com/736x/12/d8/81/12d881c0cc98e2dbb020cded3ad1f7fe.jpg" class="slide" alt="gif3">
                     <img src="https://i.pinimg.com/736x/b2/23/dc/b223dc547fc759c1c4160276e2fd9a51.jpg" class="slide" alt="gif4">
-                    <img src="https://i.pinimg.com/736x/7c/9a/81/7c9a8191ff0bd34cbeaf5a3d56575155.jpg" class="slide" alt="gif5">
-                    <img src="https://i.pinimg.com/736x/fd/f6/32/fdf63269d5248e5a9a0cfd8ca6fc8ac1.jpg" class="slide" alt="gif6">
-                    <img src="https://i.pinimg.com/736x/87/c2/7d/87c27d86e20a8403c0b7ceddaa7693ed.jpg" class="slide" alt="gif7">
-                    <img src="https://i.pinimg.com/736x/7f/a5/9a/7fa59a831fa884444492cd4bab77bd4c.jpg" class="slide" alt="gif8">
-                    <img src="https://i.pinimg.com/736x/4c/24/67/4c24676449af9cf4599c76b521ea5811.jpg" class="slide" alt="gif9">
-                    <img src="https://i.pinimg.com/736x/97/39/f2/9739f29fc857ce85495c364eafa6e7cd.jpg" class="slide" alt="gif10">
-                </div>
-            </div>
-
-            <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР -->
-            <div class="box music-box">
-                <h3>:: AUDIO PLAYER ::</h3>
-                
-                <!-- Экранчик -->
-                <div class="track-display">
-                    <marquee scrollamount="4" id="track-title">... WAITING ...</marquee>
-                </div>
-
-                <!-- Кнопки -->
-                <div class="player-controls">
-                    <button id="btn-prev" class="retro-btn">|&lt;</button>
-                    <button id="btn-play" class="retro-btn">[PLAY]</button>
-                    <button id="btn-next" class="retro-btn">&gt;|</button>
-                </div>
-
-                <!-- Громкость -->
-                <div class="volume-container">
-                    <span>VOL:</span>
-                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.3">
                 </div>
             </div>
 
@@ -78,7 +48,7 @@
             </div>
         </aside>
 
-        <!-- ПРАВАЯ КОЛОНКА (Контент) -->
+        <!-- ЦЕНТРАЛЬНАЯ КОЛОНКА (Скроллится) -->
         <main class="main-content">
             
             <!-- Бегущая строка -->
@@ -120,10 +90,9 @@
                 </div>
             </div>
             
-                        <!-- БЛОК НОВОСТЕЙ (DEVLOG) -->
+            <!-- БЛОК НОВОСТЕЙ (DEVLOG) -->
             <div class="box devlog-box">
                 <h3>:: SYSTEM LOGS / NEWS ::</h3>
-                <!-- Сюда JS будет выплевывать посты -->
                 <div id="blog-feed"></div>
             </div>
 
@@ -137,63 +106,62 @@
                 <br>
                 <img src="collage.PNG" style="max-width: 100%; opacity: 0.6; border: 1px solid #333;">
             </div>
-
         </main>
+
+        <!-- ПРАВАЯ КОЛОНКА (Закреплена: Плеер) -->
+        <aside class="right-column right-sticky">
+             <div class="box music-box">
+                <h3>:: AUDIO PLAYER ::</h3>
+                
+                <div class="track-display">
+                    <marquee scrollamount="4" id="track-title">... WAITING ...</marquee>
+                </div>
+
+                <div class="player-controls">
+                    <button id="btn-prev" class="retro-btn">|&lt;</button>
+                    <button id="btn-play" class="retro-btn">[PLAY]</button>
+                    <button id="btn-next" class="retro-btn">&gt;|</button>
+                </div>
+
+                <div class="volume-container">
+                    <span>VOL:</span>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.3">
+                </div>
+            </div>
+        </aside>
+
     </div>
 
-    <!-- ======================= -->
-    <!-- СКРИПТЫ (ЛОГИКА САЙТА)  -->
-    <!-- ======================= -->
-    
-<script>
-        // =======================
-        // 1. УМНОЕ СЛАЙДШОУ
-        // =======================
+    <!-- СКРИПТЫ -->
+    <script>
+        // 1. СЛАЙДШОУ
         const container = document.querySelector('.slideshow-container');
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
-
         function updateContainerHeight() {
             const activeSlide = slides[currentSlide];
-            // Проверка, загрузилась ли картинка, чтобы не получить высоту 0
             if (activeSlide && activeSlide.complete) {
                  container.style.height = activeSlide.clientHeight + 'px';
             } else if (activeSlide) {
-                activeSlide.onload = () => {
-                     container.style.height = activeSlide.clientHeight + 'px';
-                };
+                activeSlide.onload = () => { container.style.height = activeSlide.clientHeight + 'px'; };
             }
         }
-
         function showNextSlide() {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
             updateContainerHeight();
         }
-
-        window.addEventListener('load', () => {
-            updateContainerHeight();
-            setInterval(showNextSlide, 3500);
-        });
+        window.addEventListener('load', () => { updateContainerHeight(); setInterval(showNextSlide, 3500); });
         window.addEventListener('resize', updateContainerHeight);
 
-
-        // =======================
-        // 2. MP3 ПЛЕЕР
-        // =======================
+        // 2. ПЛЕЕР
         const playlist = [
             { title: "IMSCARED - Ambient", url: "mp3/Ambient.mp3" },
             { title: "Bergenot - Untitled", url: "mp3/Bergenot-Untitled.mp3" }
         ];
-
-        let trackIndex = 0;
-        let isPlaying = false;
-        let audio = new Audio();
-        
-        // Настройка громкости аудио плеера
+        let trackIndex = 0; let isPlaying = false; let audio = new Audio();
         audio.volume = 0.3; 
-
         const trackTitle = document.getElementById('track-title');
         const btnPrev = document.getElementById('btn-prev');
         const btnPlay = document.getElementById('btn-play');
@@ -203,117 +171,56 @@
         function loadTrack(index) {
             audio.src = playlist[index].url;
             trackTitle.innerText = `>>> ${playlist[index].title} <<<`;
-            // Не сбрасываем громкость при смене трека, берем из слайдера
             audio.volume = volumeSlider.value; 
         }
-
         function togglePlay() {
-            if (isPlaying) {
-                audio.pause();
-                btnPlay.innerText = "[PLAY]";
-                trackTitle.stop();
-            } else {
-                audio.play();
-                btnPlay.innerText = "[PAUSE]";
-                trackTitle.start();
-            }
+            if (isPlaying) { audio.pause(); btnPlay.innerText = "[PLAY]"; trackTitle.stop(); } 
+            else { audio.play(); btnPlay.innerText = "[PAUSE]"; trackTitle.start(); }
             isPlaying = !isPlaying;
         }
-
-        function nextTrack() {
-            trackIndex = (trackIndex + 1) % playlist.length;
-            loadTrack(trackIndex);
-            if (isPlaying) audio.play();
-        }
-
-        function prevTrack() {
-            trackIndex = (trackIndex - 1 + playlist.length) % playlist.length;
-            loadTrack(trackIndex);
-            if (isPlaying) audio.play();
-        }
+        function nextTrack() { trackIndex = (trackIndex + 1) % playlist.length; loadTrack(trackIndex); if (isPlaying) audio.play(); }
+        function prevTrack() { trackIndex = (trackIndex - 1 + playlist.length) % playlist.length; loadTrack(trackIndex); if (isPlaying) audio.play(); }
 
         volumeSlider.addEventListener('input', (e) => { audio.volume = e.target.value; });
         btnPlay.addEventListener('click', togglePlay);
         btnNext.addEventListener('click', nextTrack);
         btnPrev.addEventListener('click', prevTrack);
         audio.addEventListener('ended', nextTrack);
+        loadTrack(trackIndex); trackTitle.stop();
 
-        loadTrack(trackIndex);
-        trackTitle.stop();
-
-
-        // =======================
-        // 3. ЗВУКИ ИНТЕРФЕЙСА (НОВОЕ!)
-        // =======================
-        
-        // Укажи путь к твоему звуку клика. 
-        // Если файла нет, звук работать не будет, но ошибок не выдаст.
+        // 3. ЗВУКИ
         const clickSoundUrl = 'click.mp3'; 
-        
-        // Создаем объект аудио
         const uiAudio = new Audio(clickSoundUrl);
-        uiAudio.volume = 0.4; // Громкость клика (от 0.0 до 1.0)
-
+        uiAudio.volume = 0.4;
         function playClickSound() {
-            // Клонируем узел, чтобы можно было кликать быстро 
-            // и звуки накладывались друг на друга, а не прерывались
             const soundClone = uiAudio.cloneNode();
             soundClone.volume = uiAudio.volume;
-            soundClone.play().catch(e => {
-                // Игнорируем ошибки (например, если пользователь еще не взаимодействовал со страницей)
-            });
+            soundClone.play().catch(e => {});
         }
-
-        // Находим все кликабельные элементы: ссылки, кнопки и картинки проектов
-        // Ты можешь добавить сюда любые CSS селекторы
         const clickableElements = document.querySelectorAll('a, button, .project-item, .slide');
-
-        clickableElements.forEach(element => {
-            element.addEventListener('click', playClickSound);
-            
-            // Если хочешь звук при наведении (опционально), раскомментируй строки ниже:
-            // element.addEventListener('mouseenter', () => {
-            //    // Тут можно добавить другой звук, например hover.mp3
-            // });
-        });
+        clickableElements.forEach(element => { element.addEventListener('click', playClickSound); });
     </script>
-
-  
-
-    <!-- СКРИПТ ДЛЯ БЛОГА -->
-    <!-- Сначала подключаем файл с данными -->
     <script src="posts.js"></script> 
-    
     <script>
         const feedContainer = document.getElementById('blog-feed');
-
-        // Проходимся по всем постам из файла posts.js
-        blogPosts.forEach(post => {
-            // Конвертируем Markdown в HTML
-            const htmlContent = marked.parse(post.body);
-
-            // Если есть картинка, создаем для нее HTML, иначе пустота
-            const imageHtml = post.image ? `<img src="${post.image}" class="blog-img">` : '';
-
-            // Создаем HTML структуру поста
-            const postHTML = `
-                <div class="blog-post">
-                    <div class="blog-header">
-                        <span class="blog-date">[${post.date}]</span>
-                        <span class="blog-title">${post.title}</span>
+        if (typeof blogPosts !== 'undefined') {
+            blogPosts.forEach(post => {
+                const htmlContent = marked.parse(post.body);
+                const imageHtml = post.image ? `<img src="${post.image}" class="blog-img">` : '';
+                const postHTML = `
+                    <div class="blog-post">
+                        <div class="blog-header">
+                            <span class="blog-date">[${post.date}]</span>
+                            <span class="blog-title">${post.title}</span>
+                        </div>
+                        ${imageHtml}
+                        <div class="blog-body">${htmlContent}</div>
+                        <div class="blog-footer">/// END OF LOG ///</div>
                     </div>
-                    ${imageHtml}
-                    <div class="blog-body">
-                        ${htmlContent}
-                    </div>
-                    <div class="blog-footer">/// END OF LOG ///</div>
-                </div>
-            `;
-
-            // Добавляем в контейнер
-            feedContainer.innerHTML += postHTML;
-        });
+                `;
+                feedContainer.innerHTML += postHTML;
+            });
+        }
     </script>
-
 </body>
 </html>

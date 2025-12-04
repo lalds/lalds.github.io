@@ -1,23 +1,10 @@
-/* === БАЗА (OLD WEB STYLE) === */
-* {
-    box-sizing: border-box;
-}
+/* === БАЗА === */
+* { box-sizing: border-box; }
 
-/* Ретро скроллбар */
-::-webkit-scrollbar {
-    width: 12px;
-}
-::-webkit-scrollbar-track {
-    background: #000; 
-    border-left: 1px solid #333;
-}
-::-webkit-scrollbar-thumb {
-    background: #333; 
-    border: 1px solid #fff;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #fff; 
-}
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: #000; border-left: 1px solid #333; }
+::-webkit-scrollbar-thumb { background: #333; border: 1px solid #fff; }
+::-webkit-scrollbar-thumb:hover { background: #fff; }
 
 body {
     margin: 0;
@@ -25,23 +12,11 @@ body {
     background-color: #050505;
     font-family: 'Courier Prime', monospace;
     color: #ccc;
-    
-    /* === НАСТРОЙКИ ФОНА === */
     background-image: url(1764428408743-019ad020-8224-77f5-978d-1b3d67867327.png);
-    
-    /* cover = растягивает картинку так, чтобы покрыть весь экран (обрезая лишнее по краям, если пропорции не совпадают) */
     background-size: cover; 
-    
-    /* Центрирует картинку */
     background-position: center;
-    
-    /* Запрещает повторение */
     background-repeat: no-repeat;
-    
-    /* fixed = фон "приклеивается" к экрану и не двигается, когда ты скроллишь контент. Это выглядит очень круто. */
     background-attachment: fixed;
-    
-    /* Гарантирует, что фон будет во всю высоту экрана, даже если контента мало */
     min-height: 100vh;
 }
 
@@ -50,7 +25,6 @@ a {
     color: #7878ff; 
     transition: 0s;
 }
-
 a:hover {
     background-color: #7878ff;
     color: #000;
@@ -58,224 +32,147 @@ a:hover {
     cursor: help;
 }
 
-/* === СЕТКА === */
+/* === СЕТКА (3 КОЛОНКИ) === */
 .container {
-    max-width: 900px;
+    max-width: 1200px; 
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 260px 1fr;
+    
+    /* Слева 260px | Центр тянется | Справа 250px */
+    grid-template-columns: 260px 1fr 250px; 
+    
     gap: 20px;
     padding: 0 10px;
+    
+    /* Это свойство обязательно, чтобы sticky работал */
+    align-items: start; 
 }
 
-/* === КОРОБКИ (БРУТАЛИЗМ) === */
+/* === ЛИПКИЕ ПАНЕЛИ (ПК версия) === */
+
+/* Левая колонка (Профиль, Слайды) */
+.left-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px; /* Отступ от верха */
+    height: fit-content;
+}
+
+/* Правая колонка (Плеер) */
+.right-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+
+/* === ДИЗАЙН БЛОКОВ (Твой оригинал) === */
 .box {
     background: #000;
     border: 1px solid #fff;
     padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 4px 4px 0px #444; /* Жесткая тень */
+    box-shadow: 4px 4px 0px #444; 
 }
-
 .box:hover {
     transform: translate(2px, 2px);
     box-shadow: 2px 2px 0px #666;
 }
 
-/* === САЙДБАР === */
+/* Сайдбар (Левый) */
 .profile-box { text-align: center; }
-
 .avatar {
-    width: 100%;
-    max-width: 180px;
-    height: auto;
-    border: 1px solid #fff;
-    padding: 3px;
-    image-rendering: pixelated;
+    width: 100%; max-width: 180px; height: auto;
+    border: 1px solid #fff; padding: 3px; image-rendering: pixelated;
 }
-
 .profile-box h2 {
-    margin: 10px 0 5px 0;
-    color: #fff;
-    text-transform: uppercase;
-    border-bottom: 2px double #fff;
-    display: inline-block;
+    margin: 10px 0 5px 0; color: #fff; text-transform: uppercase;
+    border-bottom: 2px double #fff; display: inline-block;
 }
-
-.status {
-    font-size: 0.8rem;
-    color: #888;
-    margin-top: 5px;
-}
-
+.status { font-size: 0.8rem; color: #888; margin-top: 5px; }
 .blink {
-    color: #00ff00;
-    font-weight: bold;
+    color: #00ff00; font-weight: bold;
     animation: blinker 1s steps(2, start) infinite;
 }
 @keyframes blinker { to { visibility: hidden; } }
-
 .bio {
-    font-size: 0.9rem;
-    color: #aaa;
-    border: 1px dotted #555;
-    padding: 5px;
-    margin-top: 10px;
+    font-size: 0.9rem; color: #aaa; border: 1px dotted #555;
+    padding: 5px; margin-top: 10px;
 }
+hr { border: 0; border-bottom: 1px dashed #fff; margin: 15px 0; }
 
-hr {
-    border: 0;
-    border-bottom: 1px dashed #fff;
-    margin: 15px 0;
-}
-
-/* === СЛАЙДШОУ === */
+/* Слайдшоу */
 .slideshow-box h3 {
-    margin-top: 0;
-    border-bottom: 1px solid #fff;
-    text-align: center;
-    background: #fff;
-    color: #000;
-    margin-bottom: 10px;
+    margin-top: 0; border-bottom: 1px solid #fff;
+    text-align: center; background: #fff; color: #000; margin-bottom: 10px;
 }
-
 .slideshow-container {
-    position: relative;
-    width: 100%;
-    transition: height 0.2s steps(5); /* Резкое изменение высоты */
-    border: 1px solid #333;
-    background: #000;
-    overflow: hidden;
+    position: relative; width: 100%;
+    transition: height 0.2s steps(5);
+    border: 1px solid #333; background: #000; overflow: hidden;
 }
-
 .slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    opacity: 0;
-    display: block;
-    transition: opacity 0s; /* Мгновенная смена */
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: auto; opacity: 0;
+    display: block; transition: opacity 0s;
 }
+.slide.active { opacity: 1; z-index: 2; }
 
-.slide.active {
-    opacity: 1;
-    z-index: 2;
-}
-
-/* === MP3 ПЛЕЕР === */
+/* Плеер */
 .music-box h3 {
-    margin-top: 0;
-    border-bottom: 1px solid #fff;
-    text-align: center;
-    background: #fff;
-    color: #000;
-    margin-bottom: 10px;
+    margin-top: 0; border-bottom: 1px solid #fff;
+    text-align: center; background: #fff; color: #000; margin-bottom: 10px;
 }
-
 .track-display {
-    background: #0000aa; /* BIOS Blue */
-    border: 2px inset #fff;
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    padding: 5px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    overflow: hidden;
+    background: #0000aa; border: 2px inset #fff;
+    color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold;
+    padding: 5px; margin-bottom: 10px; text-transform: uppercase;
+    white-space: nowrap; overflow: hidden;
 }
-
 .player-controls {
-    display: flex;
-    justify-content: space-between;
-    gap: 5px;
-    margin-bottom: 10px;
+    display: flex; justify-content: space-between; gap: 5px; margin-bottom: 10px;
 }
-
 .retro-btn {
-    background: #000;
-    color: #fff;
-    border: 2px outset #ddd;
-    font-family: monospace;
-    font-weight: bold;
-    cursor: pointer;
-    flex-grow: 1;
-    padding: 5px 0;
+    background: #000; color: #fff; border: 2px outset #ddd;
+    font-family: monospace; font-weight: bold; cursor: pointer;
+    flex-grow: 1; padding: 5px 0;
 }
-
-.retro-btn:active {
-    border: 2px inset #888;
-    background: #222;
-}
-
+.retro-btn:active { border: 2px inset #888; background: #222; }
 .volume-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.8rem;
-    color: #ccc;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.8rem; color: #ccc;
 }
-
-/* Стили ползунка громкости */
-input[type=range] {
-    -webkit-appearance: none;
-    width: 100%;
-    background: transparent;
-}
+input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
 input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 15px;
-    width: 10px;
-    background: #fff;
-    border: 1px solid #000;
-    cursor: pointer;
-    margin-top: -5px;
-    box-shadow: 1px 1px 0 #000;
+    -webkit-appearance: none; height: 15px; width: 10px;
+    background: #fff; border: 1px solid #000;
+    cursor: pointer; margin-top: -5px; box-shadow: 1px 1px 0 #000;
 }
 input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 4px;
-    cursor: pointer;
-    background: #555;
-    border: 1px solid #fff;
+    width: 100%; height: 4px; cursor: pointer;
+    background: #555; border: 1px solid #fff;
 }
 
-/* === НАВИГАЦИЯ === */
+/* Навигация */
 .nav-box h3 {
-    margin-top: 0;
-    border-bottom: 1px dashed #555;
-    text-align: center;
+    margin-top: 0; border-bottom: 1px dashed #555; text-align: center;
 }
-
-.nav-list {
-    list-style: square;
-    padding-left: 20px;
-}
+.nav-list { list-style: square; padding-left: 20px; }
 .nav-list li { margin-bottom: 5px; }
 .nav-list a {
-    display: inline-block;
-    text-decoration: none;
-    color: #fff;
+    display: inline-block; text-decoration: none; color: #fff;
     border: 1px solid transparent;
 }
 .nav-list a:hover {
-    border: 1px solid #fff;
-    background: transparent;
-    color: #00ff00;
+    border: 1px solid #fff; background: transparent; color: #00ff00;
 }
 
-/* === КОНТЕНТ === */
+/* Контент */
 .marquee-box {
-    padding: 5px;
-    background: #0000aa;
-    border: 1px solid #fff;
-    color: #fff;
-    font-family: monospace;
-    font-weight: bold;
+    padding: 5px; background: #0000aa; border: 1px solid #fff;
+    color: #fff; font-family: monospace; font-weight: bold;
 }
-
 .nlpa-box {
     text-align: center;
     background-image: 
@@ -283,198 +180,81 @@ input[type=range]::-webkit-slider-runnable-track {
         linear-gradient(-45deg, #000 25%, transparent 25%), 
         linear-gradient(45deg, transparent 75%, #000 75%), 
         linear-gradient(-45deg, transparent 75%, #000 75%);
-    background-color: #222;
-    background-size: 10px 10px;
-    padding: 20px;
-    border: 1px solid #fff;
+    background-color: #222; background-size: 10px 10px;
+    padding: 20px; border: 1px solid #fff;
 }
-
 .nlpa-link {
-    display: inline-block;
-    border: 2px solid #fff;
-    padding: 10px 20px;
-    background: #000;
-    color: #fff;
-    font-weight: bold;
-    box-shadow: 3px 3px 0 #fff;
-    text-decoration: none;
+    display: inline-block; border: 2px solid #fff; padding: 10px 20px;
+    background: #000; color: #fff; font-weight: bold;
+    box-shadow: 3px 3px 0 #fff; text-decoration: none;
 }
 .nlpa-link:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0 #fff;
-    background: #fff;
-    color: #000;
+    transform: translate(2px, 2px); box-shadow: 1px 1px 0 #fff;
+    background: #fff; color: #000;
 }
-
-/* Проекты */
 .projects-box h3 {
-    background: #333;
-    color: #fff;
-    padding: 5px;
-    margin-top: 0;
-    text-align: center;
+    background: #333; color: #fff; padding: 5px;
+    margin-top: 0; text-align: center;
 }
-
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;
 }
-
-.project-item {
-    border: 1px solid #444;
-    background: #000;
-}
-.project-item:hover {
-    border-color: #fff;
-    outline: 1px solid #fff;
-}
-
+.project-item { border: 1px solid #444; background: #000; }
+.project-item:hover { border-color: #fff; outline: 1px solid #fff; }
 .project-item img {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    display: block;
-    filter: grayscale(100%); 
+    width: 100%; height: 100px; object-fit: cover;
+    display: block; filter: grayscale(100%); 
 }
-.project-item:hover img {
-    filter: grayscale(0%) contrast(1.2);
-}
-
+.project-item:hover img { filter: grayscale(0%) contrast(1.2); }
 .project-title {
-    padding: 5px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #fff;
-    border-top: 1px solid #333;
-    font-family: 'Courier New', monospace;
+    padding: 5px; text-align: center; font-size: 0.8rem;
+    color: #fff; border-top: 1px solid #333; font-family: 'Courier New', monospace;
 }
 
 /* Футер */
 .footer-box {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #666;
-    border: 1px dashed #333;
-    box-shadow: none;
+    text-align: center; font-size: 0.8rem; color: #666;
+    border: 1px dashed #333; box-shadow: none;
 }
-.buttons-88x31 img {
-    margin: 0 1px;
-    border: 1px solid #333;
-}
-/* Адаптив */
-@media (max-width: 700px) {
-    .container { 
-        grid-template-columns: 1fr; /* Одна колонка */
-    }
-    
-    /* Ставим нормальный порядок */
-    .sidebar { 
-        order: 1; /* Сначала профиль */
-        margin-bottom: 10px; /* Немного отступа от профиля до контента */
-    }
-    
-    .main-content { 
-        order: 2; /* Потом контент */
-    }
-    
-    /* Можно добавить, чтобы на мобиле аватарка не была гигантской, если нужно */
-    .profile-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
+.buttons-88x31 img { margin: 0 1px; border: 1px solid #333; }
 
-/* === DEVLOG / NEWS SYSTEM === */
+/* Devlog */
 .devlog-box h3 {
-    margin-top: 0;
-    border-bottom: 2px solid #fff;
-    background: #fff;
-    color: #000;
-    text-align: center;
-    padding: 5px;
-    margin-bottom: 20px;
+    margin-top: 0; border-bottom: 2px solid #fff;
+    background: #fff; color: #000; text-align: center;
+    padding: 5px; margin-bottom: 20px;
 }
-
-/* Ограничиваем высоту и добавляем скролл, если новостей много */
 #blog-feed {
-    max-height: 1500px;
-    overflow-y: auto;
-    padding-right: 5px; 
-    /* Стилизация скролла внутри блока */
-    scrollbar-width: thin;
-    scrollbar-color: #fff #000;
+    max-height: 1500px; overflow-y: auto; padding-right: 5px; 
+    scrollbar-width: thin; scrollbar-color: #fff #000;
 }
+.blog-post { border: 1px dashed #444; padding: 15px; margin-bottom: 25px; background: #0a0a0a; }
+.blog-header { border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+.blog-date { color: #00ff00; font-weight: bold; margin-right: 10px; }
+.blog-title { color: #fff; text-transform: uppercase; font-weight: bold; text-decoration: underline; }
+.blog-img { width: 100%; max-width: 100%; border: 1px solid #fff; margin-bottom: 15px; display: block; }
+.blog-body { font-size: 0.9rem; line-height: 1.5; color: #ccc; }
+.blog-body p { margin-bottom: 10px; }
+.blog-body strong { color: #fff; }
+.blog-body a { color: #7878ff; text-decoration: underline; }
+.blog-body ul { list-style: square; padding-left: 20px; color: #aaa; }
+.blog-footer { font-size: 0.7rem; color: #444; text-align: right; margin-top: 15px; font-style: italic; }
 
-/* Отдельный пост */
-.blog-post {
-    border: 1px dashed #444;
-    padding: 15px;
-    margin-bottom: 25px;
-    background: #0a0a0a;
-}
-
-.blog-header {
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    font-family: 'Courier New', monospace;
-}
-
-.blog-date {
-    color: #00ff00;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.blog-title {
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-/* Картинка внутри поста */
-.blog-img {
-    width: 100%;
-    max-width: 100%;
-    border: 1px solid #fff;
-    margin-bottom: 15px;
-    display: block;
-}
-
-/* Текст поста (Markdown стили) */
-.blog-body {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: #ccc;
-}
-
-.blog-body p {
-    margin-bottom: 10px;
-}
-
-.blog-body strong {
-    color: #fff;
-}
-
-.blog-body a {
-    color: #7878ff;
-    text-decoration: underline;
-}
-
-.blog-body ul {
-    list-style: square;
-    padding-left: 20px;
-    color: #aaa;
-}
-
-/* Подвал поста */
-.blog-footer {
-    font-size: 0.7rem;
-    color: #444;
-    text-align: right;
-    margin-top: 15px;
-    font-style: italic;
+/* === АДАПТИВ (ДЛЯ ТЕЛЕФОНОВ) === */
+@media (max-width: 900px) {
+    .container { 
+        /* На телефоне всё в одну колонку */
+        grid-template-columns: 1fr; 
+    }
+    
+    /* Отключаем прилипание на мобильных, чтобы не перекрывало экран */
+    .left-sticky, .right-sticky {
+        position: static;
+        width: 100%;
+    }
+    
+    /* Порядок блоков на телефоне */
+    .sidebar { order: 1; }      /* Сначала профиль */
+    .right-column { order: 2; } /* Потом плеер */
+    .main-content { order: 3; } /* Потом контент */
 }
