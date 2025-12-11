@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL GARDEN</title>
+    <style>
+        /* --- GLOBAL & FONTS --- */
+        body {
+            background-image: url('1765490538488-019b0f6e-e405-75b7-b94b-e7f2c8919c60.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+        }
+
+        /* --- FLYING TEXT CONTAINER --- */
+        #sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Пропускать клики сквозь текст */
+            z-index: 1;
+        }
+
+        .flying-msg {
+            position: absolute;
+            color: white;
+            background: black;
+            padding: 2px 5px;
+            border: 1px solid white;
+            font-weight: bold;
+            font-size: 16px;
+            white-space: nowrap;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+            /* Анимация движения вверх */
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(110vh); }
+            to { transform: translateY(-20vh); }
+        }
+
+        /* --- UI COMPONENTS (Retro Style) --- */
+        
+        /* Кнопки сверху */
+        .top-ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: flex;
+            gap: 15px;
+        }
+
+        .retro-btn {
+            background: #000;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 8px 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #555; /* Серая тень как на старых ОС */
+            transition: all 0.1s;
+            text-transform: uppercase;
+        }
+
+        .retro-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #555;
+            background: #0000AA; /* Синий при наведении */
+        }
+
+        .retro-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: none;
+        }
+
+        /* Контейнер ввода (Стиль Audio Player со скрина) */
+        .input-wrapper {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            width: 90%;
+            max-width: 450px;
+            
+            background: #000;
+            border: 2px solid #fff;
+            padding: 10px;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.8);
+        }
+
+        /* Белая полоска заголовка */
+        .input-header {
+            background: #fff;
+            color: #000;
+            font-weight: 900;
+            text-align: center;
+            padding: 4px 0;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .input-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Синее поле ввода */
+        input[type="text"] {
+            background: #0000AA; /* Тот самый синий цвет */
+            border: 2px solid #fff;
+            color: #00FF00; /* Зеленый терминальный текст или белый */
+            padding: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            font-weight: bold;
+            outline: none;
+            text-transform: uppercase;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .send-btn {
+            background: #000;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 5px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .send-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Декоративный элемент "VOL" справа */
+        .deco-vol {
+            font-size: 12px;
+            color: white;
+        }
+        .deco-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Контейнер для летающих текстов -->
+    <div id="sky"></div>
+
+    <!-- Верхние кнопки -->
+    <div class="top-ui">
+        <button class="retro-btn" onclick="history.back()">&lt; BACK</button>
+        <button class="retro-btn" id="soundBtn">[ SOUND: OFF ]</button>
+    </div>
+
+    <!-- Аудио -->
+    <audio id="bgMusic" loop>
+        <source src="mp3/nature-216798.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Поле ввода в стиле Audio Player -->
+    <div class="input-wrapper">
+        <div class="input-header">:: MESSAGE SENDER ::</div>
+        <div class="input-inner">
+            <input id="messageInput" type="text" placeholder="TYPE HERE..." autocomplete="off">
+            <div class="action-row">
+                <button class="send-btn" onclick="sendMessage()">[ UPLOAD ]</button>
+                <div class="deco-vol">VOL: <span class="deco-dot"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const messages = JSON.parse(localStorage.getItem('messages')) || [];
+        const sky = document.getElementById('sky');
+
+        // Функция создания сообщения
+        // isNew = true (только что написали) -> стартует снизу
+        // isNew = false (из истории) -> стартует в случайном месте (через animation-delay)
+        function createMessageElement(text, isNew = false) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            div.className = 'flying-msg';
+
+            // Рандомная позиция по горизонтали (10% - 80%)
+            div.style.left = (Math.random() * 70 + 10) + '%';
+
+            // Рандомная скорость (10с - 25с)
+            const duration = Math.random() * 15 + 10; 
+            div.style.animationDuration = duration + 's';
+
+            if (!isNew) {
+                // Если сообщение старое, даем ему отрицательную задержку,
+                // чтобы оно выглядело так, будто уже летит где-то посередине экрана
+                const randomDelay = Math.random() * duration; 
+                div.style.animationDelay = `-${randomDelay}s`;
+            }
+
+            sky.appendChild(div);
+        }
+
+        // 1. Загружаем старые сообщения и разбрасываем их
+        messages.forEach(msg => createMessageElement(msg, false));
+
+        // Если сообщений нет совсем, добавим одно приветственное
+        if (messages.length === 0) {
+            createMessageElement("WELCOME TO THE VOID +++", false);
+            createMessageElement("DIGITAL NATURE", false);
+        }
+
+        // 2. Отправка нового сообщения
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            
+            if (text) {
+                messages.push(text);
+                localStorage.setItem('messages', JSON.stringify(messages));
+                
+                createMessageElement(text, true); // true = летит снизу
+                
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Enter отправляет
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // 3. Звук
+        const audio = document.getElementById('bgMusic');
+        const soundBtn = document.getElementById('soundBtn');
+        
+        soundBtn.onclick = () => {
+            if (audio.paused) {
+                audio.play();
+                soundBtn.textContent = '[ SOUND: ON ]';
+                soundBtn.style.color = '#00FF00'; // Зеленый текст
+                soundBtn.style.borderColor = '#00FF00';
+            } else {
+                audio.pause();
+                soundBtn.textContent = '[ SOUND: OFF ]';
+                soundBtn.style.color = '#fff';
+                soundBtn.style.borderColor = '#fff';
+            }
+        };
+    </script>
+</body>
+</html>
