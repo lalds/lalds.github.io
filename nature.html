@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DIGITAL GARDEN</title>
+    <title>DIGITAL PURGATORY</title>
     <style>
         /* --- GLOBAL & FONTS --- */
         body {
@@ -18,6 +18,80 @@
             text-transform: uppercase;
         }
 
+        /* --- INTRO OVERLAY (RED ALERT STYLE) --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Стилизация под "Окно ошибки" */
+        .intro-box {
+            width: 85%;
+            max-width: 650px;
+            border: 2px solid #ffffff; /* Ярко-красная рамка */
+            background: #000000; /* Почти черный фон */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Красное свечение */
+            position: relative;
+        }
+
+        /* Заголовок окна */
+        .intro-header {
+            background: #ffffff;
+            color: #000;
+            font-weight: 900;
+            text-align: center;
+            padding: 8px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            animation: blinkHeader 2s infinite; /* Мигание */
+        }
+
+        @keyframes blinkHeader {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Текст предупреждения */
+        .intro-text {
+            color: #ffffff; /* Красный текст */
+            padding: 25px;
+            font-size: 14px;
+            line-height: 1.5;
+            text-transform: none; /* Сохраняем регистр букв как ты написал */
+            font-weight: bold;
+            text-align: left;
+            border-bottom: 1px solid #330000;
+        }
+
+        /* Кнопка принятия */
+        .intro-btn {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            color: #ffffff;
+            border: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .intro-btn:hover {
+            background: #ffffff;
+            color: #000;
+        }
+
         /* --- FLYING TEXT CONTAINER --- */
         #sky {
             position: absolute;
@@ -25,22 +99,50 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Пропускать клики сквозь текст */
+            pointer-events: none;
             z-index: 1;
         }
 
+        /* Сообщения */
         .flying-msg {
             position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             color: white;
             background: black;
-            padding: 2px 5px;
+            padding: 5px 8px;
             border: 1px solid white;
-            font-weight: bold;
-            font-size: 16px;
-            white-space: nowrap;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
-            /* Анимация движения вверх */
+            white-space: nowrap;
             animation: floatUp linear infinite;
+        }
+
+        .msg-avatar {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #00FF00;
+            object-fit: cover;
+            background: #333;
+        }
+
+        .msg-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg-nick {
+            font-size: 10px;
+            color: #00FF00;
+            font-weight: bold;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .msg-text {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: none;
         }
 
         @keyframes floatUp {
@@ -48,9 +150,7 @@
             to { transform: translateY(-20vh); }
         }
 
-        /* --- UI COMPONENTS (Retro Style) --- */
-        
-        /* Кнопки сверху */
+        /* --- UI COMPONENTS --- */
         .top-ui {
             position: absolute;
             top: 20px;
@@ -60,6 +160,25 @@
             gap: 15px;
         }
 
+        .system-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: #000;
+            border: 1px solid #fff;
+            padding: 10px;
+            color: #fff;
+            font-size: 12px;
+            box-shadow: -4px 4px 0px #0000AA;
+            text-align: right;
+            max-width: 200px;
+        }
+
+        .sys-row { margin-bottom: 5px; }
+        .sys-label { color: #888; }
+        .sys-val { color: #00FF00; font-weight: bold; }
+
         .retro-btn {
             background: #000;
             color: #fff;
@@ -68,7 +187,7 @@
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 4px 4px 0px #555; /* Серая тень как на старых ОС */
+            box-shadow: 4px 4px 0px #555;
             transition: all 0.1s;
             text-transform: uppercase;
         }
@@ -76,7 +195,7 @@
         .retro-btn:hover {
             transform: translate(2px, 2px);
             box-shadow: 2px 2px 0px #555;
-            background: #0000AA; /* Синий при наведении */
+            background: #0000AA;
         }
 
         .retro-btn:active {
@@ -84,65 +203,83 @@
             box-shadow: none;
         }
 
-        /* Контейнер ввода (Стиль Audio Player со скрина) */
+        /* --- INPUT PANEL --- */
         .input-wrapper {
             position: absolute;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 20;
             width: 90%;
-            max-width: 450px;
-            
+            max-width: 500px;
             background: #000;
             border: 2px solid #fff;
             padding: 10px;
             box-shadow: 8px 8px 0px rgba(0,0,0,0.8);
         }
 
-        /* Белая полоска заголовка */
         .input-header {
             background: #fff;
             color: #000;
             font-weight: 900;
             text-align: center;
-            padding: 4px 0;
-            margin-bottom: 10px;
+            padding: 2px 0;
+            margin-bottom: 8px;
             letter-spacing: 1px;
-        }
-
-        .input-inner {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        /* Синее поле ввода */
-        input[type="text"] {
-            background: #0000AA; /* Тот самый синий цвет */
-            border: 2px solid #fff;
-            color: #00FF00; /* Зеленый терминальный текст или белый */
-            padding: 10px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            font-weight: bold;
-            outline: none;
+            font-size: 14px;
             text-transform: uppercase;
         }
 
-        input[type="text"]::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+        .user-config {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .label-small {
+            font-size: 10px;
+            color: #aaa;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"] {
+            background: #222;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .main-input {
+            width: 100%;
+            box-sizing: border-box;
+            background: #0000AA !important;
+            color: #00FF00 !important;
+            font-size: 16px !important;
+            font-weight: bold;
+            padding: 10px !important;
+            border: 2px solid #fff !important;
         }
 
         .action-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 8px;
         }
 
         .send-btn {
-            background: #000;
-            color: #fff;
+            background: #fff;
+            color: #000;
             border: 2px solid #fff;
             padding: 5px 20px;
             font-family: 'Courier New', Courier, monospace;
@@ -152,76 +289,150 @@
         }
         
         .send-btn:hover {
-            background: #fff;
-            color: #000;
-        }
-
-        /* Декоративный элемент "VOL" справа */
-        .deco-vol {
-            font-size: 12px;
-            color: white;
-        }
-        .deco-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background: white;
-            border-radius: 50%;
-            margin-left: 5px;
+            background: #000;
+            color: #fff;
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Контейнер для летающих текстов -->
-    <div id="sky"></div>
-
-    <!-- Верхние кнопки -->
-    <div class="top-ui">
-        <button class="retro-btn" onclick="history.back()">&lt; BACK</button>
-        <button class="retro-btn" id="soundBtn">[ SOUND: OFF ]</button>
+    <!-- ПРЕДУПРЕЖДЕНИЕ (RED ALERT STYLE) -->
+    <div id="intro-overlay">
+        <div class="intro-box">
+            <div class="intro-header">/// WARNING: ETHICS PROTOCOL REQUIRED ///</div>
+            <div class="intro-text">
+                I understand that you visited this page knowing that there would be an input field and that you are free to write whatever you want, but don't be an idiot. I understand how you want to write about how niggers are trash, or how some government deserves to collapse or fall apart, or how you're a fucking script kiddie and want to do an XSS injection, but let's stick to ethics and do without that. I'm afraid that in 40 years, when your sons or grandsons see this, you won't like your reaction or the fact that everyone will remember you like this. Peace and good to you.
+            </div>
+            <button class="intro-btn" onclick="enterSite()">[ ACKNOWLEDGE & PROCEED ]</button>
+        </div>
     </div>
 
-    <!-- Аудио -->
+    <!-- ФОН (НЕБО) -->
+    <div id="sky"></div>
+
+    <!-- ВЕРХНИЕ КНОПКИ -->
+    <div class="top-ui">
+        <button class="retro-btn" onclick="history.back()">&lt; BACK</button>
+        <button class="retro-btn" id="soundBtn">[ MUTE ]</button>
+    </div>
+
+    <!-- МОНИТОР СИСТЕМЫ -->
+    <div class="system-info">
+        <div class="input-header">:: SYSTEM MONITOR ::</div>
+        <div class="sys-row">
+            <span class="sys-label">IP_ADDR:</span><br>
+            <span class="sys-val" id="ipDisplay">LOADING...</span>
+        </div>
+        <div class="sys-row">
+            <span class="sys-label">USER_AGENT:</span><br>
+            <span class="sys-val" style="font-size: 10px;" id="uaDisplay">UNKNOWN</span>
+        </div>
+    </div>
+
+    <!-- АУДИО -->
     <audio id="bgMusic" loop>
         <source src="mp3/nature-216798.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Поле ввода в стиле Audio Player -->
+    <!-- ПАНЕЛЬ ВВОДА -->
     <div class="input-wrapper">
-        <div class="input-header">:: MESSAGE SENDER ::</div>
-        <div class="input-inner">
-            <input id="messageInput" type="text" placeholder="TYPE HERE..." autocomplete="off">
-            <div class="action-row">
-                <button class="send-btn" onclick="sendMessage()">[ UPLOAD ]</button>
-                <div class="deco-vol">VOL: <span class="deco-dot"></span></div>
+        <div class="input-header">:: COMMUNICATOR v3.0 ::</div>
+        
+        <div class="user-config">
+            <div class="input-group" style="flex: 1;">
+                <span class="label-small">CODENAME (NICK)</span>
+                <input id="nickInput" type="text" placeholder="GUEST">
             </div>
+            <div class="input-group" style="flex: 2;">
+                <span class="label-small">AVATAR URL (IMG)</span>
+                <input id="avatarInput" type="text" placeholder="https://...">
+            </div>
+        </div>
+
+        <input id="messageInput" class="main-input" type="text" placeholder="ENTER MESSAGE..." autocomplete="off">
+        
+        <div class="action-row">
+            <button class="send-btn" onclick="sendMessage()">[ TRANSMIT ]</button>
+            <div style="font-size: 10px; color: #fff;">SECURE_CONNECTION: TRUE</div>
         </div>
     </div>
 
     <script>
-        const messages = JSON.parse(localStorage.getItem('messages')) || [];
+        // --- 1. Функция входа на сайт ---
+        function enterSite() {
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.opacity = '0';
+            overlay.style.transition = 'opacity 0.8s';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
+        }
+
+        // --- 2. Логика IP и UserAgent ---
+        document.getElementById('uaDisplay').textContent = navigator.platform;
+        
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipDisplay').textContent = data.ip;
+            })
+            .catch(err => {
+                document.getElementById('ipDisplay').textContent = "HIDDEN";
+            });
+
+        // --- 3. Работа с хранилищем (Ник/Аватар) ---
+        const nickInput = document.getElementById('nickInput');
+        const avatarInput = document.getElementById('avatarInput');
+
+        nickInput.value = localStorage.getItem('user_nick') || '';
+        avatarInput.value = localStorage.getItem('user_avatar') || '';
+
+        nickInput.addEventListener('input', () => localStorage.setItem('user_nick', nickInput.value));
+        avatarInput.addEventListener('input', () => localStorage.setItem('user_avatar', avatarInput.value));
+
+        // --- 4. Сообщения ---
+        let messages = JSON.parse(localStorage.getItem('messages_v2')) || [];
+        
+        const oldMessages = JSON.parse(localStorage.getItem('messages')) || [];
+        if (oldMessages.length > 0) {
+            oldMessages.forEach(text => {
+                messages.push({
+                    text: text,
+                    nick: 'ANONYMOUS',
+                    avatar: 'https://cdn-icons-png.flaticon.com/512/266/266033.png'
+                });
+            });
+            localStorage.removeItem('messages');
+            localStorage.setItem('messages_v2', JSON.stringify(messages));
+        }
+
         const sky = document.getElementById('sky');
 
-        // Функция создания сообщения
-        // isNew = true (только что написали) -> стартует снизу
-        // isNew = false (из истории) -> стартует в случайном месте (через animation-delay)
-        function createMessageElement(text, isNew = false) {
+        function createMessageElement(msgData, isNew = false) {
             const div = document.createElement('div');
-            div.textContent = text;
             div.className = 'flying-msg';
 
-            // Рандомная позиция по горизонтали (10% - 80%)
-            div.style.left = (Math.random() * 70 + 10) + '%';
+            const avatarUrl = msgData.avatar && msgData.avatar.length > 10 
+                ? msgData.avatar 
+                : 'https://cdn-icons-png.flaticon.com/512/266/266033.png';
 
-            // Рандомная скорость (10с - 25с)
+            const nickName = msgData.nick || 'UNKNOWN';
+
+            div.innerHTML = `
+                <img src="${avatarUrl}" class="msg-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/266/266033.png'">
+                <div class="msg-content">
+                    <div class="msg-nick">${escapeHtml(nickName)}</div>
+                    <div class="msg-text">${escapeHtml(msgData.text)}</div>
+                </div>
+            `;
+
+            div.style.left = (Math.random() * 70 + 5) + '%';
             const duration = Math.random() * 15 + 10; 
             div.style.animationDuration = duration + 's';
 
             if (!isNew) {
-                // Если сообщение старое, даем ему отрицательную задержку,
-                // чтобы оно выглядело так, будто уже летит где-то посередине экрана
                 const randomDelay = Math.random() * duration; 
                 div.style.animationDelay = `-${randomDelay}s`;
             }
@@ -229,37 +440,41 @@
             sky.appendChild(div);
         }
 
-        // 1. Загружаем старые сообщения и разбрасываем их
-        messages.forEach(msg => createMessageElement(msg, false));
-
-        // Если сообщений нет совсем, добавим одно приветственное
-        if (messages.length === 0) {
-            createMessageElement("WELCOME TO THE VOID +++", false);
-            createMessageElement("DIGITAL NATURE", false);
+        function escapeHtml(text) {
+            if(!text) return '';
+            return text.replace(/&/g, "&amp;")
+                       .replace(/</g, "&lt;")
+                       .replace(/>/g, "&gt;")
+                       .replace(/"/g, "&quot;")
+                       .replace(/'/g, "&#039;");
         }
 
-        // 2. Отправка нового сообщения
+        messages.forEach(msg => createMessageElement(msg, false));
+        if (messages.length === 0) {
+             createMessageElement({text: "WELCOME TO PURGATORY", nick: "SYSTEM", avatar: ""}, false);
+        }
+
         function sendMessage() {
             const input = document.getElementById('messageInput');
             const text = input.value.trim();
+            const nick = nickInput.value.trim() || 'USER_' + Math.floor(Math.random()*999);
+            const avatar = avatarInput.value.trim();
             
             if (text) {
-                messages.push(text);
-                localStorage.setItem('messages', JSON.stringify(messages));
-                
-                createMessageElement(text, true); // true = летит снизу
-                
+                const newMsg = { text, nick, avatar };
+                messages.push(newMsg);
+                localStorage.setItem('messages_v2', JSON.stringify(messages));
+                createMessageElement(newMsg, true);
                 input.value = '';
                 input.focus();
             }
         }
 
-        // Enter отправляет
         document.getElementById('messageInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
 
-        // 3. Звук
+        // --- 5. Звук ---
         const audio = document.getElementById('bgMusic');
         const soundBtn = document.getElementById('soundBtn');
         
@@ -267,7 +482,7 @@
             if (audio.paused) {
                 audio.play();
                 soundBtn.textContent = '[ SOUND: ON ]';
-                soundBtn.style.color = '#00FF00'; // Зеленый текст
+                soundBtn.style.color = '#00FF00';
                 soundBtn.style.borderColor = '#00FF00';
             } else {
                 audio.pause();
