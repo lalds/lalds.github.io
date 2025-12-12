@@ -110,7 +110,8 @@
             border: 1px solid white;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
             white-space: nowrap;
-            animation: floatUp linear infinite;
+            /* Анимация пролета один раз, потом удаляем JS-ом */
+            animation: floatUp linear forwards; 
         }
 
         .msg-avatar {
@@ -141,8 +142,10 @@
         }
 
         @keyframes floatUp {
-            from { transform: translateY(110vh); }
-            to { transform: translateY(-20vh); }
+            from { transform: translateY(110vh); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            to { transform: translateY(-20vh); opacity: 0; }
         }
 
         /* --- UI COMPONENTS --- */
@@ -324,6 +327,10 @@
             <span class="sys-label">DB_STATUS:</span><br>
             <span class="sys-val" id="dbStatus" style="color: yellow;">CONNECTING...</span>
         </div>
+        <div class="sys-row">
+            <span class="sys-label">CACHE_SIZE:</span><br>
+            <span class="sys-val" id="cacheSize">0</span>
+        </div>
     </div>
 
     <audio id="bgMusic" loop>
@@ -354,22 +361,20 @@
 
     <!-- ПОДКЛЮЧЕНИЕ FIREBASE -->
     <script type="module">
-        // Импортируем Firebase (v9)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
+        // !!! ВСТАВЬ СЮДА ДАННЫЕ ИЗ FIREBASE !!!
         const firebaseConfig = {
-            apiKey: "AIzaSyAgkYSN_vH1CcjTWXs_0tIXwYxKXpeBnhg",
-            authDomain: "project-5d8d1659-d736-4b51-9bd.firebaseapp.com",
-            databaseURL: "https://project-5d8d1659-d736-4b51-9bd-default-rtdb.firebaseio.com",
-            projectId: "project-5d8d1659-d736-4b51-9bd",
-            storageBucket: "project-5d8d1659-d736-4b51-9bd.firebasestorage.app",
-            messagingSenderId: "678442751848",
-            appId: "1:678442751848:web:c2df35e73c4336c1b0e8dd",
-            measurementId: "G-XT0QSK7J49"
+            apiKey: "ВСТАВЬ_СВОЙ_API_KEY",
+            authDomain: "ТВОЙ_ПРОЕКТ.firebaseapp.com",
+            databaseURL: "https://ТВОЙ_ПРОЕКТ-default-rtdb.firebaseio.com",
+            projectId: "ТВОЙ_ПРОЕКТ",
+            storageBucket: "ТВОЙ_ПРОЕКТ.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
         };
 
-        // Инициализация
         let db;
         try {
             const app = initializeApp(firebaseConfig);
@@ -384,10 +389,12 @@
 
         const messagesRef = ref(db, 'messages');
 
-        // --- ЛОГИКА ОТОБРАЖЕНИЯ (Flying Text) ---
+        // --- ЛОГИКА "ДОЖДЯ ИЗ СООБЩЕНИЙ" ---
+        const messageCache = []; // Хранилище всех загруженных сообщений
         const sky = document.getElementById('sky');
 
-        function createMessageElement(msgData, isNew = false) {
+        // Функция визуального спавна
+        function spawnMessage(msgData, immediate = false) {
             const div = document.createElement('div');
             div.className = 'flying-msg';
 
@@ -405,39 +412,53 @@
                 </div>
             `;
 
+            // Рандомная позиция
             div.style.left = (Math.random() * 80 + 5) + '%';
             
-            // Если сообщение только что пришло (isNew), оно летит снизу (обычная анимация)
-            // Если загрузилось старое из базы, даем ему случайный оффсет, чтобы оно уже было на экране
-            const duration = Math.random() * 15 + 10; 
+            // Скорость полета (от 10 до 20 секунд)
+            const duration = Math.random() * 10 + 10; 
             div.style.animationDuration = duration + 's';
-
-            if (!isNew) {
-                const randomDelay = Math.random() * duration; 
-                div.style.animationDelay = `-${randomDelay}s`;
-            }
 
             sky.appendChild(div);
             
-            // Удаляем DOM элемент через время жизни анимации, чтобы браузер не умер
+            // Удаляем элемент после того как он улетел (чтобы браузер не завис)
             setTimeout(() => {
                 div.remove();
-                // Для "зацикливания" можно бы перезапускать, но с базой лучше просто видеть поток
-                // Если хочешь чтобы старые летали вечно - нужно усложнять логику, 
-                // но для Realtime чата лучше чтобы они улетали и освобождали память.
             }, duration * 1000); 
         }
 
-        // --- СЛУШАЕМ БАЗУ ДАННЫХ ---
-        // Это событие срабатывает каждый раз, когда КТО-ТО добавляет сообщение
+        // 1. Слушаем базу и просто пополняем кэш
         onChildAdded(messagesRef, (snapshot) => {
             const data = snapshot.val();
-            // Определяем, насколько сообщение старое (если старше 1 мин - считаем "архивным" для анимации)
-            const isFresh = (Date.now() - (data.timestamp || 0)) < 60000;
-            createMessageElement(data, isFresh);
+            messageCache.push(data);
+            
+            // Обновляем счетчик
+            document.getElementById('cacheSize').textContent = messageCache.length;
+
+            // Если сообщение "свежее" (написано только что, меньше 10 секунд назад),
+            // запускаем его сразу вне очереди, чтобы автор его увидел.
+            const now = Date.now();
+            const msgTime = data.timestamp || 0;
+            if (now - msgTime < 10000) {
+                spawnMessage(data);
+            }
         });
 
-        // --- ОТПРАВКА СООБЩЕНИЯ ---
+        // 2. ГЕНЕРАТОР ПОТОКА (САМОЕ ВАЖНОЕ)
+        // Каждые 800мс берем случайное сообщение из памяти и запускаем его
+        setInterval(() => {
+            if (messageCache.length > 0) {
+                // Берем случайное
+                const randomMsg = messageCache[Math.floor(Math.random() * messageCache.length)];
+                
+                // Чтобы не перегрузить экран, проверяем сколько сейчас элементов
+                if (document.getElementsByClassName('flying-msg').length < 30) {
+                    spawnMessage(randomMsg);
+                }
+            }
+        }, 800);
+
+        // --- ОТПРАВКА ---
         window.sendMessage = function() {
             const input = document.getElementById('messageInput');
             const nickInput = document.getElementById('nickInput');
@@ -448,15 +469,13 @@
             const avatar = avatarInput.value.trim();
             
             if (text) {
-                // Отправляем в Firebase (а не в localStorage)
                 push(messagesRef, {
                     text: text,
                     nick: nick,
                     avatar: avatar,
-                    timestamp: serverTimestamp() // Время сервера
+                    timestamp: serverTimestamp()
                 });
                 
-                // Сохраняем ник локально для удобства
                 localStorage.setItem('user_nick', nick);
                 localStorage.setItem('user_avatar', avatar);
                 
@@ -465,22 +484,19 @@
             }
         }
 
-        // --- HELPER FUNCTIONS ---
         function escapeHtml(text) {
             if(!text) return '';
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
-        // Keypress logic
         document.getElementById('messageInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') window.sendMessage();
         });
 
-        // Load saved user config
         document.getElementById('nickInput').value = localStorage.getItem('user_nick') || '';
         document.getElementById('avatarInput').value = localStorage.getItem('user_avatar') || '';
 
-        // --- Global Functions Export (т.к. мы в module) ---
+        // Global exports
         window.enterSite = function() {
             const overlay = document.getElementById('intro-overlay');
             overlay.style.opacity = '0';
@@ -488,7 +504,6 @@
             setTimeout(() => { overlay.style.display = 'none'; }, 800);
         }
 
-        // --- Audio & Other UI ---
         const audio = document.getElementById('bgMusic');
         const soundBtn = document.getElementById('soundBtn');
         soundBtn.onclick = () => {
@@ -503,7 +518,6 @@
             }
         };
 
-        // --- IP Info ---
         document.getElementById('uaDisplay').textContent = navigator.platform;
         fetch('https://api.ipify.org?format=json')
             .then(res => res.json())
