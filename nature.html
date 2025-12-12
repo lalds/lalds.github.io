@@ -110,8 +110,7 @@
             border: 1px solid white;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
             white-space: nowrap;
-            /* Анимация пролета один раз, потом удаляем JS-ом */
-            animation: floatUp linear forwards; 
+            animation: floatUp linear infinite;
         }
 
         .msg-avatar {
@@ -142,10 +141,8 @@
         }
 
         @keyframes floatUp {
-            from { transform: translateY(110vh); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            to { transform: translateY(-20vh); opacity: 0; }
+            from { transform: translateY(110vh); }
+            to { transform: translateY(-20vh); }
         }
 
         /* --- UI COMPONENTS --- */
@@ -327,10 +324,6 @@
             <span class="sys-label">DB_STATUS:</span><br>
             <span class="sys-val" id="dbStatus" style="color: yellow;">CONNECTING...</span>
         </div>
-        <div class="sys-row">
-            <span class="sys-label">CACHE_SIZE:</span><br>
-            <span class="sys-val" id="cacheSize">0</span>
-        </div>
     </div>
 
     <audio id="bgMusic" loop>
@@ -359,20 +352,21 @@
         </div>
     </div>
 
-    <!-- ПОДКЛЮЧЕНИЕ FIREBASE -->
+<!-- ЗАМЕНИ ТОЛЬКО СКРИПТ В КОНЦЕ -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
         // !!! ВСТАВЬ СЮДА ДАННЫЕ ИЗ FIREBASE !!!
         const firebaseConfig = {
-            apiKey: "ВСТАВЬ_СВОЙ_API_KEY",
-            authDomain: "ТВОЙ_ПРОЕКТ.firebaseapp.com",
-            databaseURL: "https://ТВОЙ_ПРОЕКТ-default-rtdb.firebaseio.com",
-            projectId: "ТВОЙ_ПРОЕКТ",
-            storageBucket: "ТВОЙ_ПРОЕКТ.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef123456"
+            apiKey: "AIzaSyAgkYSN_vH1CcjTWXs_0tIXwYxKXpeBnhg",
+            authDomain: "project-5d8d1659-d736-4b51-9bd.firebaseapp.com",
+            databaseURL: "https://project-5d8d1659-d736-4b51-9bd-default-rtdb.firebaseio.com",
+            projectId: "project-5d8d1659-d736-4b51-9bd",
+            storageBucket: "project-5d8d1659-d736-4b51-9bd.firebasestorage.app",
+            messagingSenderId: "678442751848",
+            appId: "1:678442751848:web:c2df35e73c4336c1b0e8dd",
+            measurementId: "G-XT0QSK7J49"
         };
 
         let db;
@@ -389,11 +383,20 @@
 
         const messagesRef = ref(db, 'messages');
 
-        // --- ЛОГИКА "ДОЖДЯ ИЗ СООБЩЕНИЙ" ---
-        const messageCache = []; // Хранилище всех загруженных сообщений
+        // --- ЛОГИКА "ДОЖДЯ" ---
+        const messageCache = []; 
         const sky = document.getElementById('sky');
+        let lastSpawnedText = ""; // Чтобы не повторять одно и то же подряд
 
-        // Функция визуального спавна
+        // Фейковые сообщения для атмосферы, если база пустая
+        const systemMessages = [
+            { text: "NO SIGNAL...", nick: "SYSTEM", avatar: "" },
+            { text: "SEARCHING FOR HOST...", nick: "NET_BOT", avatar: "" },
+            { text: "CONNECTION ESTABLISHED", nick: "SYSTEM", avatar: "" },
+            { text: "...", nick: "VOID", avatar: "" },
+            { text: "WAITING FOR INPUT", nick: "KERNEL", avatar: "" }
+        ];
+
         function spawnMessage(msgData, immediate = false) {
             const div = document.createElement('div');
             div.className = 'flying-msg';
@@ -412,51 +415,61 @@
                 </div>
             `;
 
-            // Рандомная позиция
+            // Позиция
             div.style.left = (Math.random() * 80 + 5) + '%';
             
-            // Скорость полета (от 10 до 20 секунд)
-            const duration = Math.random() * 10 + 10; 
+            // Скорость
+            const duration = Math.random() * 10 + 12; // 12-22 секунды (медленнее)
             div.style.animationDuration = duration + 's';
 
             sky.appendChild(div);
             
-            // Удаляем элемент после того как он улетел (чтобы браузер не завис)
-            setTimeout(() => {
-                div.remove();
-            }, duration * 1000); 
+            setTimeout(() => { div.remove(); }, duration * 1000); 
         }
 
-        // 1. Слушаем базу и просто пополняем кэш
+        // 1. Пополняем кэш из базы
         onChildAdded(messagesRef, (snapshot) => {
             const data = snapshot.val();
             messageCache.push(data);
             
-            // Обновляем счетчик
             document.getElementById('cacheSize').textContent = messageCache.length;
 
-            // Если сообщение "свежее" (написано только что, меньше 10 секунд назад),
-            // запускаем его сразу вне очереди, чтобы автор его увидел.
+            // Если сообщение свежее (меньше 10 сек назад), показываем сразу
             const now = Date.now();
             const msgTime = data.timestamp || 0;
             if (now - msgTime < 10000) {
                 spawnMessage(data);
+                lastSpawnedText = data.text; // Запоминаем, чтобы сразу не дублировать в цикле
             }
         });
 
-        // 2. ГЕНЕРАТОР ПОТОКА (САМОЕ ВАЖНОЕ)
-        // Каждые 800мс берем случайное сообщение из памяти и запускаем его
+        // 2. ГЕНЕРАТОР ПОТОКА (ИСПРАВЛЕННЫЙ)
         setInterval(() => {
-            if (messageCache.length > 0) {
+            let pool = [];
+
+            // Если реальных сообщений мало (< 10), подмешиваем системные
+            if (messageCache.length < 10) {
+                pool = messageCache.concat(systemMessages);
+            } else {
+                pool = messageCache;
+            }
+
+            if (pool.length > 0) {
                 // Берем случайное
-                const randomMsg = messageCache[Math.floor(Math.random() * messageCache.length)];
+                const randomMsg = pool[Math.floor(Math.random() * pool.length)];
                 
-                // Чтобы не перегрузить экран, проверяем сколько сейчас элементов
-                if (document.getElementsByClassName('flying-msg').length < 30) {
+                // ПРОВЕРКА НА ПОВТОР: Если это сообщение такое же, как предыдущее - пропускаем такт
+                if (randomMsg.text === lastSpawnedText && pool.length > 2) {
+                    return; 
+                }
+
+                // Ограничение кол-ва элементов на экране (чтобы телефон не грелся)
+                if (document.getElementsByClassName('flying-msg').length < 25) {
                     spawnMessage(randomMsg);
+                    lastSpawnedText = randomMsg.text;
                 }
             }
-        }, 800);
+        }, 10500); // Увеличил интервал до 1.5 сек (было 0.8), чтобы не спамило
 
         // --- ОТПРАВКА ---
         window.sendMessage = function() {
