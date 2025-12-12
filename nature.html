@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DIGITAL PURGATORY</title>
+    <title>DIGITAL PURGATORY ONLINE</title>
     <style>
         /* --- GLOBAL & FONTS --- */
         body {
@@ -33,26 +33,24 @@
             flex-direction: column;
         }
 
-        /* Стилизация под "Окно ошибки" */
         .intro-box {
             width: 85%;
             max-width: 650px;
-            border: 2px solid #ffffff; /* Ярко-красная рамка */
-            background: #000000; /* Почти черный фон */
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Красное свечение */
+            border: 2px solid #FF3333;
+            background: #0a0000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
             position: relative;
         }
 
-        /* Заголовок окна */
         .intro-header {
-            background: #ffffff;
+            background: #FF3333;
             color: #000;
             font-weight: 900;
             text-align: center;
             padding: 8px;
             font-size: 18px;
             letter-spacing: 2px;
-            animation: blinkHeader 2s infinite; /* Мигание */
+            animation: blinkHeader 2s infinite;
         }
 
         @keyframes blinkHeader {
@@ -60,24 +58,22 @@
             50% { opacity: 0.8; }
         }
 
-        /* Текст предупреждения */
         .intro-text {
-            color: #ffffff; /* Красный текст */
+            color: #FF3333;
             padding: 25px;
             font-size: 14px;
             line-height: 1.5;
-            text-transform: none; /* Сохраняем регистр букв как ты написал */
+            text-transform: none;
             font-weight: bold;
             text-align: left;
             border-bottom: 1px solid #330000;
         }
 
-        /* Кнопка принятия */
         .intro-btn {
             width: 100%;
             padding: 15px;
             background: #000;
-            color: #ffffff;
+            color: #FF3333;
             border: none;
             font-family: 'Courier New', Courier, monospace;
             font-size: 16px;
@@ -88,7 +84,7 @@
         }
 
         .intro-btn:hover {
-            background: #ffffff;
+            background: #FF3333;
             color: #000;
         }
 
@@ -103,7 +99,6 @@
             z-index: 1;
         }
 
-        /* Сообщения */
         .flying-msg {
             position: absolute;
             display: flex;
@@ -297,7 +292,7 @@
 </head>
 <body>
 
-    <!-- ПРЕДУПРЕЖДЕНИЕ (RED ALERT STYLE) -->
+    <!-- ПРЕДУПРЕЖДЕНИЕ -->
     <div id="intro-overlay">
         <div class="intro-box">
             <div class="intro-header">/// WARNING: ETHICS PROTOCOL REQUIRED ///</div>
@@ -308,16 +303,13 @@
         </div>
     </div>
 
-    <!-- ФОН (НЕБО) -->
     <div id="sky"></div>
 
-    <!-- ВЕРХНИЕ КНОПКИ -->
     <div class="top-ui">
         <button class="retro-btn" onclick="history.back()">&lt; BACK</button>
         <button class="retro-btn" id="soundBtn">[ MUTE ]</button>
     </div>
 
-    <!-- МОНИТОР СИСТЕМЫ -->
     <div class="system-info">
         <div class="input-header">:: SYSTEM MONITOR ::</div>
         <div class="sys-row">
@@ -328,14 +320,16 @@
             <span class="sys-label">USER_AGENT:</span><br>
             <span class="sys-val" style="font-size: 10px;" id="uaDisplay">UNKNOWN</span>
         </div>
+        <div class="sys-row">
+            <span class="sys-label">DB_STATUS:</span><br>
+            <span class="sys-val" id="dbStatus" style="color: yellow;">CONNECTING...</span>
+        </div>
     </div>
 
-    <!-- АУДИО -->
     <audio id="bgMusic" loop>
         <source src="mp3/nature-216798.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- ПАНЕЛЬ ВВОДА -->
     <div class="input-wrapper">
         <div class="input-header">:: COMMUNICATOR v3.0 ::</div>
         
@@ -358,56 +352,39 @@
         </div>
     </div>
 
-    <script>
-        // --- 1. Функция входа на сайт ---
-        function enterSite() {
-            const overlay = document.getElementById('intro-overlay');
-            overlay.style.opacity = '0';
-            overlay.style.transition = 'opacity 0.8s';
-            
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 800);
+    <!-- ПОДКЛЮЧЕНИЕ FIREBASE -->
+    <script type="module">
+        // Импортируем Firebase (v9)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAgkYSN_vH1CcjTWXs_0tIXwYxKXpeBnhg",
+            authDomain: "project-5d8d1659-d736-4b51-9bd.firebaseapp.com",
+            databaseURL: "https://project-5d8d1659-d736-4b51-9bd-default-rtdb.firebaseio.com",
+            projectId: "project-5d8d1659-d736-4b51-9bd",
+            storageBucket: "project-5d8d1659-d736-4b51-9bd.firebasestorage.app",
+            messagingSenderId: "678442751848",
+            appId: "1:678442751848:web:c2df35e73c4336c1b0e8dd",
+            measurementId: "G-XT0QSK7J49"
+        };
+
+        // Инициализация
+        let db;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getDatabase(app);
+            document.getElementById('dbStatus').textContent = "ONLINE";
+            document.getElementById('dbStatus').style.color = "#00FF00";
+        } catch (e) {
+            console.error("Firebase init error:", e);
+            document.getElementById('dbStatus').textContent = "ERROR";
+            document.getElementById('dbStatus').style.color = "red";
         }
 
-        // --- 2. Логика IP и UserAgent ---
-        document.getElementById('uaDisplay').textContent = navigator.platform;
-        
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('ipDisplay').textContent = data.ip;
-            })
-            .catch(err => {
-                document.getElementById('ipDisplay').textContent = "HIDDEN";
-            });
+        const messagesRef = ref(db, 'messages');
 
-        // --- 3. Работа с хранилищем (Ник/Аватар) ---
-        const nickInput = document.getElementById('nickInput');
-        const avatarInput = document.getElementById('avatarInput');
-
-        nickInput.value = localStorage.getItem('user_nick') || '';
-        avatarInput.value = localStorage.getItem('user_avatar') || '';
-
-        nickInput.addEventListener('input', () => localStorage.setItem('user_nick', nickInput.value));
-        avatarInput.addEventListener('input', () => localStorage.setItem('user_avatar', avatarInput.value));
-
-        // --- 4. Сообщения ---
-        let messages = JSON.parse(localStorage.getItem('messages_v2')) || [];
-        
-        const oldMessages = JSON.parse(localStorage.getItem('messages')) || [];
-        if (oldMessages.length > 0) {
-            oldMessages.forEach(text => {
-                messages.push({
-                    text: text,
-                    nick: 'ANONYMOUS',
-                    avatar: 'https://cdn-icons-png.flaticon.com/512/266/266033.png'
-                });
-            });
-            localStorage.removeItem('messages');
-            localStorage.setItem('messages_v2', JSON.stringify(messages));
-        }
-
+        // --- ЛОГИКА ОТОБРАЖЕНИЯ (Flying Text) ---
         const sky = document.getElementById('sky');
 
         function createMessageElement(msgData, isNew = false) {
@@ -428,7 +405,10 @@
                 </div>
             `;
 
-            div.style.left = (Math.random() * 70 + 5) + '%';
+            div.style.left = (Math.random() * 80 + 5) + '%';
+            
+            // Если сообщение только что пришло (isNew), оно летит снизу (обычная анимация)
+            // Если загрузилось старое из базы, даем ему случайный оффсет, чтобы оно уже было на экране
             const duration = Math.random() * 15 + 10; 
             div.style.animationDuration = duration + 's';
 
@@ -438,59 +418,97 @@
             }
 
             sky.appendChild(div);
+            
+            // Удаляем DOM элемент через время жизни анимации, чтобы браузер не умер
+            setTimeout(() => {
+                div.remove();
+                // Для "зацикливания" можно бы перезапускать, но с базой лучше просто видеть поток
+                // Если хочешь чтобы старые летали вечно - нужно усложнять логику, 
+                // но для Realtime чата лучше чтобы они улетали и освобождали память.
+            }, duration * 1000); 
         }
 
-        function escapeHtml(text) {
-            if(!text) return '';
-            return text.replace(/&/g, "&amp;")
-                       .replace(/</g, "&lt;")
-                       .replace(/>/g, "&gt;")
-                       .replace(/"/g, "&quot;")
-                       .replace(/'/g, "&#039;");
-        }
+        // --- СЛУШАЕМ БАЗУ ДАННЫХ ---
+        // Это событие срабатывает каждый раз, когда КТО-ТО добавляет сообщение
+        onChildAdded(messagesRef, (snapshot) => {
+            const data = snapshot.val();
+            // Определяем, насколько сообщение старое (если старше 1 мин - считаем "архивным" для анимации)
+            const isFresh = (Date.now() - (data.timestamp || 0)) < 60000;
+            createMessageElement(data, isFresh);
+        });
 
-        messages.forEach(msg => createMessageElement(msg, false));
-        if (messages.length === 0) {
-             createMessageElement({text: "WELCOME TO PURGATORY", nick: "SYSTEM", avatar: ""}, false);
-        }
-
-        function sendMessage() {
+        // --- ОТПРАВКА СООБЩЕНИЯ ---
+        window.sendMessage = function() {
             const input = document.getElementById('messageInput');
+            const nickInput = document.getElementById('nickInput');
+            const avatarInput = document.getElementById('avatarInput');
+
             const text = input.value.trim();
-            const nick = nickInput.value.trim() || 'USER_' + Math.floor(Math.random()*999);
+            const nick = nickInput.value.trim() || 'ANONYMOUS';
             const avatar = avatarInput.value.trim();
             
             if (text) {
-                const newMsg = { text, nick, avatar };
-                messages.push(newMsg);
-                localStorage.setItem('messages_v2', JSON.stringify(messages));
-                createMessageElement(newMsg, true);
+                // Отправляем в Firebase (а не в localStorage)
+                push(messagesRef, {
+                    text: text,
+                    nick: nick,
+                    avatar: avatar,
+                    timestamp: serverTimestamp() // Время сервера
+                });
+                
+                // Сохраняем ник локально для удобства
+                localStorage.setItem('user_nick', nick);
+                localStorage.setItem('user_avatar', avatar);
+                
                 input.value = '';
                 input.focus();
             }
         }
 
+        // --- HELPER FUNCTIONS ---
+        function escapeHtml(text) {
+            if(!text) return '';
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // Keypress logic
         document.getElementById('messageInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
+            if (e.key === 'Enter') window.sendMessage();
         });
 
-        // --- 5. Звук ---
+        // Load saved user config
+        document.getElementById('nickInput').value = localStorage.getItem('user_nick') || '';
+        document.getElementById('avatarInput').value = localStorage.getItem('user_avatar') || '';
+
+        // --- Global Functions Export (т.к. мы в module) ---
+        window.enterSite = function() {
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.opacity = '0';
+            overlay.style.transition = 'opacity 0.8s';
+            setTimeout(() => { overlay.style.display = 'none'; }, 800);
+        }
+
+        // --- Audio & Other UI ---
         const audio = document.getElementById('bgMusic');
         const soundBtn = document.getElementById('soundBtn');
-        
         soundBtn.onclick = () => {
             if (audio.paused) {
                 audio.play();
                 soundBtn.textContent = '[ SOUND: ON ]';
                 soundBtn.style.color = '#00FF00';
-                soundBtn.style.borderColor = '#00FF00';
             } else {
                 audio.pause();
                 soundBtn.textContent = '[ SOUND: OFF ]';
                 soundBtn.style.color = '#fff';
-                soundBtn.style.borderColor = '#fff';
             }
         };
+
+        // --- IP Info ---
+        document.getElementById('uaDisplay').textContent = navigator.platform;
+        fetch('https://api.ipify.org?format=json')
+            .then(res => res.json())
+            .then(data => document.getElementById('ipDisplay').textContent = data.ip)
+            .catch(() => document.getElementById('ipDisplay').textContent = "HIDDEN");
     </script>
 </body>
 </html>
