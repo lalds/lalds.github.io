@@ -352,12 +352,10 @@
         </div>
     </div>
 
-<!-- ЗАМЕНИ ТОЛЬКО СКРИПТ В КОНЦЕ -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
-        // !!! ВСТАВЬ СЮДА ДАННЫЕ ИЗ FIREBASE !!!
         const firebaseConfig = {
             apiKey: "AIzaSyAgkYSN_vH1CcjTWXs_0tIXwYxKXpeBnhg",
             authDomain: "project-5d8d1659-d736-4b51-9bd.firebaseapp.com",
@@ -383,12 +381,9 @@
 
         const messagesRef = ref(db, 'messages');
 
-        // --- ЛОГИКА "ДОЖДЯ" ---
         const messageCache = []; 
         const sky = document.getElementById('sky');
-        let lastSpawnedText = ""; // Чтобы не повторять одно и то же подряд
-
-        // Фейковые сообщения для атмосферы, если база пустая
+        let lastSpawnedText = ""; 
         const systemMessages = [
             { text: "NO SIGNAL...", nick: "SYSTEM", avatar: "" },
             { text: "SEARCHING FOR HOST...", nick: "NET_BOT", avatar: "" },
@@ -443,7 +438,6 @@
             }
         });
 
-        // 2. ГЕНЕРАТОР ПОТОКА (ИСПРАВЛЕННЫЙ)
         setInterval(() => {
             let pool = [];
 
