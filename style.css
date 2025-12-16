@@ -225,7 +225,7 @@ input[type=range]::-webkit-slider-runnable-track {
     padding: 5px; margin-bottom: 20px;
 }
 #blog-feed {
-    max-height: 1500px; overflow-y: auto; padding-right: 5px; 
+    overflow-y: auto; padding-right: 5px; 
     scrollbar-width: thin; scrollbar-color: #fff #000;
 }
 .blog-post { border: 1px dashed #444; padding: 15px; margin-bottom: 25px; background: #0a0a0a; }
