@@ -1,5 +1,13 @@
 const blogPosts = [
     {
+        id: 7,
+        date: "10.01.2025",
+        title: "KRAINOTOMY - is out!!",
+        image: "https://img.itch.zone/aW1nLzI0OTIyMzQ2LnBuZw==/original/FnY5dQ.png",
+        body: `Krainotomy вышел в демо-версии, вы можете скачать его на нашем официальном сайте либо на itch.io, спасибо за внимание!
+        <a href="https://spectreee.itch.io/krainotomy">KRAINOTOMY on ITCH.IO</a>`
+    },
+    {
         id: 6,
         date: "19.12.2025",
         title: "KRAINOTOMY - Soon?",
