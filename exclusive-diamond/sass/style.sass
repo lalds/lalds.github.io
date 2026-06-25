@@ -1,0 +1,283 @@
+@import 'variables'
+
+*, *::before, *::after
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+html
+  font-size: 16px
+  scroll-behavior: smooth
+
+body
+  font-family: $font-body
+  color: $dark
+  background-color: $bg-cream
+  line-height: 1.6
+  -webkit-font-smoothing: antialiased
+
+a
+  text-decoration: none
+  color: inherit
+  transition: color 0.3s ease
+
+ul
+  list-style: none
+
+img
+  max-width: 100%
+  height: auto
+  display: block
+
+.container
+  width: 100%
+  max-width: $container-width
+  margin: 0 auto
+  padding: 0 24px
+
+// Header
+.header
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: $header-height
+  background: $white
+  z-index: 100
+  border-bottom: 1px solid $border
+
+  &__inner
+    display: flex
+    align-items: center
+    justify-content: space-between
+    height: 100%
+
+  &__logo
+    display: flex
+    align-items: center
+    gap: 12px
+
+  &__logo-icon
+    width: 40px
+    height: 40px
+
+  &__logo-text
+    display: flex
+    flex-direction: column
+    line-height: 1.2
+
+  &__logo-name
+    font-family: $font-heading
+    font-size: 18px
+    font-weight: 700
+    color: $dark
+
+  &__logo-sub
+    font-size: 11px
+    color: $gray-light
+    letter-spacing: 0.5px
+
+  &__nav
+    display: flex
+    align-items: center
+    gap: 36px
+
+  &__nav-link
+    font-size: 15px
+    font-weight: 500
+    color: $dark-soft
+    position: relative
+
+    &::after
+      content: ''
+      position: absolute
+      bottom: -4px
+      left: 0
+      width: 0
+      height: 2px
+      background: $gold
+      transition: width 0.3s ease
+
+    &:hover
+      color: $gold
+      &::after
+        width: 100%
+
+// Hero
+.hero
+  padding-top: #{$header-height + 70px}
+  padding-bottom: 50px
+  background: linear-gradient(180deg, $white 0%, $bg-cream 100%)
+
+  &__inner
+    display: flex
+    align-items: center
+    gap: 40px
+
+  &__content
+    flex: 1
+    max-width: 500px
+
+  &__badge
+    display: inline-block
+    padding: 10px 24px
+    background: $bg-cream
+    border: 2px solid $gold
+    border-radius: 50px
+    font-size: 14px
+    font-weight: 600
+    color: $gold
+    letter-spacing: 0.5px
+    margin-bottom: 28px
+
+  &__title
+    font-family: $font-heading
+    font-size: 52px
+    font-weight: 700
+    line-height: 1.15
+    color: $dark
+    margin-bottom: 24px
+
+    span
+      color: $gold
+
+  &__desc
+    font-size: 16px
+    color: $gray
+    line-height: 1.7
+    margin-bottom: 36px
+    max-width: 420px
+
+  &__buttons
+    display: flex
+    gap: 16px
+    align-items: center
+
+  &__image
+    flex: 1
+    display: flex
+    justify-content: flex-end
+
+    &-wrapper
+      width: 100%
+      max-width: 480px
+      border-radius: $radius-xl
+      overflow: hidden
+      box-shadow: $shadow-image
+
+      img
+        width: 100%
+        height: 420px
+        object-fit: cover
+
+// Buttons
+.btn
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  padding: 14px 32px
+  border-radius: 50px
+  font-size: 14px
+  font-weight: 600
+  letter-spacing: 0.3px
+  cursor: pointer
+  transition: all 0.3s ease
+  border: 2px solid transparent
+  text-transform: lowercase
+
+  &--primary
+    background: linear-gradient(135deg, $gold 0%, $gold-light 100%)
+    color: $white
+    border-color: $gold
+
+    &:hover
+      background: linear-gradient(135deg, $gold-hover 0%, $gold 100%)
+      transform: translateY(-2px)
+      box-shadow: 0 6px 20px rgba($gold, 0.35)
+
+  &--outline
+    background: transparent
+    color: $dark
+    border-color: $border
+
+    &:hover
+      border-color: $gold
+      color: $gold
+      transform: translateY(-2px)
+
+// Stats
+.stats
+  padding: 40px 0 60px
+  background: $bg-cream
+
+  &__inner
+    display: flex
+    justify-content: center
+    gap: 80px
+
+  &__item
+    text-align: center
+
+  &__number
+    font-family: $font-heading
+    font-size: 42px
+    font-weight: 700
+    color: $gold
+    line-height: 1
+    margin-bottom: 8px
+
+  &__label
+    font-size: 14px
+    color: $gray
+    font-weight: 500
+
+// Responsive
+@media (max-width: $desktop)
+  .hero
+    &__title
+      font-size: 42px
+    &__inner
+      gap: 40px
+  .stats__inner
+    gap: 50px
+
+@media (max-width: $tablet)
+  .header__nav
+    display: none
+
+  .hero
+    &__inner
+      flex-direction: column
+      text-align: center
+    &__content
+      max-width: 100%
+    &__desc
+      max-width: 100%
+      margin-left: auto
+      margin-right: auto
+    &__buttons
+      justify-content: center
+    &__image
+      justify-content: center
+    &__title
+      font-size: 36px
+
+  .stats__inner
+    flex-wrap: wrap
+    gap: 40px
+  .stats__item
+    flex: 1 1 40%
+
+@media (max-width: $mobile)
+  .hero
+    &__title
+      font-size: 30px
+    &__buttons
+      flex-direction: column
+      width: 100%
+      .btn
+        width: 100%
+    &__image-wrapper img
+      height: 300px
+  .stats__number
+    font-size: 34px
