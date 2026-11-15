@@ -1,260 +1,240 @@
-/* === БАЗА === */
+:root {
+    --bg: #0b0c0b;
+    --fg: #e4e2dc;
+    --muted: #77756f;
+    --line: #232523;
+    --accent: #8dffb0;
+    --font: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
 * { box-sizing: border-box; }
 
-::-webkit-scrollbar { width: 12px; }
-::-webkit-scrollbar-track { background: #000; border-left: 1px solid #333; }
-::-webkit-scrollbar-thumb { background: #333; border: 1px solid #fff; }
-::-webkit-scrollbar-thumb:hover { background: #fff; }
+html { -webkit-text-size-adjust: 100%; }
 
 body {
     margin: 0;
-    padding: 20px 0;
-    background-color: #050505;
-    font-family: 'Courier Prime', monospace;
-    color: #ccc;
-    background-image: url(1764428408743-019ad020-8224-77f5-978d-1b3d67867327.png);
-    background-size: cover; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    min-height: 100vh;
+    background: var(--bg);
+    color: var(--fg);
+    font: 13px/1.65 var(--font);
+}
+
+main {
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 4.5rem 1.5rem 6rem;
 }
 
 a {
+    color: inherit;
     text-decoration: underline;
-    color: #7878ff; 
-    transition: 0s;
+    text-decoration-color: var(--line);
+    text-underline-offset: 3px;
+    transition: text-decoration-color .15s, color .15s;
 }
-a:hover {
-    background-color: #7878ff;
-    color: #000;
-    text-decoration: none;
-    cursor: help;
+a:hover { color: var(--accent); text-decoration-color: currentColor; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+/* --- header --- */
+.head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
 }
-
-/* === СЕТКА (3 КОЛОНКИ) === */
-.container {
-    max-width: 1200px; 
-    margin: 0 auto;
-    display: grid;
-    
-    /* Слева 260px | Центр тянется | Справа 250px */
-    grid-template-columns: 260px 1fr 250px; 
-    
-    gap: 20px;
-    padding: 0 10px;
-    
-    /* Это свойство обязательно, чтобы sticky работал */
-    align-items: start; 
-}
-
-/* === ЛИПКИЕ ПАНЕЛИ (ПК версия) === */
-
-/* Левая колонка (Профиль, Слайды) */
-.left-sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 20px; /* Отступ от верха */
-    height: fit-content;
-}
-
-/* Правая колонка (Плеер) */
-.right-sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 20px;
-    height: fit-content;
-}
-
-
-/* === ДИЗАЙН БЛОКОВ (Твой оригинал) === */
-.box {
-    background: #000;
-    border: 1px solid #fff;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 4px 4px 0px #444; 
-}
-.box:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px #666;
-}
-
-/* Сайдбар (Левый) */
-.profile-box { text-align: center; }
 .avatar {
-    width: 100%; max-width: 180px; height: auto;
-    border: 1px solid #fff; padding: 3px; image-rendering: pixelated;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: grayscale(1);
+    transition: filter .3s;
 }
-.profile-box h2 {
-    margin: 10px 0 5px 0; color: #fff; text-transform: uppercase;
-    border-bottom: 2px double #fff; display: inline-block;
+.avatar:hover { filter: none; }
+h1 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
 }
-.status { font-size: 0.8rem; color: #888; margin-top: 5px; }
-.blink {
-    color: #00ff00; font-weight: bold;
-    animation: blinker 1s steps(2, start) infinite;
-}
-@keyframes blinker { to { visibility: hidden; } }
-.bio {
-    font-size: 0.9rem; color: #aaa; border: 1px dotted #555;
-    padding: 5px; margin-top: 10px;
-}
-hr { border: 0; border-bottom: 1px dashed #fff; margin: 15px 0; }
+.sub { color: var(--muted); margin: 0; }
 
-/* Слайдшоу */
-.slideshow-box h3 {
-    margin-top: 0; border-bottom: 1px solid #fff;
-    text-align: center; background: #fff; color: #000; margin-bottom: 10px;
-}
-.slideshow-container {
-    position: relative; width: 100%;
-    transition: height 0.2s steps(5);
-    border: 1px solid #333; background: #000; overflow: hidden;
-}
-.slide {
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: auto; opacity: 0;
-    display: block; transition: opacity 0s;
-}
-.slide.active { opacity: 1; z-index: 2; }
-
-/* Плеер */
-.music-box h3 {
-    margin-top: 0; border-bottom: 1px solid #fff;
-    text-align: center; background: #fff; color: #000; margin-bottom: 10px;
-}
-.track-display {
-    background: #0000aa; border: 2px inset #fff;
-    color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold;
-    padding: 5px; margin-bottom: 10px; text-transform: uppercase;
-    white-space: nowrap; overflow: hidden;
-}
-.player-controls {
-    display: flex; justify-content: space-between; gap: 5px; margin-bottom: 10px;
-}
-.retro-btn {
-    background: #000; color: #fff; border: 2px outset #ddd;
-    font-family: monospace; font-weight: bold; cursor: pointer;
-    flex-grow: 1; padding: 5px 0;
-}
-.retro-btn:active { border: 2px inset #888; background: #222; }
-.volume-container {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 0.8rem; color: #ccc;
-}
-input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; height: 15px; width: 10px;
-    background: #fff; border: 1px solid #000;
-    cursor: pointer; margin-top: -5px; box-shadow: 1px 1px 0 #000;
-}
-input[type=range]::-webkit-slider-runnable-track {
-    width: 100%; height: 4px; cursor: pointer;
-    background: #555; border: 1px solid #fff;
+.back {
+    display: inline-block;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 2.5rem;
 }
 
-/* Навигация */
-.nav-box h3 {
-    margin-top: 0; border-bottom: 1px dashed #555; text-align: center;
+/* --- sections --- */
+section { margin-bottom: 2.75rem; }
+h2 {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--muted);
+    text-transform: lowercase;
+    letter-spacing: .08em;
+    margin: 0 0 .9rem;
 }
-.nav-list { list-style: square; padding-left: 20px; }
-.nav-list li { margin-bottom: 5px; }
-.nav-list a {
-    display: inline-block; text-decoration: none; color: #fff;
-    border: 1px solid transparent;
+p { margin: 0 0 .8rem; }
+
+/* --- lists --- */
+.list { list-style: none; margin: 0; padding: 0; }
+.list li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 1rem;
+    padding: .55rem 0;
+    border-top: 1px solid var(--line);
 }
-.nav-list a:hover {
-    border: 1px solid #fff; background: transparent; color: #00ff00;
+.list li:last-child { border-bottom: 1px solid var(--line); }
+.list .desc { grid-column: 1 / -1; color: var(--muted); }
+.list .meta { color: var(--muted); font-size: 11px; white-space: nowrap; }
+
+.links { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+
+.more { display: inline-block; margin-top: .9rem; color: var(--muted); }
+
+/* --- games --- */
+.games { list-style: none; margin: 0; padding: 0; }
+.game {
+    display: grid;
+    grid-template-columns: 112px 1fr;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--line);
+}
+.game:last-child { border-bottom: 1px solid var(--line); }
+.game img {
+    width: 112px;
+    aspect-ratio: 315 / 250;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--line);
+    filter: grayscale(.6);
+    transition: filter .3s;
+}
+.game:hover img { filter: none; }
+.game h3 { font-size: 13px; font-weight: 600; margin: 0 0 .2rem; }
+.game p { color: var(--muted); margin: 0 0 .35rem; }
+.tags { font-size: 11px; color: var(--muted); }
+.tags .st { color: var(--accent); }
+
+@media (max-width: 480px) {
+    .game { grid-template-columns: 80px 1fr; }
+    .game img { width: 80px; }
 }
 
-/* Контент */
-.marquee-box {
-    padding: 5px; background: #0000aa; border: 1px solid #fff;
-    color: #fff; font-family: monospace; font-weight: bold;
+/* --- log --- */
+.post { padding: 1.25rem 0; border-top: 1px solid var(--line); }
+.post-date { color: var(--muted); font-size: 11px; }
+.post h3 { font-size: 13px; font-weight: 600; margin: .2rem 0 .7rem; }
+.post img, .post iframe { max-width: 100%; border-radius: 3px; border: 0; }
+.post-body { white-space: pre-line; overflow-wrap: anywhere; }
+.post-body h2 { color: var(--fg); margin-top: 1rem; }
+.post-body ul { padding-left: 1.2rem; margin: 0; white-space: normal; }
+
+/* --- footer --- */
+footer {
+    color: var(--muted);
+    font-size: 11px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: .5rem;
 }
-.nlpa-box {
-    text-align: center;
-    background-image: 
-        linear-gradient(45deg, #000 25%, transparent 25%), 
-        linear-gradient(-45deg, #000 25%, transparent 25%), 
-        linear-gradient(45deg, transparent 75%, #000 75%), 
-        linear-gradient(-45deg, transparent 75%, #000 75%);
-    background-color: #222; background-size: 10px 10px;
-    padding: 20px; border: 1px solid #fff;
+.btn {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 3px;
 }
-.nlpa-link {
-    display: inline-block; border: 2px solid #fff; padding: 10px 20px;
-    background: #000; color: #fff; font-weight: bold;
-    box-shadow: 3px 3px 0 #fff; text-decoration: none;
+.btn:hover { color: var(--accent); }
+
+/* --- clippy --- */
+#clippy {
+    position: fixed;
+    right: 22px;
+    bottom: 18px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    pointer-events: none;
+    font: 12px/1.45 var(--font);
+    transition: transform .4s cubic-bezier(.5, -0.4, .5, 1.4), opacity .3s;
 }
-.nlpa-link:hover {
-    transform: translate(2px, 2px); box-shadow: 1px 1px 0 #fff;
-    background: #fff; color: #000;
+#clippy.gone { transform: translateY(160%); opacity: 0; }
+
+.clippy-bubble {
+    pointer-events: auto;
+    position: relative;
+    max-width: 230px;
+    margin: 0 18px 10px 0;
+    padding: .65rem .8rem;
+    background: #ffffe1;
+    color: #111;
+    border: 1px solid #111;
+    border-radius: 7px;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, .15);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .2s, transform .2s;
 }
-.projects-box h3 {
-    background: #333; color: #fff; padding: 5px;
-    margin-top: 0; text-align: center;
+.clippy-bubble.show { opacity: 1; transform: none; }
+.clippy-bubble::after {
+    content: "";
+    position: absolute;
+    right: 22px;
+    bottom: -8px;
+    width: 12px;
+    height: 12px;
+    background: #ffffe1;
+    border-right: 1px solid #111;
+    border-bottom: 1px solid #111;
+    transform: rotate(45deg) skew(10deg, 10deg);
 }
-.projects-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;
+.clippy-close {
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    background: none;
+    border: 0;
+    font: inherit;
+    color: #777;
+    cursor: pointer;
+    padding: 0 2px;
 }
-.project-item { border: 1px solid #444; background: #000; }
-.project-item:hover { border-color: #fff; outline: 1px solid #fff; }
-.project-item img {
-    width: 100%; height: 100px; object-fit: cover;
-    display: block; filter: grayscale(100%); 
+.clippy-close:hover { color: #000; }
+.clippy-text { padding-right: .7rem; }
+
+.clippy-body {
+    pointer-events: auto;
+    width: 72px;
+    cursor: grab;
+    filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, .18));
+    animation: clippy-idle 4s ease-in-out infinite;
 }
-.project-item:hover img { filter: grayscale(0%) contrast(1.2); }
-.project-title {
-    padding: 5px; text-align: center; font-size: 0.8rem;
-    color: #fff; border-top: 1px solid #333; font-family: 'Courier New', monospace;
+.clippy-body:active { cursor: grabbing; }
+.clippy-body.talk { animation: clippy-talk .35s ease-in-out 2; }
+.clippy-lid { transform-box: fill-box; transform-origin: center; animation: clippy-blink 5s infinite; }
+
+@keyframes clippy-idle {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg) translateY(-2px); }
+}
+@keyframes clippy-talk {
+    50% { transform: translateY(-7px) rotate(-4deg); }
+}
+@keyframes clippy-blink {
+    0%, 94%, 100% { transform: scaleY(0); }
+    96% { transform: scaleY(1); }
 }
 
-/* Футер */
-.footer-box {
-    text-align: center; font-size: 0.8rem; color: #666;
-    border: 1px dashed #333; box-shadow: none;
-}
-.buttons-88x31 img { margin: 0 1px; border: 1px solid #333; }
-
-/* Devlog */
-.devlog-box h3 {
-    margin-top: 0; border-bottom: 2px solid #fff;
-    background: #fff; color: #000; text-align: center;
-    padding: 5px; margin-bottom: 20px;
-}
-#blog-feed {
-    overflow-y: auto; padding-right: 5px; 
-    scrollbar-width: thin; scrollbar-color: #fff #000;
-}
-.blog-post { border: 1px dashed #444; padding: 15px; margin-bottom: 25px; background: #0a0a0a; }
-.blog-header { border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; font-family: 'Courier New', monospace; }
-.blog-date { color: #00ff00; font-weight: bold; margin-right: 10px; }
-.blog-title { color: #fff; text-transform: uppercase; font-weight: bold; text-decoration: underline; }
-.blog-img { width: 100%; max-width: 100%; border: 1px solid #fff; margin-bottom: 15px; display: block; }
-.blog-body { font-size: 0.9rem; line-height: 1.5; color: #ccc; }
-.blog-body p { margin-bottom: 10px; }
-.blog-body strong { color: #fff; }
-.blog-body a { color: #7878ff; text-decoration: underline; }
-.blog-body ul { list-style: square; padding-left: 20px; color: #aaa; }
-.blog-footer { font-size: 0.7rem; color: #444; text-align: right; margin-top: 15px; font-style: italic; }
-
-/* === АДАПТИВ (ДЛЯ ТЕЛЕФОНОВ) === */
-@media (max-width: 900px) {
-    .container { 
-        /* На телефоне всё в одну колонку */
-        grid-template-columns: 1fr; 
-    }
-    
-    /* Отключаем прилипание на мобильных, чтобы не перекрывало экран */
-    .left-sticky, .right-sticky {
-        position: static;
-        width: 100%;
-    }
-    
-    /* Порядок блоков на телефоне */
-    .sidebar { order: 1; }      /* Сначала профиль */
-    .right-column { order: 2; } /* Потом плеер */
-    .main-content { order: 3; } /* Потом контент */
+@media (prefers-reduced-motion: reduce) {
+    .clippy-body, .clippy-lid { animation: none; }
 }

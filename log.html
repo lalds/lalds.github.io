@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alekstwin / log</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<main>
+
+    <a href="index.html" class="back">← в комнату</a>
+
+    <section>
+        <h2>log</h2>
+        <div id="feed"></div>
+    </section>
+
+</main>
+<script src="posts.js"></script>
+<script>
+    const feed = document.getElementById('feed');
+    blogPosts.forEach(post => {
+        const el = document.createElement('article');
+        el.className = 'post';
+        el.dataset.clippy = 'Похоже, вы читаете девлог. Хотите, я сделаю из него презентацию в PowerPoint?';
+        el.innerHTML = `
+            <div class="post-date">${post.date}</div>
+            <h3>${post.title}</h3>
+            ${post.image ? `<img src="${post.image}" alt="" loading="lazy">` : ''}
+            <div class="post-body">${marked.parse(post.body)}</div>`;
+        feed.appendChild(el);
+    });
+</script>
+<script src="clippy.js"></script>
+</body>
+</html>

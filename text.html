@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alekstwin</title>
+    <meta name="description" content="alekstwin — unity dev, bug hunter, NLPA COLLAB">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+
+    <header class="head">
+        <img src="avatar.png" alt="" class="avatar" data-clippy="Это ты? Выглядишь как человек, который коммитит в main без ревью.">
+        <div>
+            <h1>alekstwin</h1>
+            <p class="sub">unity dev · bug hunter · lead dev @ NLPA COLLAB</p>
+        </div>
+    </header>
+
+    <section>
+        <p>Делаю странные хоррор-игры на Unity, ковыряю движки, ищу баги за деньги и пишу инструменты, которые никто не просил.</p>
+        <p class="sub">C# · C++ · Python · немного HTML, к сожалению</p>
+    </section>
+
+    <section>
+        <h2>code</h2>
+        <ul class="list">
+            <li data-clippy="Похоже, вы пытаетесь починить RealtimeCSG под Linux. Unity Technologies вас не простит.">
+                <a href="https://github.com/lalds/OpenCSG">OpenCSG</a><span class="meta">C# / C++</span>
+                <span class="desc">Открытое геометрическое ядро для RealtimeCSG с поддержкой Linux.</span>
+            </li>
+            <li data-clippy="Нейросеть, которая распрыгивает лучше тебя. 850 юнитов в секунду. Я бы так не смогла, у меня нет ног.">
+                <a href="https://github.com/lalds/AGDeepLearn">AGDeepLearn</a><span class="meta">C++ / PyTorch</span>
+                <span class="desc">RL-агент для air-strafe и bhop в GoldSrc. Shared memory, 1180 FPS.</span>
+            </li>
+            <li data-clippy="Фулбоди в VR через вебку? Похоже, вы пытаетесь сэкономить на Vive-трекерах.">
+                <a href="https://github.com/lalds/WebHTC">WebHTC</a><span class="meta">Python</span>
+                <span class="desc">Full-body и hand tracking для SteamVR с одной вебки через MediaPipe.</span>
+            </li>
+            <li data-clippy="Discord-бот с ИИ. Ну наконец-то у меня будет конкурент.">
+                <a href="https://github.com/lalds/NLThinkingPanel">NLThinkingPanel</a><span class="meta">Python</span>
+                <span class="desc">Discord-бот с AI через OpenRouter, понимающий контекст сервера.</span>
+            </li>
+            <li data-clippy="Похоже, вы ищете продавцов на Wildberries. Хотите я открою Word?">
+                <a href="https://github.com/lalds/WBScraper">WBScraper</a><span class="meta">Python</span>
+                <span class="desc">Telegram-бот для поиска молодых продавцов на Wildberries.</span>
+            </li>
+        </ul>
+        <a class="more" href="https://github.com/lalds">все репозитории →</a>
+    </section>
+
+    <section>
+        <h2>games</h2>
+        <ul class="list">
+            <li data-clippy="Бодикам-хоррор. Я бы посмотрела, но у меня от скримеров гнётся проволока.">
+                <a href="games.html#outlaw">OUTLAW</a><span class="meta">в разработке</span>
+                <span class="desc">Хоррор от первого лица через полицейский бодикам.</span>
+            </li>
+            <li data-clippy="Чат стрима хочет ещё. Чат всегда хочет ещё.">
+                <a href="games.html#what-did-i-deserve-that">What Did i Deserve That</a><span class="meta">релиз</span>
+                <span class="desc">Обычная ночь в Белграде оказывается прямым эфиром.</span>
+            </li>
+            <li data-clippy="KRAINOTOMY! Тот самый, про который в логах три поста подряд.">
+                <a href="https://spectreee.itch.io/krainotomy">KRAINOTOMY</a><span class="meta">демо · с Spectree</span>
+                <span class="desc">Мультиплеерный хоррор, вдохновлённый Sad Satan.</span>
+            </li>
+        </ul>
+        <a class="more" href="games.html">все игры →</a>
+    </section>
+
+    <section>
+        <h2>elsewhere</h2>
+        <div class="links">
+            <a href="https://nlpacollab.neocities.org/" data-clippy="NLPA COLLAB. Звучит как секта. Мне нравится.">nlpa collab</a>
+            <a href="https://arnoldsavethewest.itch.io/">itch.io</a>
+            <a href="https://github.com/lalds">github</a>
+            <a href="https://t.me/angelserserser" data-clippy="Похоже, вы хотите написать в телегу. Хотите помочь составить письмо?">telegram</a>
+            <a href="https://www.youtube.com/@Angelo-b1k7m">youtube</a>
+            <a href="log.html" data-clippy="Тут девлоги. Читать только с чаем.">log</a>
+            <a href="index.html" data-clippy="Там я в 3D. Красивее, чем тут, честно.">3d-комната</a>
+            <a href="nature.html" data-clippy="Не нажимай. Ну или нажимай, я тебе кто, мама?">nature.html</a>
+        </div>
+    </section>
+
+    <footer>
+        <span>© 2026 alekstwin</span>
+        <button class="btn" id="music" data-clippy="Музыка на сайте. Добро пожаловать в 2007.">♪ ambient</button>
+    </footer>
+
+</main>
+
+<script>
+    const playlist = ['mp3/Ambient.mp3', 'mp3/Bergenot-Untitled.mp3'];
+    let track = 0;
+    const audio = new Audio(playlist[0]);
+    audio.volume = 0.3;
+    audio.addEventListener('ended', () => { track = (track + 1) % playlist.length; audio.src = playlist[track]; audio.play(); });
+    const musicBtn = document.getElementById('music');
+    musicBtn.addEventListener('click', () => {
+        if (audio.paused) { audio.play(); musicBtn.textContent = '■ ambient'; }
+        else { audio.pause(); musicBtn.textContent = '♪ ambient'; }
+    });
+</script>
+<script src="clippy.js"></script>
+</body>
+</html>

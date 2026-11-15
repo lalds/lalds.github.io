@@ -2,229 +2,59 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>ALEKSTWIN // HOME</title>
-    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Библиотека для чтения Markdown -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Шрифт печатной машинки -->
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <title>alekstwin</title>
+    <meta name="description" content="alekstwin — unity dev, bug hunter, lead dev @ NLPA COLLAB">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&family=Permanent+Marker&family=Caveat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="room.css">
+    <script type="importmap">
+        { "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        } }
+    </script>
 </head>
 <body>
 
-    <div class="container">
-        
-        <!-- ЛЕВАЯ КОЛОНКА (Закреплена: Профиль, Слайды, Ссылки) -->
-        <aside class="sidebar left-sticky">
-            <div class="box nature-box">
-                <a href="nature.html" class="nature-link">
-                    <strong>→ NATURE.HTML ←</strong>
-                </a>
-            </div>
-            <!-- Профиль -->
-            <div class="box profile-box">
-                <img src="avatar.png" alt="Alekstwin" class="avatar">
-                <h2>Alekstwin</h2>
-                <p class="status">STATUS: <span class="blink">ONLINE</span></p>
-                <hr>
-                <p class="bio">Unity Developer, Bug Hunter, Coder <br><br>C#,Python,HTML,CSS <br><br><strong>NLPA COLLAB - Lead Developer </strong></p>
-            </div>
+<canvas id="view"></canvas>
+<div class="fx"></div>
 
-            <!-- СЛАЙДШОУ -->
-            <div class="box slideshow-box">
-                <h3>:: MEMORIES ::</h3>
-                <div class="slideshow-container">
-                    <img src="https://i.pinimg.com/1200x/c4/1d/b8/c41db83ba8d1c4bd0930f7c5a428d93c.jpg" class="slide active" alt="gif1">
-                    <img src="https://i.pinimg.com/736x/02/9f/86/029f86e280bbff9399db5ad63e29e85c.jpg" class="slide" alt="gif2">
-                    <img src="https://i.pinimg.com/736x/12/d8/81/12d881c0cc98e2dbb020cded3ad1f7fe.jpg" class="slide" alt="gif3">
-                    <img src="https://i.pinimg.com/736x/b2/23/dc/b223dc547fc759c1c4160276e2fd9a51.jpg" class="slide" alt="gif4">
-                </div>
-            </div>
+<!-- заставка -->
+<div id="boot">
+    <pre id="boot-log"></pre>
+    <button id="enter" disabled>[ загрузка... ]</button>
+    <a class="boot-alt" href="text.html">текстовая версия</a>
+</div>
 
-            <!-- Навигация -->
-            <div class="box nav-box">
-                <h3>:: LINKS ::</h3>
-                <ul class="nav-list">
-                    <li><a href="https://t.me/angelserserser" target="_blank">Telegram</a></li>
-                    <li><a href="https://www.youtube.com/@Angelo-b1k7m" target="_blank">YouTube</a></li>
-                    <li><a href="https://arnoldsavethewest.itch.io/" target="_blank">Itch.io</a></li>
-                </ul>
-            </div>
-        </aside>
+<!-- подпись под курсором -->
+<div id="tip"></div>
 
-        <!-- ЦЕНТРАЛЬНАЯ КОЛОНКА (Скроллится) -->
-        <main class="main-content">
-            
-            <!-- Бегущая строка -->
-            <div class="box marquee-box">
-                <marquee scrollamount="6">
-                    WELCOME TO MY DIGITAL GARDEN +++ CHECK OUT MY PROJECTS +++ NLPA COLLAB IS HERE +++
-                </marquee>
-            </div>
+<!-- скрепка говорит -->
+<div id="bubble"><span id="bubble-text"></span></div>
 
-            <!-- Кнопка NLPA -->
-            <div class="box nlpa-box">
-                <a href="https://nlpacollab.neocities.org/" class="nlpa-link">
-                    <span class="star">★</span> ENTER NLPA COLLAB <span class="star">★</span>
-                </a>
-            </div>
+<!-- терминал поверх экрана монитора -->
+<div id="term" hidden>
+    <div id="term-out"></div>
+</div>
 
-            <!-- Проекты -->
-            <div class="box projects-box">
-                <h3>:: PROJECTS ::</h3>
-                <div class="projects-grid">
-                    <div class="project-item">
-                        <a href="https://nlpacollab.neocities.org/hollowair">
-                            <img src="https://img.itch.zone/aW1hZ2UvMzU4ODQxNi8yMTM1Nzg1Mi5wbmc=/original/cys%2B31.png" alt="HollowAir">
-                            <div class="project-title">HollowAir</div>
-                        </a>
-                    </div>
-                    <div class="project-item">
-                        <a href="https://nlpacollab.neocities.org/freedungeon3d">
-                            <img src="https://img.itch.zone/aW1hZ2UvMjk0MDEwNy8xNzYwNzQ3OC5wbmc=/original/2vD9Ux.png" alt="FreeDungeon3D">
-                            <div class="project-title">FreeDungeon3D</div>
-                        </a>
-                    </div>
-                    <div class="project-item">
-                        <a href="https://nlpacollab.neocities.org/epitaphy">
-                            <img src="https://img.itch.zone/aW1hZ2UvMzk5NTkyNi8yMzgyOTM4My5wbmc=/original/1JuMcU.png" alt="EPITAPHY">
-                            <div class="project-title">EPITAPHY</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- БЛОК НОВОСТЕЙ (DEVLOG) -->
-            <div class="box devlog-box">
-                <h3>:: SYSTEM LOGS / NEWS ::</h3>
-                <div id="blog-feed"></div>
-            </div>
+<!-- карточка кассеты / дискеты -->
+<div id="card" hidden>
+    <button class="card-x" aria-label="закрыть">×</button>
+    <div id="card-body"></div>
+</div>
 
-            <!-- Футер -->
-            <div class="box footer-box">
-                <p>Last updated: 21.11.2025</p>
-                <div class="buttons-88x31">
-                    <img src="https://cyber.dabamos.de/88x31/nowebp.gif" alt="no webp">
-                    <img src="https://cyber.dabamos.de/88x31/html_learn.gif" alt="html">
-                </div>
-                <br>
-                <img src="collage.PNG" style="max-width: 100%; opacity: 0.6; border: 1px solid #333;">
-            </div>
-        </main>
+<nav id="hud">
+    <span>alekstwin</span>
+    <a href="games.html">игры</a>
+    <a href="log.html">лог</a>
+    <a href="text.html">текст</a>
+    <button id="mute">♪ выкл</button>
+</nav>
 
-        <!-- ПРАВАЯ КОЛОНКА (Закреплена: Плеер) -->
-        <aside class="right-column right-sticky">
-             <div class="box music-box">
-                <h3>:: AUDIO PLAYER ::</h3>
-                
-                <div class="track-display">
-                    <marquee scrollamount="4" id="track-title">... WAITING ...</marquee>
-                </div>
+<noscript><p class="nojs">Тут 3D-комната, ей нужен JavaScript. Есть <a href="text.html">текстовая версия</a>.</p></noscript>
 
-                <div class="player-controls">
-                    <button id="btn-prev" class="retro-btn">|&lt;</button>
-                    <button id="btn-play" class="retro-btn">[PLAY]</button>
-                    <button id="btn-next" class="retro-btn">&gt;|</button>
-                </div>
-
-                <div class="volume-container">
-                    <span>VOL:</span>
-                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.3">
-                </div>
-            </div>
-        </aside>
-
-    </div>
-
-    <!-- СКРИПТЫ -->
-    <script>
-        // 1. СЛАЙДШОУ
-        const container = document.querySelector('.slideshow-container');
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
-        function updateContainerHeight() {
-            const activeSlide = slides[currentSlide];
-            if (activeSlide && activeSlide.complete) {
-                 container.style.height = activeSlide.clientHeight + 'px';
-            } else if (activeSlide) {
-                activeSlide.onload = () => { container.style.height = activeSlide.clientHeight + 'px'; };
-            }
-        }
-        function showNextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-            updateContainerHeight();
-        }
-        window.addEventListener('load', () => { updateContainerHeight(); setInterval(showNextSlide, 3500); });
-        window.addEventListener('resize', updateContainerHeight);
-
-        // 2. ПЛЕЕР
-        const playlist = [
-            { title: "IMSCARED - Ambient", url: "mp3/Ambient.mp3" },
-            { title: "Bergenot - Untitled", url: "mp3/Bergenot-Untitled.mp3" }
-        ];
-        let trackIndex = 0; let isPlaying = false; let audio = new Audio();
-        audio.volume = 0.3; 
-        const trackTitle = document.getElementById('track-title');
-        const btnPrev = document.getElementById('btn-prev');
-        const btnPlay = document.getElementById('btn-play');
-        const btnNext = document.getElementById('btn-next');
-        const volumeSlider = document.getElementById('volume-slider');
-
-        function loadTrack(index) {
-            audio.src = playlist[index].url;
-            trackTitle.innerText = `>>> ${playlist[index].title} <<<`;
-            audio.volume = volumeSlider.value; 
-        }
-        function togglePlay() {
-            if (isPlaying) { audio.pause(); btnPlay.innerText = "[PLAY]"; trackTitle.stop(); } 
-            else { audio.play(); btnPlay.innerText = "[PAUSE]"; trackTitle.start(); }
-            isPlaying = !isPlaying;
-        }
-        function nextTrack() { trackIndex = (trackIndex + 1) % playlist.length; loadTrack(trackIndex); if (isPlaying) audio.play(); }
-        function prevTrack() { trackIndex = (trackIndex - 1 + playlist.length) % playlist.length; loadTrack(trackIndex); if (isPlaying) audio.play(); }
-
-        volumeSlider.addEventListener('input', (e) => { audio.volume = e.target.value; });
-        btnPlay.addEventListener('click', togglePlay);
-        btnNext.addEventListener('click', nextTrack);
-        btnPrev.addEventListener('click', prevTrack);
-        audio.addEventListener('ended', nextTrack);
-        loadTrack(trackIndex); trackTitle.stop();
-
-        // 3. ЗВУКИ
-        const clickSoundUrl = 'click.mp3'; 
-        const uiAudio = new Audio(clickSoundUrl);
-        uiAudio.volume = 0.4;
-        function playClickSound() {
-            const soundClone = uiAudio.cloneNode();
-            soundClone.volume = uiAudio.volume;
-            soundClone.play().catch(e => {});
-        }
-        const clickableElements = document.querySelectorAll('a, button, .project-item, .slide');
-        clickableElements.forEach(element => { element.addEventListener('click', playClickSound); });
-    </script>
-    <script src="posts.js"></script> 
-    <script>
-        const feedContainer = document.getElementById('blog-feed');
-        if (typeof blogPosts !== 'undefined') {
-            blogPosts.forEach(post => {
-                const htmlContent = marked.parse(post.body);
-                const imageHtml = post.image ? `<img src="${post.image}" class="blog-img">` : '';
-                const postHTML = `
-                    <div class="blog-post">
-                        <div class="blog-header">
-                            <span class="blog-date">[${post.date}]</span>
-                            <span class="blog-title">${post.title}</span>
-                        </div>
-                        ${imageHtml}
-                        <div class="blog-body">${htmlContent}</div>
-                        <div class="blog-footer">/// END OF LOG ///</div>
-                    </div>
-                `;
-                feedContainer.innerHTML += postHTML;
-            });
-        }
-    </script>
+<script src="posts.js"></script>
+<script type="module" src="main.js"></script>
 </body>
 </html>
