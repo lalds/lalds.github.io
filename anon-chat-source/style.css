@@ -23,3 +23,32 @@ label { display: block; margin-bottom: 6px; font-weight: 650; }
 .entry p { margin: 3px 0 0; color: #18283c; white-space: pre-wrap; overflow-wrap: anywhere; }
 #status { color: #9e2838; margin-bottom: 0; }
 :focus-visible { outline: 3px solid #527cee; outline-offset: 3px; }
+main { max-width: 1080px; }
+.workspace { display: grid; grid-template-columns: minmax(235px, 29%) minmax(0, 1fr); min-height: 430px; }
+aside { padding: 18px 16px 0 0; border-right: 1px solid #dce5f0; }
+aside h2 { font-size: 1.15rem; margin: 0 0 12px; }
+aside #create { width: 100%; }
+#rooms { display: grid; gap: 6px; max-height: 220px; overflow: auto; margin-bottom: 14px; }
+#rooms button { text-align: left; }
+#rooms button[aria-current="true"] { background: #e7f0ff; border-color: #527cee; }
+#rooms p { margin: 0 0 6px; font-size: .9rem; }
+.conversation { min-width: 0; padding-left: 20px; }
+#chat h1 { font-size: clamp(1.15rem, 3.4vw, 1.9rem); overflow-wrap: anywhere; }
+#history { max-height: 430px; }
+.entry img { display: block; width: auto; max-width: 100%; max-height: 290px; object-fit: contain; border-radius: 8px; margin-top: 6px; }
+#preview:not([hidden]) { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+#preview img { width: 72px; height: 56px; object-fit: cover; border-radius: 5px; }
+.photo-label { margin: 0; font-size: .85rem; min-width: 0; }
+#photo { font-size: .8rem; width: 100%; padding: 3px; }
+@media(max-width: 690px) {
+  .workspace { grid-template-columns: 1fr; }
+  aside { border-right: 0; border-bottom: 1px solid #dce5f0; padding: 14px 0; }
+  .conversation { padding-left: 0; }
+  #rooms { max-height: 120px; }
+}
+@media(min-width: 691px) {
+  body { padding-block: 24px; }
+  main { padding-block: 24px; }
+  #history { max-height: clamp(230px, 44vh, 430px); }
+}
+#status:empty { margin: 0; }

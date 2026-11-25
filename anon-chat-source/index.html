@@ -10,25 +10,37 @@
 <body>
 <main>
 <header><span class="brand">Комната</span><span class="badge">Локальный режим</span></header>
+<p id="status" role="status"></p>
+<div class="workspace">
+<aside aria-label="Комнаты">
+  <h2>Комнаты</h2>
+  <div id="rooms"></div>
+  <button id="create">+ Создать комнату</button>
+  <form id="join">
+    <label for="code">Войти по коду</label>
+    <div class="row"><input id="code" required maxlength="8" autocomplete="off" placeholder="A12B34CD"><button class="secondary">Войти</button></div>
+  </form>
+</aside>
+<div class="conversation">
 <section id="welcome">
   <h1>Анонимный обмен<br>сообщениями</h1>
   <p>Создайте комнату или введите её код в другой вкладке этого же браузера.</p>
-  <button id="create">Создать комнату</button>
-  <form id="join">
-    <label for="code">Код комнаты</label>
-    <div class="row"><input id="code" required maxlength="8" autocomplete="off" placeholder="Например, A12B34CD"><button class="secondary">Войти</button></div>
-  </form>
 </section>
 <section id="chat" hidden>
-  <div class="chat-head"><div><h1>Комната <span id="room"></span></h1><p id="identity"></p></div><button class="secondary" id="leave">Выйти</button></div>
+  <div class="chat-head"><div><h1>Комната <span id="room" tabindex="-1"></span></h1><p id="identity"></p></div><button class="secondary" id="leave">Выйти</button></div>
   <div id="history" role="log" aria-label="История сообщений"></div>
   <form id="send">
     <label for="message">Сообщение</label>
-    <textarea id="message" rows="3" maxlength="1000" required placeholder="Напишите сообщение"></textarea>
-    <div class="row actions"><span>До 1000 символов</span><button>Отправить</button></div>
+    <textarea id="message" rows="3" maxlength="1000" placeholder="Напишите сообщение"></textarea>
+    <div id="preview" hidden><img id="previewImage" alt="Выбранное фото"><button type="button" class="secondary" id="removePhoto">Убрать фото</button></div>
+    <div class="row actions">
+      <label class="photo-label" for="photo">Фото<input id="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
+      <button id="sendButton">Отправить</button>
+    </div>
   </form>
 </section>
-<p id="status" role="status"></p>
+</div>
+</div>
 </main>
 </body>
 </html>
