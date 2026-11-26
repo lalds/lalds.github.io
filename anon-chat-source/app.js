@@ -88,7 +88,11 @@ function showRoom(code) {
 
 function openRoom(code) {
   if (!roomExists(code)) throw new Error("Комната с таким кодом не найдена.");
-  sessionStorage.setItem(profileKey, JSON.stringify({ id: profile.id, room: code }));
+  try {
+    sessionStorage.setItem(profileKey, JSON.stringify({ id: profile.id, room: code }));
+  } catch {
+    // The URL remains sufficient to restore the selected guest and room.
+  }
   showRoom(code);
 }
 
@@ -155,41 +159,25 @@ function renderHistory() {
   history.scrollTop = history.scrollHeight;
 }
 
-// Some browsers copy sessionStorage when a tab is duplicated. A lock
-// reserves the guest identity for one live tab without changing stored messages.
-async function claimGuest(profile) {
-  if (!navigator.locks) return profile;
-  return new Promise((resolve) => {
-    function reserve(candidate) {
-      navigator.locks.request(prefix + "guest:" + candidate.id, { ifAvailable: true }, (lock) => {
-        if (!lock) {
-          reserve({ ...candidate, id: crypto.randomUUID() });
-          return;
-        }
-        resolve(candidate);
-        // Chromium releases the lock when this document is destroyed.
-        return new Promise(() => {});
-      }).catch(() => resolve(candidate));
-    }
-    reserve(profile);
-  });
-}
-
 let profile;
-async function start() {
-  get("create").disabled = true;
+function start() {
+  const create = get("create");
   const join = get("join").querySelector("button");
+  create.disabled = true;
   join.disabled = true;
   try {
-    profile = await claimGuest(readProfile());
+    profile = readProfile();
     if (validCode(profile.room) && roomExists(profile.room)) openRoom(profile.room);
     else leaveRoom();
-    get("create").disabled = false;
+    create.disabled = false;
     join.disabled = false;
   } catch {
     get("status").textContent = "Для работы откройте сайт через localhost или HTTPS и разрешите сохранение данных.";
   }
 }
+
+// Pasting a different guest URL in an existing tab may only change the fragment.
+window.addEventListener("hashchange", start);
 
 get("create").addEventListener("click", () => {
   try {
@@ -291,6 +279,72 @@ get("photo").addEventListener("change", async () => {
   }
 });
 
+const soundButton = document.createElement("button");
+soundButton.type = "button";
+soundButton.className = "secondary";
+soundButton.setAttribute("aria-label", "Звук входящих сообщений");
+soundButton.setAttribute("aria-pressed", "false");
+soundButton.textContent = "Звук: выкл.";
+document.querySelector("header").append(soundButton);
+
+const notice = document.createElement("p");
+notice.setAttribute("role", "status");
+notice.style.margin = "0";
+get("status").before(notice);
+let noticeTimer;
+let audio;
+let soundEnabled = false;
+soundButton.onclick = async () => {
+  if (soundEnabled) {
+    soundEnabled = false;
+  } else {
+    try {
+      audio ??= new AudioContext();
+      await audio.resume();
+      soundEnabled = audio.state === "running";
+      if (soundEnabled) chime();
+    } catch {
+      get("status").textContent = "Браузер не смог включить звук.";
+    }
+  }
+  soundButton.setAttribute("aria-pressed", String(soundEnabled));
+  soundButton.textContent = soundEnabled ? "Звук: вкл." : "Звук: выкл.";
+};
+
+function chime() {
+  if (!soundEnabled || audio.state !== "running") return;
+  const now = audio.currentTime;
+  for (const [index, frequency] of [659.25, 783.99].entries()) {
+    const startTime = now + index * .095;
+    const note = audio.createOscillator();
+    const volume = audio.createGain();
+    note.type = "sine";
+    note.frequency.value = frequency;
+    volume.gain.setValueAtTime(.001, startTime);
+    volume.gain.exponentialRampToValueAtTime(.055, startTime + .025);
+    volume.gain.exponentialRampToValueAtTime(.001, startTime + .21);
+    note.connect(volume);
+    volume.connect(audio.destination);
+    note.start(startTime);
+    note.stop(startTime + .22);
+  }
+}
+
+function notifyIncoming(event) {
+  if (event.oldValue || !event.newValue) return;
+  let message;
+  try {
+    message = JSON.parse(event.newValue);
+  } catch {
+    return;
+  }
+  if (typeof message?.author !== "string" || message.author === profile.id) return;
+  notice.textContent = validPhoto(message.photo) ? "Получено новое фото" : "Новое сообщение";
+  clearTimeout(noticeTimer);
+  noticeTimer = setTimeout(() => { notice.textContent = ""; }, 4000);
+  chime();
+}
+
 window.addEventListener("storage", (event) => {
   if (event.storageArea !== localStorage || !profile) return;
   if (activeRoom && !roomExists(activeRoom)) {
@@ -300,6 +354,7 @@ window.addEventListener("storage", (event) => {
     renderRooms();
   } else if (activeRoom && event.key.startsWith(prefix + "message:" + activeRoom + ":")) {
     renderHistory();
+    notifyIncoming(event);
   }
 });
 
