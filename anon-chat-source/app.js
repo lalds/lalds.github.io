@@ -54,6 +54,9 @@ function showError(error) {
 }
 
 function readProfile() {
+  // A reopened document may have fresh sessionStorage, but keeps its URL.
+  const resume = /^#guest=([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})(?:&room=([0-9A-F]{8}))?$/.exec(location.hash);
+  if (resume) return { id: resume[1], room: resume[2] || "" };
   try {
     const profile = JSON.parse(sessionStorage.getItem(profileKey));
     if (typeof profile?.id === "string" && typeof profile.room === "string") return profile;
@@ -69,6 +72,8 @@ function roomExists(code) {
 
 function showRoom(code) {
   activeRoom = code;
+  const hash = "#guest=" + profile.id + (code ? "&room=" + code : "");
+  if (location.hash !== hash) history.replaceState(history.state, "", hash);
   get("status").textContent = "";
   get("welcome").hidden = Boolean(code);
   get("chat").hidden = !code;
