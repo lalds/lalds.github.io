@@ -71,6 +71,7 @@ function roomExists(code) {
 }
 
 function showRoom(code) {
+  hideNotice();
   activeRoom = code;
   const hash = "#guest=" + profile.id + (code ? "&room=" + code : "");
   if (location.hash !== hash) history.replaceState(history.state, "", hash);
@@ -287,11 +288,46 @@ soundButton.setAttribute("aria-pressed", "false");
 soundButton.textContent = "Звук: выкл.";
 document.querySelector("header").append(soundButton);
 
-const notice = document.createElement("p");
-notice.setAttribute("role", "status");
-notice.style.margin = "0";
-get("status").before(notice);
+const notice = document.createElement("aside");
+notice.hidden = true;
+notice.id = "incoming-notice";
+const noticeContent = document.createElement("div");
+noticeContent.setAttribute("role", "status");
+const noticeTitle = document.createElement("strong");
+const noticeText = document.createElement("div");
+noticeContent.append(noticeTitle, noticeText);
+const dismiss = document.createElement("button");
+dismiss.type = "button";
+dismiss.className = "secondary";
+dismiss.textContent = "×";
+dismiss.setAttribute("aria-label", "Закрыть уведомление");
+dismiss.onclick = hideNotice;
+notice.append(noticeContent, dismiss);
+document.body.append(notice);
+
+const noticeStyle = document.createElement("style");
+noticeStyle.textContent = `
+  #incoming-notice {
+    position: fixed; z-index: 10;
+    bottom: max(16px, env(safe-area-inset-bottom)); right: 16px;
+    width: min(360px, calc(100% - 32px));
+    padding: 12px 14px; border: 1px solid #b8cae5; border-radius: 14px;
+    background: #fff; color: #18283c; box-shadow: 0 8px 24px #18283c26;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  }
+  #incoming-notice[hidden] { display: none; }
+  #incoming-notice div { min-width: 0; overflow-wrap: anywhere; }
+  #incoming-notice strong { display: block; font-size: .85rem; color: #21418c; }
+  #incoming-notice button { padding: 0 8px; flex: none; }
+`;
+document.head.append(noticeStyle);
 let noticeTimer;
+function hideNotice() {
+  clearTimeout(noticeTimer);
+  notice.hidden = true;
+  noticeTitle.textContent = "";
+  noticeText.textContent = "";
+}
 let audio;
 let soundEnabled = false;
 soundButton.onclick = async () => {
@@ -339,9 +375,15 @@ function notifyIncoming(event) {
     return;
   }
   if (typeof message?.author !== "string" || message.author === profile.id) return;
-  notice.textContent = validPhoto(message.photo) ? "Получено новое фото" : "Новое сообщение";
+  const text = typeof message.text === "string" ? message.text.trim() : "";
+  const hasPhoto = validPhoto(message.photo);
+  if (!text && !hasPhoto) return;
+  const preview = text.length > 160 ? text.slice(0, 159) + "…" : text;
+  notice.hidden = false;
+  noticeTitle.textContent = alias(message.author);
+  noticeText.textContent = hasPhoto ? (preview ? "Фотография · " + preview : "Фотография") : preview;
   clearTimeout(noticeTimer);
-  noticeTimer = setTimeout(() => { notice.textContent = ""; }, 4000);
+  noticeTimer = setTimeout(hideNotice, 5000);
   chime();
 }
 
