@@ -288,45 +288,86 @@ soundButton.setAttribute("aria-pressed", "false");
 soundButton.textContent = "Звук: выкл.";
 document.querySelector("header").append(soundButton);
 
-const notice = document.createElement("aside");
-notice.hidden = true;
-notice.id = "incoming-notice";
-const noticeContent = document.createElement("div");
-noticeContent.setAttribute("role", "status");
-const noticeTitle = document.createElement("strong");
-const noticeText = document.createElement("div");
-noticeContent.append(noticeTitle, noticeText);
-const dismiss = document.createElement("button");
-dismiss.type = "button";
-dismiss.className = "secondary";
-dismiss.textContent = "×";
-dismiss.setAttribute("aria-label", "Закрыть уведомление");
-dismiss.onclick = hideNotice;
-notice.append(noticeContent, dismiss);
-document.body.append(notice);
+const notices = document.createElement("div");
+notices.id = "incoming-notices";
+notices.setAttribute("role", "log");
+notices.setAttribute("aria-label", "Входящие уведомления");
+document.body.append(notices);
 
 const noticeStyle = document.createElement("style");
 noticeStyle.textContent = `
-  #incoming-notice {
+  #incoming-notices {
     position: fixed; z-index: 10;
     bottom: max(16px, env(safe-area-inset-bottom)); right: 16px;
     width: min(360px, calc(100% - 32px));
+    display: flex; flex-direction: column; gap: 8px; pointer-events: none;
+  }
+  .incoming-notice {
     padding: 12px 14px; border: 1px solid #b8cae5; border-radius: 14px;
     background: #fff; color: #18283c; box-shadow: 0 8px 24px #18283c26;
     display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    pointer-events: auto;
+    animation: notice-enter 220ms ease-out both;
   }
-  #incoming-notice[hidden] { display: none; }
-  #incoming-notice div { min-width: 0; overflow-wrap: anywhere; }
-  #incoming-notice strong { display: block; font-size: .85rem; color: #21418c; }
-  #incoming-notice button { padding: 0 8px; flex: none; }
+  .incoming-notice.is-leaving {
+    pointer-events: none; animation: notice-exit 160ms ease-in both;
+  }
+  .incoming-notice div { min-width: 0; overflow-wrap: anywhere; }
+  .incoming-notice strong { display: block; font-size: .85rem; color: #21418c; }
+  .incoming-notice button { padding: 0 8px; flex: none; }
+  @keyframes notice-enter {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes notice-exit {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(8px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .incoming-notice, .incoming-notice.is-leaving { animation-duration: 1ms; }
+  }
 `;
 document.head.append(noticeStyle);
-let noticeTimer;
+
+const noticeTimers = new Map();
+function removeNotice(card) {
+  clearTimeout(noticeTimers.get(card));
+  noticeTimers.delete(card);
+  card.remove();
+}
+
 function hideNotice() {
-  clearTimeout(noticeTimer);
-  notice.hidden = true;
-  noticeTitle.textContent = "";
-  noticeText.textContent = "";
+  for (const card of Array.from(notices.children)) {
+    removeNotice(card);
+  }
+}
+
+function dismissNotice(card) {
+  if (card.classList.contains("is-leaving")) return;
+  clearTimeout(noticeTimers.get(card));
+  card.classList.add("is-leaving");
+  noticeTimers.set(card, setTimeout(() => removeNotice(card), 170));
+}
+
+function showNotice(author, preview) {
+  const card = document.createElement("div");
+  card.className = "incoming-notice";
+  const content = document.createElement("div");
+  const title = document.createElement("strong");
+  title.textContent = author;
+  const body = document.createElement("div");
+  body.textContent = preview;
+  content.append(title, body);
+  const dismiss = document.createElement("button");
+  dismiss.type = "button";
+  dismiss.className = "secondary";
+  dismiss.textContent = "×";
+  dismiss.setAttribute("aria-label", "Закрыть уведомление");
+  dismiss.onclick = () => dismissNotice(card);
+  card.append(content, dismiss);
+  if (notices.childElementCount >= 4) removeNotice(notices.firstElementChild);
+  notices.append(card);
+  noticeTimers.set(card, setTimeout(() => dismissNotice(card), 5000));
 }
 let audio;
 let soundEnabled = false;
@@ -379,11 +420,7 @@ function notifyIncoming(event) {
   const hasPhoto = validPhoto(message.photo);
   if (!text && !hasPhoto) return;
   const preview = text.length > 160 ? text.slice(0, 159) + "…" : text;
-  notice.hidden = false;
-  noticeTitle.textContent = alias(message.author);
-  noticeText.textContent = hasPhoto ? (preview ? "Фотография · " + preview : "Фотография") : preview;
-  clearTimeout(noticeTimer);
-  noticeTimer = setTimeout(hideNotice, 5000);
+  showNotice(alias(message.author), hasPhoto ? (preview ? "Фотография · " + preview : "Фотография") : preview);
   chime();
 }
 
