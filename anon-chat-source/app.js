@@ -67,9 +67,7 @@ function roomExists(code) {
   return localStorage.getItem(roomPrefix + code) !== null;
 }
 
-function openRoom(code) {
-  if (code && !roomExists(code)) throw new Error("Комната с таким кодом не найдена.");
-  sessionStorage.setItem(profileKey, JSON.stringify({ id: profile.id, room: code }));
+function showRoom(code) {
   activeRoom = code;
   get("status").textContent = "";
   get("welcome").hidden = Boolean(code);
@@ -80,6 +78,30 @@ function openRoom(code) {
   clearPhoto();
   renderRooms();
   if (code) renderHistory();
+  else get("history").replaceChildren();
+}
+
+function openRoom(code) {
+  if (!roomExists(code)) throw new Error("Комната с таким кодом не найдена.");
+  sessionStorage.setItem(profileKey, JSON.stringify({ id: profile.id, room: code }));
+  showRoom(code);
+}
+
+function leaveRoom() {
+  let sessionError;
+  try {
+    sessionStorage.setItem(profileKey, JSON.stringify({ id: profile.id, room: "" }));
+  } catch (error) {
+    sessionError = error;
+    try {
+      sessionStorage.removeItem(profileKey);
+      sessionError = null;
+    } catch {
+      // Close the room even if the browser has blocked session storage.
+    }
+  }
+  showRoom("");
+  if (sessionError) showError(new Error("Комната закрыта, но браузер не сохранил состояние вкладки."));
 }
 
 function alias(id) {
@@ -128,12 +150,40 @@ function renderHistory() {
   history.scrollTop = history.scrollHeight;
 }
 
+// Some browsers copy sessionStorage when a tab is duplicated. A lock
+// reserves the guest identity for one live tab without changing stored messages.
+async function claimGuest(profile) {
+  if (!navigator.locks) return profile;
+  return new Promise((resolve) => {
+    function reserve(candidate) {
+      navigator.locks.request(prefix + "guest:" + candidate.id, { ifAvailable: true }, (lock) => {
+        if (!lock) {
+          reserve({ ...candidate, id: crypto.randomUUID() });
+          return;
+        }
+        resolve(candidate);
+        // Chromium releases the lock when this document is destroyed.
+        return new Promise(() => {});
+      }).catch(() => resolve(candidate));
+    }
+    reserve(profile);
+  });
+}
+
 let profile;
-try {
-  profile = readProfile();
-  openRoom(roomExists(profile.room) ? profile.room : "");
-} catch {
-  get("status").textContent = "Для работы откройте сайт через localhost или HTTPS и разрешите сохранение данных.";
+async function start() {
+  get("create").disabled = true;
+  const join = get("join").querySelector("button");
+  join.disabled = true;
+  try {
+    profile = await claimGuest(readProfile());
+    if (validCode(profile.room) && roomExists(profile.room)) openRoom(profile.room);
+    else leaveRoom();
+    get("create").disabled = false;
+    join.disabled = false;
+  } catch {
+    get("status").textContent = "Для работы откройте сайт через localhost или HTTPS и разрешите сохранение данных.";
+  }
 }
 
 get("create").addEventListener("click", () => {
@@ -193,7 +243,7 @@ get("send").addEventListener("submit", (event) => {
 
 get("leave").addEventListener("click", () => {
   try {
-    openRoom("");
+    leaveRoom();
     get("create").focus();
   } catch (error) {
     showError(error);
@@ -239,7 +289,7 @@ get("photo").addEventListener("change", async () => {
 window.addEventListener("storage", (event) => {
   if (event.storageArea !== localStorage || !profile) return;
   if (activeRoom && !roomExists(activeRoom)) {
-    openRoom("");
+    leaveRoom();
     get("status").textContent = "Данные комнаты удалены из браузера.";
   } else if (!event.key || event.key.startsWith(roomPrefix)) {
     renderRooms();
@@ -247,3 +297,5 @@ window.addEventListener("storage", (event) => {
     renderHistory();
   }
 });
+
+start();
